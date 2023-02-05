@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('priority')->nullable()->default('999');
-            $table->string('tittle');
+            $table->string('title');
         });
     }
 

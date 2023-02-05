@@ -19,7 +19,7 @@ return new class extends Migration
                 ->references('id')
                 ->on('categories')
                 ->onDelete('cascade');
-            $table->string('tittle');
+            $table->string('title');
             $table->bigInteger('numberInFilter')->nullable()->default('999');
             $table->timestamps();
         });

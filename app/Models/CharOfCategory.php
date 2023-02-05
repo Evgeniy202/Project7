@@ -9,5 +9,7 @@ class CharOfCategory extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id', 'category', 'tittle', 'numberInFilter'];
+    protected $fillable = ['id', 'category', 'title', 'numberInFilter'];
+
+    public $timestamps = false;
 }

@@ -9,5 +9,7 @@ class Categories extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id', 'priority', 'tittle'];
+    protected $fillable = ['id', 'priority', 'title'];
+
+    public $timestamps = false;
 }
