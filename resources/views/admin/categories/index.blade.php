@@ -32,7 +32,7 @@
                                 <div class="modal-body text-dark">
                                     <div>
                                         <a class="col-12 btn btn-outline-secondary"
-                                           href="#">
+                                           href="{{ route('featuresOfCategory', $category->id) }}">
                                             Manage characteristic
                                         </a>
                                         <hr>
