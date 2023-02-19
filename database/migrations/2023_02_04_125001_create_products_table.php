@@ -20,7 +20,7 @@ return new class extends Migration
                 ->references('id')
                 ->on('categories')
                 ->onDelete('cascade');
-            $table->string('tittle');
+            $table->string('title');
             $table->string('slug');
             $table->longText('description');
             $table->decimal('price');

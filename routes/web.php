@@ -38,6 +38,29 @@ Route::group(['middleware' => ['role:admin']], function () {
             [\App\Http\Controllers\Admin\ValueOfFeaturesController::class, 'remove'])
             ->name('removeValuesOfFeature');
 
+        Route::prefix('products')->group(function () {
+            Route::post('/{productId}/addImage',
+                [\App\Http\Controllers\Admin\ProductController::class, 'addImage'])
+                ->name('addProductImage');
+            Route::post('/{productId}/changeImage/{imageId}',
+                [\App\Http\Controllers\Admin\ProductController::class, 'changeImage'])
+                ->name('changeProductImage');
+            Route::get('/{productId}/deleteImage/{imageId}',
+                [\App\Http\Controllers\Admin\ProductController::class, 'destroyImage'])
+                ->name('destroyProductImage');
+
+            Route::post('/{productId}/addFeature',
+                [\App\Http\Controllers\Admin\ProductController::class, 'addCharOfProduct'])
+                ->name('addProductFeature');
+            Route::post('/{productId}/changeFeature/{prodCharId}',
+                [\App\Http\Controllers\Admin\ProductController::class, 'changeCharOfProduct'])
+                ->name('changeProductFeature');
+            Route::get('/{productId}/deleteFeature/{prodCharId}',
+                [\App\Http\Controllers\Admin\ProductController::class, 'removeCharOfProduct'])
+                ->name('destroyProductFeature');
+        });
+
         Route::resource('categories', \App\Http\Controllers\Admin\CategoriesController::class);
+        Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
     });
 });
