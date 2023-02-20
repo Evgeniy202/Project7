@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Functions\Features\ValuesOfFeatures;
 use App\Http\Controllers\Controller;
 use App\Models\Categories;
+use App\Models\CharOfCategory;
 use App\Models\CharOfProduct;
 use App\Models\Comment;
 use App\Models\ProductDiscount;
@@ -112,6 +113,10 @@ class ProductController extends Controller
             ->where('product', $product->id)
             ->orderBy('numberInList', 'asc')
             ->get();
+        $featuresOfCategory = CharOfCategory::query()
+            ->where('category', $product->category)
+            ->orderBy('numberInFilter')
+            ->get();
         $featuresOfProduct = FeaturesOfProducts::getValue($category->id, $charsOfProd);
         $values = ValuesOfFeatures::getValues($featuresOfProduct);
         $comments = Comment::query()->where('product', $product->id)->orderBy('updated_at');
@@ -127,6 +132,7 @@ class ProductController extends Controller
             'values' => $values,
             'featuresView' => $featuresView,
             'comments' => $comments,
+            'featuresOfCategory' => $featuresOfCategory,
         ]);
     }
 
@@ -298,30 +304,36 @@ class ProductController extends Controller
 
     public function addCharOfProduct(Request $request, $productId)
     {
+        $char = $request->input('char');
+
+        if (!empty($oldChar = CharOfProduct::query()
+            ->where('product', $productId)
+            ->where('char', $char)
+            ->first()
+        ))
+        {
+            $oldChar->delete();
+            $mes_text = "Product's feature changed!";
+        }
+        else
+        {
+            $mes_text = "Product's feature added!";
+        }
+
         $newCharOfProduct = new CharOfProduct();
         $newCharOfProduct->product = $productId;
-        $newCharOfProduct->char = $request->input('char');
+        $newCharOfProduct->char = $char;
         $newCharOfProduct->value = $request->input('value');
         $newCharOfProduct->numberInList = $request->input('numberInList');
         $newCharOfProduct->save();
 
-        return redirect()->back()->with(["message" => "success", "mes_text" => "Product's feature added!"]);
+        return redirect()->back()->with(["message" => "success", "mes_text" => $mes_text]);
     }
 
     public function changeCharOfProduct(Request $request, $productId, $prodCharId)
     {
-        $newValue = $request->input('changeValue') ?? null;
-        $newNumInList = $request->input('numberInList') ?? null;
         $review = CharOfProduct::query()->find($prodCharId);
-
-        if (($newValue != null) && ($newValue != $review->value))
-        {
-            $review->value = $newValue;
-        }
-        if (($newNumInList != null) && ($newNumInList != $review->numberInList))
-        {
-            $review->numberInList = $newNumInList;
-        }
+        $review->numberInList = $request->input('numberInList');
         $review->save();
 
         return redirect()->back()->with(["message" => "success", "mes_text" => "Product's feature changed!"]);

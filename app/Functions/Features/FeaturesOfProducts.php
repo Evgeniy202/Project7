@@ -39,7 +39,7 @@ class FeaturesOfProducts
             {
                 if ($item_2->id == $item->char)
                 {
-                    $feature = $item_2->tittle;
+                    $feature = $item_2->title;
                     $feature_id = $item_2->id;
 
                     foreach ($all_values as $val)
@@ -53,13 +53,15 @@ class FeaturesOfProducts
                 }
             }
 
-            if (($feature != '') && ($value != ''))
+            if (!empty($feature) && !empty($value != ''))
             {
                 $featuresOfProduct[$i] = [
+                    'charsOfProd' => $item->id,
                     'feature' => $feature,
                     'value' => $value,
                     'feature_id' => $feature_id,
                     'value_id' => $value_id,
+                    'numberInList' => $item->numberInList,
                 ];
             }
             $i++;
@@ -77,7 +79,27 @@ class FeaturesOfProducts
         {
             foreach ($features as $feature)
             {
-                if ($feature->id == $item->char)
+                if (empty($feature->id))
+                {
+                    if ($feature['feature_id'] == $item->char)
+                    {
+                        $featuresView[$i] = ['feature' => $feature['feature']];
+
+                        foreach ($values as $value)
+                        {
+                            if ($value->id == $item->value)
+                            {
+                                $featuresView[$i]['id'] = $feature['charsOfProd'];
+                                $featuresView[$i]['value'] = $value->value;
+                                $featuresView[$i]['charOfProd'] = $item->id;
+                                $featuresView[$i]['numberInList'] = $feature['numberInList'];
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                else if ($feature->id == $item->char)
                 {
                     $featuresView[$i] = ['feature' => $feature->title];
 
@@ -85,8 +107,10 @@ class FeaturesOfProducts
                     {
                         if ($value->id == $item->value)
                         {
-                            $featuresView[$i] = ['value' => $value->value];
-                            $featuresView[$i] = ['charOfProd' => $item->id];
+                            $featuresView[$i]['id'] = $feature->charsOfProd;
+                            $featuresView[$i]['value'] = $value->value;
+                            $featuresView[$i]['charOfProd'] = $item->id;
+                            $featuresView[$i]['numberInList'] = $feature->numberInList;
                             break;
                         }
                     }

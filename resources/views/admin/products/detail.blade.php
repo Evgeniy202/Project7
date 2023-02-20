@@ -3,6 +3,7 @@
     Product - {{ $product->title }}
 @endsection
 @section('content')
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <div class="row">
         <form action="{{ route('products.update', $product) }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -165,37 +166,135 @@
             <hr class="mt-2">
         @endforeach
         <hr class="mt-2">
-        <button type="button" class="btn btn-outline-success col-md-12" data-bs-toggle="modal"
-                data-bs-target="#orderDetails-">
-            Add New Feature
+        <button type="button" class="btn btn-outline-success col-md-9" data-bs-toggle="modal"
+                data-bs-target="#newProdChar-">
+            Create Or Change Characteristic
         </button>
-        <div class="modal fade" id="orderDetails-" tabindex="-1" aria-labelledby="orderDetailsLabel-"
-             aria-hidden="true">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content text-dark">
-                    <div class="modal-header">
-                        <h5 class="modal-title text-center" id="orderDetailsLabel-">
-                            Add New Feature
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <form action="#" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <div class="form-group mt-3">
-
-                                </div>
-                                <hr>
-                                <input type="submit" class="btn btn-success btn-block col-12" value="Add">
-                            </form>
-                        </div>
+        <a href="{{ route('featuresOfCategory', $product->category) }}" target="_blank"
+           class="btn btn-outline-warning col-md-3">
+            Characteristics manage
+        </a>
+        <hr class="mt-3 mb-3">
+    </div>
+    <div class="modal fade" id="newProdChar-" tabindex="-1" aria-labelledby="newProdCharLabel-"
+         aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content text-dark">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="newProdCharLabel-">
+                        Create Or Change Characteristic
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <form action="{{ route('addProductFeature', $product->id) }}" method="POST">
+                            @csrf
+                            <div class="form-group mt-3 text-dark">
+                                <select name="char" class="form-control text-center" id="char">
+                                    <option>-Select characteristic-</option>
+                                    @foreach ($featuresOfCategory as $char)
+                                        <option value="{{ $char->id }}"
+                                                data-class="{{ $char->id }}">{{ $char->title }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group mt-3">
+                                <select name="value" class="form-control text-center" id="value">
+                                </select>
+                            </div>
+                            <div class="form-group mt-3">
+                                <input type="text" name="numberInList" id="numberInList"
+                                       placeholder="Number in list"
+                                       class="form-control text-center">
+                            </div>
+                            <hr>
+                            <input type="submit" class="btn btn-success btn-block col-12"
+                                   value="Create Or Change Characteristic">
+                            <script src="/js/ajax/admin/valueOfFeature.js"></script>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-        @foreach($featuresView as $featureView)
-
-        @endforeach
     </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Number In Filter</th>
+            <th scope="col">Feature</th>
+            <th scope="col">Value</th>
+            <th scope="col">Remove</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($featuresView as $featureView)
+            <tr>
+                <th scope="row">{{ $featureView['numberInList'] }}</th>
+                <td>{{ $featureView['feature'] }}</td>
+                <td>{{ $featureView['value'] }}</td>
+                <td>
+                    <button class="btn btn-warning" data-bs-toggle="modal"
+                            data-bs-target="#changeModal-{{ $featureView['feature'] }}">Change Number in Filter
+                    </button>
+                    <div class="modal fade" id="changeModal-{{ $featureView['feature'] }}" tabindex="-1"
+                         aria-labelledby="changeModalLabel-{{ $featureView['feature'] }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header text-dark">
+                                    <h5 class="modal-title text-center"
+                                        id="changeModalLabel-{{ $featureView['feature'] }}">
+                                        <strong>Change Number In List for {{ $featureView['feature'] }}</strong>
+                                    </h5>
+                                </div>
+                                <div class="modal-body text-dark">
+                                    <div>
+                                        <form
+                                            action="{{ route('changeProductFeature', [$product->id, $featureView['charOfProd']]) }}"
+                                            method="POST">
+                                            @csrf
+                                            <input type="text" placeholder="Number" id="numberInList"
+                                                   name="numberInList"
+                                                   value="{{ $featureView['numberInList'] }}" required>
+                                            <input type="submit" class="btn btn-warning" value="Change">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-danger" data-bs-toggle="modal"
+                            data-bs-target="#removeModal-{{ $featureView['feature'] }}">Remove
+                    </button>
+                    <div class="modal fade" id="removeModal-{{ $featureView['feature'] }}" tabindex="-1"
+                         aria-labelledby="removeModalLabel-{{ $featureView['feature'] }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header text-dark">
+                                    <h5 class="modal-title text-center"
+                                        id="removeModalLabel-{{ $featureView['feature'] }}">
+                                        <strong>Remove {{ $featureView['feature'] }}</strong>
+                                    </h5>
+                                </div>
+                                <div class="modal-body text-dark">
+                                    <div>
+                                        You are sure you want to delete the feature "{{ $featureView['feature'] }}"?
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                        Close
+                                    </button>
+                                    <a href="{{ route('destroyProductFeature', [$product->id, $featureView['charOfProd']]) }}">
+                                        <button type="button" class="btn btn-outline-danger">Remove
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        @endforeach
+    </table>
 @endsection

@@ -63,4 +63,7 @@ Route::group(['middleware' => ['role:admin']], function () {
         Route::resource('categories', \App\Http\Controllers\Admin\CategoriesController::class);
         Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
     });
+
+    //Ajax
+    Route::get('/get-values-for-char/{charId}', [\App\Http\Controllers\Ajax\AjaxController::class, 'getValuesForChar']);
 });
