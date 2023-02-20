@@ -86,6 +86,7 @@ class FeaturesOfProducts
                         if ($value->id == $item->value)
                         {
                             $featuresView[$i] = ['value' => $value->value];
+                            $featuresView[$i] = ['charOfProd' => $item->id];
                             break;
                         }
                     }

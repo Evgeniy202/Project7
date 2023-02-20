@@ -118,6 +118,7 @@ class ProductController extends Controller
         $featuresView = FeaturesOfProducts::getFeaturesOfProductView($charsOfProd, $featuresOfProduct, $values);
 
         return view('admin.products.detail', [
+            'product' => $product,
             'category' => $category,
             'productDiscounts' => $productDiscounts,
             'imagesOfProduct' => $imagesOfProduct,
@@ -216,7 +217,7 @@ class ProductController extends Controller
         $newImage = new ProductImage();
 
         $newImage->product = $productId;
-        $newImage->image = $request->file('mainImg')->store('products', 'public');
+        $newImage->image = $request->file('image')->store('products', 'public');
 
         if (!empty($request->input('position')))
         {
@@ -226,6 +227,8 @@ class ProductController extends Controller
         $newImage->isMain = 0;
         $newImage->created_at = date("Y-m-d H:i:s");
         $newImage->updated_at = date("Y-m-d H:i:s");
+
+        $newImage->save();
 
         return redirect()->back()->with(["message" => "success", "mes_text" => "Product's image added!"]);
     }
@@ -243,7 +246,7 @@ class ProductController extends Controller
 
         if ($request->input('position') != $image->position)
         {
-            $image->positoin = $request->input('position');
+            $image->position = $request->input('position');
             $image->updated_at = date("Y-m-d H:i:s");
         }
 
@@ -276,6 +279,17 @@ class ProductController extends Controller
         $image = ProductImage::query()->find($imageId);
         $product = Products::query()->find($productId);
 
+        if ($image->isMain == 1)
+        {
+            $newMainImage = ProductImage::query()
+                ->where('product', $product->id)
+                ->orderBy('position')
+                ->first();
+            $newMainImage->isMain = 1;
+            $newMainImage->save();
+        }
+
+        Storage::disk('public')->delete($image->image);
         $image->delete();
 
         return redirect()->route('products.show', $product)
