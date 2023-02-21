@@ -47,6 +47,148 @@
             <input type="submit" class="btn btn-outline-warning btn-block col-md-12" value="Change">
         </form>
         <hr class="mt-2">
+        <hr>
+        <button type="button" class="btn btn-outline-success col-md-12" data-bs-toggle="modal"
+                data-bs-target="#createDiscount-">
+            Add New Discount
+        </button>
+        <div class="modal fade" id="createDiscount-" tabindex="-1" aria-labelledby="createDiscountLabel-"
+             aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content text-dark">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center" id="createDiscountLabel-">
+                            Add New Discount
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <form action="{{ route('create-discount', $product->id) }}" method="POST"
+                                  enctype="multipart/form-data">
+                                @csrf
+                                <div class="form-group mt-3">
+                                    <div class="form-group mt-3">
+                                        <input type="text" id="discount" name="discount" placeholder="Discount..."
+                                               required>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <label for="start_date">Start Date:</label>
+                                        <input type="datetime-local" id="begin" name="begin" required>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <label for="end_date">End Date:</label>
+                                        <input type="datetime-local" id="end" name="end" required><br><br>
+                                    </div>
+                                </div>
+                                <hr>
+                                <input type="submit" class="btn btn-success btn-block col-12" value="Add">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Discount</th>
+                <th scope="col">Price with discount</th>
+                <th scope="col">Date - begin</th>
+                <th scope="col">Date - end</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($productDiscounts as $discount)
+                <tr>
+                    <th scope="row">{{ $discount->discount }}$</th>
+                    <th scope="row">{{ $product->price - $discount->discount }}$</th>
+                    <td>{{ $discount->begin_date }}</td>
+                    <td>{{ $discount->end_date }}</td>
+                    <td>
+                        <button class="btn btn-warning col-5" data-bs-toggle="modal"
+                                data-bs-target="#changeModal-{{ $discount->id }}">Change Discount
+                        </button>
+                        <div class="modal fade" id="changeModal-{{ $discount->id }}" tabindex="-1"
+                             aria-labelledby="changeModalLabel-{{ $discount->id }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header text-dark">
+                                        <h5 class="modal-title text-center"
+                                            id="changeModalLabel-{{ $discount->id }}">
+                                            <strong>Change Discount</strong>
+                                        </h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <form action="{{ route('change-discount', $discount->id) }}" method="POST"
+                                                  enctype="multipart/form-data">
+                                                @csrf
+                                                <div class="form-group mt-3">
+                                                    <div class="form-group mt-3">
+                                                        <input type="text" id="discount" name="discount"
+                                                               placeholder="Discount..."
+                                                               value="{{ $discount->discount }}"
+                                                               required>
+                                                    </div>
+                                                    <div class="form-group mt-3">
+                                                        <label for="start_date">Start Date:</label>
+                                                        <input type="datetime-local" id="begin" name="begin"
+                                                               value="{{ $discount->begin_date }}"
+                                                               required>
+                                                    </div>
+                                                    <div class="form-group mt-3">
+                                                        <label for="end_date">End Date:</label>
+                                                        <input type="datetime-local" id="end" name="end"
+                                                               value="{{ $discount->end_date }}"
+                                                               required>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <input type="submit" class="btn btn-warning btn-block col-12"
+                                                       value="Change">
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-danger col-5" data-bs-toggle="modal"
+                                data-bs-target="#removeModal-{{ $discount->id }}">Remove Discount
+                        </button>
+                        <div class="modal fade" id="removeModal-{{ $discount->id }}" tabindex="-1"
+                             aria-labelledby="removeModalLabel-{{ $discount->id }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header text-dark">
+                                        <h5 class="modal-title text-center"
+                                            id="removeModalLabel-{{ $discount->id }}">
+                                            <strong>Remove Discount</strong>
+                                        </h5>
+                                    </div>
+                                    <div class="modal-body text-dark">
+                                        <div>
+                                            You are sure you want to delete this discount?
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                            Close
+                                        </button>
+                                        <a href="{{ route('remove-discount', $discount->id) }}"
+                                           class="btn btn-outline-danger">Remove</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            @endforeach
+        </table>
+        <hr class="mt-2">
+        <hr>
         <button type="button" class="btn btn-outline-success col-md-12" data-bs-toggle="modal"
                 data-bs-target="#orderDetails-">
             Add New Image
@@ -163,9 +305,9 @@
                     </div>
                 </div>
             </div>
-            <hr class="mt-2">
         @endforeach
         <hr class="mt-2">
+        <hr>
         <button type="button" class="btn btn-outline-success col-md-9" data-bs-toggle="modal"
                 data-bs-target="#newProdChar-">
             Create Or Change Characteristic

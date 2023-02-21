@@ -9,5 +9,7 @@ class ProductDiscount extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id', 'product', 'discount', 'begin', 'end', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'product', 'discount', 'begin_date', 'end_date'];
+
+    public $timestamps = false;
 }

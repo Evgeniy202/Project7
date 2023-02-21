@@ -20,8 +20,8 @@ return new class extends Migration
                 ->on('products')
                 ->onDelete('cascade');
             $table->double('discount')->nullable()->default('0');
-            $table->dateTime('begin');
-            $table->dateTime('end')->nullable();
+            $table->dateTime('begin_date');
+            $table->dateTime('end_date')->nullable();
             $table->timestamps();
         });
     }

@@ -14,6 +14,7 @@ use App\Models\Products;
 use Illuminate\Http\Request;
 use App\Functions\Features\FeaturesOfProducts;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class ProductController extends Controller
 {
@@ -102,7 +103,7 @@ class ProductController extends Controller
         $category = Categories::query()->find($product->category);
         $productDiscounts = ProductDiscount::query()
             ->where('product', $product->id)
-            ->orderBy('end', 'asc')
+            ->orderBy('end_date', 'asc')
             ->get();
         $imagesOfProduct = ProductImage::query()
             ->where('product', $product->id)
@@ -344,5 +345,36 @@ class ProductController extends Controller
         CharOfProduct::query()->find($prodCharId)->delete();
 
         return redirect()->back()->with(["message" => "success", "mes_text" => "Product's feature removed!"]);
+    }
+
+    public function createDiscount(Request $request, $productId)
+    {
+        $discount = new ProductDiscount();
+        $discount->product = $productId;
+        $discount->discount = $request->input('discount');
+        $discount->begin_date = Carbon::createFromFormat('Y-m-d\TH:i', $request->input('begin'));
+        $discount->end_date = Carbon::createFromFormat('Y-m-d\TH:i', $request->input('end'));
+        $discount->save();
+
+        return redirect()->back()->with(["message" => "success", "mes_text" => "Product's discount added!"]);
+    }
+
+    public function changeDiscount(Request $request, $discountId)
+    {
+        $discount = ProductDiscount::query()->find($discountId);
+        $discount->discount = $request->input('discount');
+        $discount->begin_date = Carbon::createFromFormat('Y-m-d\TH:i', $request->input('begin'));
+        $discount->end_date = Carbon::createFromFormat('Y-m-d\TH:i', $request->input('end'));
+        $discount->save();
+
+        return redirect()->back()->with(["message" => "success", "mes_text" => "Product's discount changed!"]);
+    }
+
+    public function removeDiscount($discountId)
+    {
+        $discount = ProductDiscount::query()->find($discountId);
+        $discount->delete();
+
+        return redirect()->back()->with(["message" => "success", "mes_text" => "Product's discount removed!"]);
     }
 }

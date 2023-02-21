@@ -58,6 +58,16 @@ Route::group(['middleware' => ['role:admin']], function () {
             Route::get('/{productId}/deleteFeature/{prodCharId}',
                 [\App\Http\Controllers\Admin\ProductController::class, 'removeCharOfProduct'])
                 ->name('destroyProductFeature');
+
+            Route::post('/create-discount/{productId}',
+                [\App\Http\Controllers\Admin\ProductController::class, 'createDiscount'])
+                ->name('create-discount');
+            Route::post('/change-discount/{discountId}',
+                [\App\Http\Controllers\Admin\ProductController::class, 'changeDiscount'])
+                ->name('change-discount');
+            Route::get('/remove-discount/{discountId}',
+                [\App\Http\Controllers\Admin\ProductController::class, 'removeDiscount'])
+                ->name('remove-discount');
         });
 
         Route::resource('categories', \App\Http\Controllers\Admin\CategoriesController::class);
