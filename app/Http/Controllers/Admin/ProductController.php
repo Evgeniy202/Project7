@@ -219,6 +219,15 @@ class ProductController extends Controller
             ->with(["message" => "success", "mes_text" => "Product removed!"]);
     }
 
+    public function search(Request $request)
+    {
+        $query = $request->input('search');
+        $products = Products::search($query);
+        $categories = Categories::query()->orderBy('priority')->get();
+
+        return view('admin.products.search', ['products' => $products, 'categories' => $categories]);
+    }
+
     public function addImage(Request $request, $productId)
     {
         $newImage = new ProductImage();
@@ -281,15 +290,14 @@ class ProductController extends Controller
             ->with(["message" => "success", "mes_text" => "Product's image changed!"]);
     }
 
-    public function destroyImage($productId, $imageId)
+    public function destroyImage($imageId)
     {
         $image = ProductImage::query()->find($imageId);
-        $product = Products::query()->find($productId);
 
         if ($image->isMain == 1)
         {
             $newMainImage = ProductImage::query()
-                ->where('product', $product->id)
+                ->where('product', $image->product)
                 ->orderBy('position')
                 ->first();
             $newMainImage->isMain = 1;
@@ -299,7 +307,7 @@ class ProductController extends Controller
         Storage::disk('public')->delete($image->image);
         $image->delete();
 
-        return redirect()->route('products.show', $product)
+        return redirect()->back()
             ->with(["message" => "success", "mes_text" => "Product's image removed!"]);
     }
 
@@ -331,7 +339,7 @@ class ProductController extends Controller
         return redirect()->back()->with(["message" => "success", "mes_text" => $mes_text]);
     }
 
-    public function changeCharOfProduct(Request $request, $productId, $prodCharId)
+    public function changeCharOfProduct(Request $request, $prodCharId)
     {
         $review = CharOfProduct::query()->find($prodCharId);
         $review->numberInList = $request->input('numberInList');
@@ -340,7 +348,7 @@ class ProductController extends Controller
         return redirect()->back()->with(["message" => "success", "mes_text" => "Product's feature changed!"]);
     }
 
-    public function removeCharOfProduct($productId, $prodCharId)
+    public function removeCharOfProduct($prodCharId)
     {
         CharOfProduct::query()->find($prodCharId)->delete();
 

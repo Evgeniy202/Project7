@@ -299,7 +299,7 @@
                             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                                 Close
                             </button>
-                            <a href="{{ route('destroyProductImage', [$product->id, $image->id]) }}"
+                            <a href="{{ route('destroyProductImage', [$image->id]) }}"
                                class="btn btn-outline-danger">Remove</a>
                         </div>
                     </div>
@@ -392,7 +392,7 @@
                                 <div class="modal-body text-dark">
                                     <div>
                                         <form
-                                            action="{{ route('changeProductFeature', [$product->id, $featureView['charOfProd']]) }}"
+                                            action="{{ route('changeProductFeature', [$featureView['charOfProd']]) }}"
                                             method="POST">
                                             @csrf
                                             <input type="text" placeholder="Number" id="numberInList"
@@ -427,7 +427,7 @@
                                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                                         Close
                                     </button>
-                                    <a href="{{ route('destroyProductFeature', [$product->id, $featureView['charOfProd']]) }}">
+                                    <a href="{{ route('destroyProductFeature', [$featureView['charOfProd']]) }}">
                                         <button type="button" class="btn btn-outline-danger">Remove
                                         </button>
                                     </a>

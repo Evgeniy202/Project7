@@ -22,4 +22,12 @@ class Products extends Model
         'created_at',
         'updated_at',
     ];
+
+    public static function search($query)
+    {
+        return Products::query()
+            ->where('title', 'LIKE', '%'.$query.'%')
+            ->orWhere('slug', 'LIKE', '%'.$query.'%')
+            ->paginate(20);
+    }
 }
