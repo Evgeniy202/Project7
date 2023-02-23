@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BannerController extends Controller
 {
@@ -75,6 +76,7 @@ class BannerController extends Controller
      */
     public function destroy(Banner $banner)
     {
+        Storage::disk('public')->delete($banner->image);
         $banner->delete();
 
         return redirect()->route('banner.index')
