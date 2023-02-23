@@ -1,6 +1,7 @@
 @extends('admin.layouts.base')
 @section('title', 'All Categories')
 @section('content')
+    <h1>Categories</h1>
     <table class="table table-striped">
         <thead>
         <tr>

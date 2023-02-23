@@ -75,6 +75,7 @@ Route::group(['middleware' => ['role:admin']], function () {
 
         Route::resource('categories', \App\Http\Controllers\Admin\CategoriesController::class);
         Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
+        Route::resource('banner', \App\Http\Controllers\Admin\BannerController::class);
     });
 
     //Ajax

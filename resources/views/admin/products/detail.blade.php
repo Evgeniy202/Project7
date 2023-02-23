@@ -4,6 +4,8 @@
 @endsection
 @section('content')
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <h1>Product - {{ $product->title }}</h1>
+    <hr class="mt-2">
     <div class="row">
         <form action="{{ route('products.update', $product) }}" method="POST" enctype="multipart/form-data">
             @csrf
