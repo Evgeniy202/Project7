@@ -54,8 +54,18 @@
                     <a class="nav-link" href="{{ route('banner.index') }}">Banners</a>
                 </li>
             </ul>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a href="#" id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tools</a>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('forgetCategoriesSession') }}">Forget Categories
+                            Session</a>
+                    </div>
+                </li>
+            </ul>
         </div>
-    </div>
+    </div>{{ route('forgetCategoriesSession') }}
 </nav>
 <main class="py-4 container">
     @if(session()->has('message'))

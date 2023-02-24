@@ -77,7 +77,8 @@
         <hr class="mb-4">
     </div>
     <div class="row">
-        <h6 class="col-md-6">Title</h6>
+        <h6 class="col-md-4">Title</h6>
+        <h6 class="col-md-2">Count</h6>
         <h6 class="col-md-2">Price</h6>
         <h6 class="col-md-2">Is available</h6>
         <h6 class="col-md-2">Is favorite</h6>
@@ -85,7 +86,8 @@
         @foreach($products as $product)
             <hr>
             <a href="{{ route('products.show', $product) }}"
-               class="col-md-6 btn btn-warning">{{ $product->title }}</a>
+               class="col-md-4 btn btn-warning">{{ $product->title }}</a>
+            <p class="col-md-2">{{ $product->count }}</p>
             <p class="col-md-2">{{ $product->price }}$</p>
             <strong class="col-md-2">
                 @if($product->isAvailable == 1)

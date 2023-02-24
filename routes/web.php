@@ -12,6 +12,9 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::prefix('admin')->group(function () {
         Route::get('/', [\App\Http\Controllers\Admin\MainPageController::class, 'index'])
             ->name('mainAdmin');
+        Route::get('/forget-categories-session',
+            [\App\Http\Controllers\Admin\MainPageController::class, 'forgetCategoriesSession'])
+            ->name('forgetCategoriesSession');
 
         Route::get('/categories/{category}/features',
             [\App\Http\Controllers\Admin\CharOfCategoriesController::class, 'featuresOfCategory'])

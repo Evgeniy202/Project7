@@ -40,7 +40,7 @@ class BannerController extends Controller
 
         $banner = Banner::createBanner($validatedData);
 
-        return redirect()->route('banner.show', $banner)
+        return redirect()->route('banner.index')
             ->with(["message" => "success", "mes_text" => "Banner created successfully."]);
     }
 

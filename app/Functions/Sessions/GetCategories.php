@@ -3,6 +3,7 @@
 namespace App\Functions\Sessions;
 
 use App\Models\Categories;
+use Illuminate\Support\Facades\Session;
 
 class GetCategories
 {
@@ -19,5 +20,10 @@ class GetCategories
         }
 
         return $categoriesList;
+    }
+
+    public static function forgetCategoriesSession()
+    {
+        Session::forget('categoriesList');
     }
 }

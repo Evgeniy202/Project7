@@ -63,6 +63,7 @@ class ProductController extends Controller
         $newProduct->title = $request->input('title');
         $newProduct->slug = $request->input('slug');
         $newProduct->description = $request->input('description');
+        $newProduct->count = $request->input('count');
         $newProduct->price = round($price, 2);
         $newProduct->isAvailable = $isAvailable;
         $newProduct->isFavorite = $isFavorite;

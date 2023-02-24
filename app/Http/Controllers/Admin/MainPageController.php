@@ -12,4 +12,11 @@ class MainPageController extends Controller
     {
         return view('admin.index');
     }
+
+    public function forgetCategoriesSession()
+    {
+        GetCategories::forgetCategoriesSession();
+
+        return redirect()->back()->with(["message" => "success", "mes_text" => "The session was successfully reset."]);
+    }
 }

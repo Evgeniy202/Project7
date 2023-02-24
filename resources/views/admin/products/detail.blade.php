@@ -12,6 +12,7 @@
             @method('PUT')
             <div class="form-group mt-3">
                 <div class="form-group mt-3">
+                    <label>Title:</label>
                     <input type="text" name="title" id="title" placeholder="Title..."
                            class="form-control bg-dark text-light" value="{{ $product->title }}">
                 </div>
@@ -24,8 +25,12 @@
                               placeholder="Description...">{{ $product->description }}</textarea>
                 </div>
                 <div class="form-group mt-3">
-                    <input type="text" name="price" id="price" placeholder="Price..."
+                    <label>Price:</label><input type="text" name="price" id="price" placeholder="Price..."
                            class="form-control bg-dark text-light" value="{{ $product->price }}">
+                </div>
+                <div class="form-group mt-3">
+                    <label>Count:</label><input type="number" name="count" id="count" placeholder="Count..."
+                           class="form-control bg-dark text-light" value="{{ $product->count }}">
                 </div>
                 <div class="form-group mt-3">
                     @if($product->isAvailable == 1)

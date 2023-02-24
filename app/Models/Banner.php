@@ -60,4 +60,9 @@ class Banner extends Model
 
         return $banner;
     }
+
+    public static function getBanners()
+    {
+        return self::query()->where('active', 1)->orderBy('priority')->get();
+    }
 }
