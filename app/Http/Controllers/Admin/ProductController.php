@@ -223,7 +223,7 @@ class ProductController extends Controller
     public function search(Request $request)
     {
         $query = $request->input('search');
-        $products = Products::search($query);
+        $products = Products::searchAdmin($query);
         $categories = Categories::query()->orderBy('priority')->get();
 
         return view('admin.products.search', ['products' => $products, 'categories' => $categories]);

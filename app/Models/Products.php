@@ -23,11 +23,26 @@ class Products extends Model
         'updated_at',
     ];
 
-    public static function search($query)
+    public static function searchAdmin($query)
     {
         return Products::query()
             ->where('title', 'LIKE', '%'.$query.'%')
             ->orWhere('slug', 'LIKE', '%'.$query.'%')
+            ->paginate(20);
+    }
+
+    public static function searchAllPublic($query)
+    {
+        return Products::query()
+            ->where('title', 'LIKE', '%'.$query.'%')
+            ->paginate(20);
+    }
+
+    public static function searchInCategoryPublic($query, $category)
+    {
+        return Products::query()
+            ->where('category', $category)
+            ->where('title', 'LIKE', '%'.$query.'%')
             ->paginate(20);
     }
 }

@@ -39,7 +39,8 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                             @foreach($categories as $category)
-                                <a class="dropdown-item" href="#">{{ $category->title }}</a>
+                                <a class="dropdown-item"
+                                   href="{{ route('category.show', $category) }}">{{ $category->title }}</a>
                             @endforeach
                         </div>
                     </li>
@@ -48,12 +49,13 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ms-auto">
                     <li>
-                        <form action="#" method="">
+                        <form action="{{ route('searchAll') }}" method="POST">
+                            @csrf
                             <div class="input-group float-center">
                                 <div class="form-outline">
                                     <input type="search" id="form1" class="form-control" placeholder="Search..."/>
                                 </div>
-                                <button type="button" class="btn btn-primary shadow-0">
+                                <button type="submit" class="btn btn-primary shadow-0">
                                     Search
                                 </button>
                             </div>

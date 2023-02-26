@@ -6,6 +6,11 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::post('/search', [\App\Http\Controllers\Open\ProductController::class, 'searchAll'])->name('searchAll');
+
+Route::prefix('Category')->group(function () {
+    Route::resource('category', \App\Http\Controllers\Open\CategoriesController::class);
+});
 
 //Admin//
 Route::group(['middleware' => ['role:admin']], function () {
