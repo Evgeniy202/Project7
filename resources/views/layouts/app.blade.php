@@ -53,7 +53,8 @@
                             @csrf
                             <div class="input-group float-center">
                                 <div class="form-outline">
-                                    <input type="search" id="form1" class="form-control" placeholder="Search..."/>
+                                    <input type="search" id="form1" class="form-control" placeholder="Search..."
+                                           required/>
                                 </div>
                                 <button type="submit" class="btn btn-primary shadow-0">
                                     Search

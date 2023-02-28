@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Open;
 
 use App\Functions\Sessions\GetCategories;
 use App\Http\Controllers\Controller;
+use App\Models\ProductImage;
 use App\Models\Products;
 use Illuminate\Http\Request;
 
@@ -104,7 +105,7 @@ class ProductController extends Controller
                     return redirect()->back()->with(["message" => "error", "mes_text" => "Product no found."]);
                 }
 
-                return view('public.products.index', [
+                return view('public.products.searchInCategory', [
                     'currentCategory' => $currentCategory,
                     'categories' => $categories,
                     'products' => $products,
@@ -115,15 +116,17 @@ class ProductController extends Controller
         {
             $query = $request->input('search');
             $products = Products::searchAllPublic($query);
+            $productsImages = ProductImage::getMainImages($products);
 
             if (empty($products[0]))
             {
                 return redirect()->back()->with(["message" => "error", "mes_text" => "Product no found."]);
             }
 
-            return view('public.products.index', [
+            return view('public.products.search', [
                 'categories' => $categories,
                 'products' => $products,
+                'productsImages' => $productsImages,
             ]);
         }
     }
