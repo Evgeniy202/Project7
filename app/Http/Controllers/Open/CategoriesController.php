@@ -12,6 +12,7 @@ use App\Models\ProductImage;
 use App\Models\Products;
 use App\Models\ValueOfChar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class CategoriesController extends Controller
 {
@@ -23,13 +24,33 @@ class CategoriesController extends Controller
      */
     public function show(Categories $category)
     {
+        if (empty(Session::get('sort')) || Session::get('sort') == "random")
+        {
+            $products = Products::query()
+                ->where('category', $category->id)
+                ->where('isAvailable', 1)
+                ->where('count', '>', 0)
+                ->inRandomOrder()->paginate(20);
+        }
+        elseif (Session::get('sort') == 'cheap')
+        {
+            $products = Products::query()
+                ->where('category', $category->id)
+                ->where('isAvailable', 1)
+                ->where('count', '>', 0)
+                ->orderBy('price')->paginate(20);
+        }
+        elseif (Session::get('sort') == 'expensive')
+        {
+            $products = Products::query()
+                ->where('category', $category->id)
+                ->where('isAvailable', 1)
+                ->where('count', '>', 0)
+                ->orderByDesc('price')->paginate(20);
+        }
+
         $categories = GetCategories::getCategoriesList();
-        $products = Products::query()
-            ->where('category', $category->id)
-            ->where('isAvailable', 1)
-            ->where('count', '>', 0)
-            ->inRandomOrder()->paginate(20);
-        $images = ProductImage::getMainImages($products);
+        $images = ProductImage::getMainImages($products ?? null);
         $features = CharOfCategory::query()
             ->where('category', $category->id)
             ->orderBy('numberInFilter')->get();
@@ -44,6 +65,15 @@ class CategoriesController extends Controller
             'features' => $features,
             'values' => $values,
             'discounts' => $productsDiscount,
+            'sort' => Session::get('sort') ?? null,
         ]);
+    }
+
+    public function sortProducts($categoryId, $sort)
+    {
+        $categories = GetCategories::getCategoriesList();
+        $category = $categories->find($categoryId);
+
+        return redirect()->route('category.show', $category)->with('sort', $sort);
     }
 }

@@ -90,25 +90,32 @@
                 <header class="d-sm-flex align-items-center border-bottom mb-4 pb-3">
                     <h1 class="d-block py-2">{{ $currentCategory->title }}</h1>
                     <div class="ms-auto">
-                        <select name="meth" id="meth" class="form-select d-inline-block w-auto">
-{{--                            @foreach($sortList as $sort)--}}
-                                <option value="0">#</option>
-{{--                            @endforeach--}}
+                        <label for="sort"><strong>Sort by:</strong></label>
+                        <select name="sort" id="sort" class="form-select d-inline-block w-auto">
+                            @if(empty($sort))
+                                <option value="{{$currentCategory->id}}-random">Randomly</option>
+                                <option value="{{$currentCategory->id}}-cheap">Cheap at first</option>
+                                <option value="{{$currentCategory->id}}-expensive">First expensive</option>
+                            @elseif($sort == "cheap")
+                                <option value="{{$currentCategory->id}}-cheap">Cheap at first</option>
+                                <option value="{{$currentCategory->id}}-expensive">First expensive</option>
+                                <option value="{{$currentCategory->id}}-random">Randomly</option>
+                            @elseif($sort == "expensive")
+                                <option value="{{$currentCategory->id}}-expensive">First expensive</option>
+                                <option value="{{$currentCategory->id}}-random">Randomly</option>
+                                <option value="{{$currentCategory->id}}-cheap">Cheap at first</option>
+                            @endif
                         </select>
+                        <script
+                            src="https://code.jquery.com/jquery-3.6.0.min.js"
+                            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+                            crossorigin="anonymous"
+                        ></script>
                     </div>
-                    {{--                    <script>--}}
-                    {{--                        $(document).ready(function () {--}}
-                    {{--                            $('#meth').on('change', function () {--}}
-                    {{--                                var sort = $(this).val();--}}
-                    {{--                                if (sort) {--}}
-                    {{--                                    window.location.replace("/category/{{ $category->id }}?sort=" + sort);--}}
-                    {{--                                }--}}
-                    {{--                            });--}}
-                    {{--                        });--}}
-                    {{--                    </script>--}}
+                    <script src="/js/products/sort.js"></script>
                 </header>
                 <!-- ========= content items ========= -->
-                @include('layouts.productsCategory')
+            @include('layouts.productsCategory')
 
             {{--                <li class="page-item active" aria-current="page"><span class="page-link">1</span></li>--}}
             <!-- ========= content items .// ========= -->

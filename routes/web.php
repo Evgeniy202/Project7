@@ -9,6 +9,8 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::post('/search', [\App\Http\Controllers\Open\ProductController::class, 'searchAll'])->name('searchAll');
 
 Route::prefix('Category')->group(function () {
+    Route::get('/{categoryId}/sort/{sort}', [\App\Http\Controllers\Open\CategoriesController::class, 'sortProducts'])
+        ->name('sortProductsPublic');
     Route::resource('category', \App\Http\Controllers\Open\CategoriesController::class);
 });
 
