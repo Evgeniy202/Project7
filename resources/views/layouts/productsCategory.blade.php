@@ -3,7 +3,7 @@
         <div class="col-lg-3 col-md-5 col-sm-5 bg-gradient m-4">
             <figure class="card-product-grid">
                 <div class="bg-light rounded mt-2">
-                    <a href="#"
+                    <a href="{{ route('product.show', $product) }}"
                        class="img-wrap rounded bg-gray-light">
                         <img height="100" class="mix-blend-multiply mt-4 m-5 rounded"
                              src="{{ asset('/storage/'.$images[$product->id]) }}"
@@ -37,7 +37,7 @@
                             </i></a>
                     @endif
                     <b>
-                        <a href="#"
+                        <a href="{{ route('product.show', $product) }}"
                            class="title text-danger">{{ $product->title }}</a>
                     </b>
                     <br>
@@ -50,6 +50,6 @@
     @endforeach
 </div>
 <hr>
-<footer class="d-flex mt-4">
+<footer class="row pagination">
     {{ $products->links() }}
 </footer>

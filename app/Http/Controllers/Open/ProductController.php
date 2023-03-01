@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers\Open;
 
+use App\Functions\Features\FeaturesOfProducts;
+use App\Functions\Features\ValuesOfFeatures;
 use App\Functions\Sessions\GetCategories;
 use App\Http\Controllers\Controller;
+use App\Models\CharOfCategory;
+use App\Models\CharOfProduct;
+use App\Models\Comment;
 use App\Models\ProductImage;
 use App\Models\Products;
 use Illuminate\Http\Request;
@@ -44,12 +49,37 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Products  $products
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\Products  $product
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show(Products $products)
+    public function show(Products $product)
     {
-        //
+        $categories = GetCategories::getCategoriesList();
+        $images = ProductImage::query()
+            ->where('product', $product->id)
+            ->orderBy('isMain', 'desc')
+            ->orderBy('position', 'asc')
+            ->get();
+        $charsOfProd = CharOfProduct::query()
+            ->where('product', $product->id)
+            ->orderBy('numberInList', 'asc')
+            ->get();
+        $featuresOfCategory = CharOfCategory::query()
+            ->where('category', $product->category)
+            ->orderBy('numberInFilter')
+            ->get();
+        $featuresOfProduct = FeaturesOfProducts::getValue($product->category, $charsOfProd);
+        $values = ValuesOfFeatures::getValues($featuresOfProduct);
+        $comments = Comment::query()->where('product', $product->id)->orderBy('updated_at');
+        $featuresView = FeaturesOfProducts::getFeaturesOfProductView($charsOfProd, $featuresOfProduct, $values);
+
+        return view('public.products.productDetail', [
+           'product' => $product,
+           'categories' => $categories,
+           'images' => $images,
+           'features' => $featuresView,
+           'comments' => $comments,
+        ]);
     }
 
     /**

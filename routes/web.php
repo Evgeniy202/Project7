@@ -12,6 +12,8 @@ Route::prefix('Category')->group(function () {
     Route::resource('category', \App\Http\Controllers\Open\CategoriesController::class);
 });
 
+Route::resource('product', \App\Http\Controllers\Open\ProductController::class);
+
 //Admin//
 Route::group(['middleware' => ['role:admin']], function () {
     Route::prefix('admin')->group(function () {

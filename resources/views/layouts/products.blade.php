@@ -3,7 +3,7 @@
         <div class="col-lg-2 col-md-5 col-sm-5 bg-gradient m-3 rounded-2">
             <figure class="card-product-grid">
                 <div class="bg-light rounded mt-2">
-                    <a href="#prodDet"
+                    <a href="{{ route('product.show', $product) }}"
                        class="img-wrap rounded bg-gray-light">
                         <img height="100" class="mix-blend-multiply mt-4 m-5 rounded"
                              src="{{ asset('/storage/'.$productsImages[$product->id]) }}">
@@ -48,7 +48,7 @@
                         </i></a>
                     {{--                        @endif--}}
 
-                    <b><a href="#prodDet"
+                    <b><a href="{{ route('product.show', $product) }}"
                           class="title text-danger">{{ $product->title }}</a></b>
                     <br>
                     <a href="#" style="text-decoration: none">
