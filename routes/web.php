@@ -11,6 +11,8 @@ Route::post('/search', [\App\Http\Controllers\Open\ProductController::class, 'se
 Route::prefix('Category')->group(function () {
     Route::get('/{categoryId}/sort/{sort}', [\App\Http\Controllers\Open\CategoriesController::class, 'sortProducts'])
         ->name('sortProductsPublic');
+    Route::post('/{categoryId}/filter', [\App\Http\Controllers\Open\CategoriesController::class, 'filter'])
+        ->name('filterProductsPublic');
     Route::resource('category', \App\Http\Controllers\Open\CategoriesController::class);
 });
 

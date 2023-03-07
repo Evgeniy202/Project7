@@ -45,4 +45,29 @@ class Products extends Model
             ->where('title', 'LIKE', '%'.$query.'%')
             ->paginate(20);
     }
+
+    public static function filter($products, $data)
+    {
+        $features = [];
+        $values = [];
+
+        for ($i = 0; $i < count($data); $i++)
+        {
+            $features[$i] = $data[$i]['feature'];
+            $values[$i] = $data[$i]['value'];
+        }
+
+        $productsId = $products->pluck('id');
+        $items = CharOfProduct::query()
+            ->whereIn('product', $productsId)
+            ->whereIn('char', $features)
+            ->whereIn('value', $values)
+            ->distinct()
+            ->pluck('product')
+            ->toArray();
+
+        $products->whereIn('id', $items);
+
+        return $products;
+    }
 }

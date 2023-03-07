@@ -30,7 +30,15 @@ class CategoriesController extends Controller
                 ->where('category', $category->id)
                 ->where('isAvailable', 1)
                 ->where('count', '>', 0)
-                ->inRandomOrder()->paginate(20);
+                ->inRandomOrder();
+
+            if (Session::get('activeFeatures'))
+            {
+                $products = Products::filter($products, Session::get('filterData'));
+            }
+
+
+            $products = $products->paginate(20);
         }
         elseif (Session::get('sort') == 'cheap')
         {
@@ -38,7 +46,14 @@ class CategoriesController extends Controller
                 ->where('category', $category->id)
                 ->where('isAvailable', 1)
                 ->where('count', '>', 0)
-                ->orderBy('price')->paginate(20);
+                ->orderBy('price');
+
+            if (Session::get('activeFeatures'))
+            {
+                $products = Products::filter($products, Session::get('filterData'));
+            }
+
+            $products = $products->paginate(20);
         }
         elseif (Session::get('sort') == 'expensive')
         {
@@ -46,7 +61,14 @@ class CategoriesController extends Controller
                 ->where('category', $category->id)
                 ->where('isAvailable', 1)
                 ->where('count', '>', 0)
-                ->orderByDesc('price')->paginate(20);
+                ->orderByDesc('price');
+
+            if (Session::get('activeFeatures'))
+            {
+                $products = Products::filter($products, Session::get('filterData'));
+            }
+
+            $products = $products->paginate(20);
         }
 
         $categories = GetCategories::getCategoriesList();
@@ -66,6 +88,7 @@ class CategoriesController extends Controller
             'values' => $values,
             'discounts' => $productsDiscount,
             'sort' => Session::get('sort') ?? null,
+            'activeFeatures' => Session::get('activeFeatures') ?? null,
         ]);
     }
 
@@ -75,5 +98,37 @@ class CategoriesController extends Controller
         $category = $categories->find($categoryId);
 
         return redirect()->route('category.show', $category)->with('sort', $sort);
+    }
+
+    public function filter($categoryId, Request $request)
+    {
+        $features = CharOfCategory::query()->where('category', $categoryId)->get();
+        $activeFeatures = [];
+
+        if (count($request->all()) > 1)
+        {
+            $features = [];
+            $category = Categories::query()->find($categoryId);
+            $i = 0;
+
+            foreach ($request->all() as $item)
+            {
+                if (count(explode('-', $item)) == 2)
+                {
+                    $activeFeatures[$i] = $item;
+                    $features[$i]['feature'] = explode('-', $item)[0];
+                    $features[$i]['value'] = explode('-', $item)[1];
+                    $i++;
+                }
+            }
+
+            return redirect()->route('category.show', $category)
+                ->with('activeFeatures', $activeFeatures)
+                ->with('filterData', $features);
+        }
+        else
+        {
+            return redirect()->back()->with(["message" => "error", "mes_text" => "Products no found."]);
+        }
     }
 }
