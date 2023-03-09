@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
 class Products extends Model
 {
@@ -46,8 +48,9 @@ class Products extends Model
             ->paginate(20);
     }
 
-    public static function filter($products, $data)
+    public static function filter($products, $data, $productsFeatures)
     {
+        $filters = [];
         $features = [];
         $values = [];
 
@@ -57,14 +60,44 @@ class Products extends Model
             $values[$i] = $data[$i]['value'];
         }
 
-        $productsId = $products->pluck('id');
-        $items = CharOfProduct::query()
-            ->whereIn('product', $productsId)
-            ->whereIn('char', $features)
-            ->whereIn('value', $values)
-            ->distinct()
-            ->pluck('product')
-            ->toArray();
+        $filters = [];
+        $i = 0;
+
+        foreach ($data as $item)
+        {
+            if ((!empty($filters[0])) && ($filters[$i]['id'] == $item['feature']))
+            {
+                array_push($filters[$i]['value'], $item['value']);
+            }
+            elseif ((!empty($filters[0])) && ($filters[$i]['id'] != $item['feature']))
+            {
+                $i++;
+                $filters[$i]['id'] = $item['feature'];
+                $filters[$i]['value'] = [$item['value']];
+            }
+            elseif ($i == 0)
+            {
+                $filters[$i]['id'] = $item['feature'];
+                $filters[$i]['value'] = [$item['value']];
+            }
+        }
+
+        $items = $products->pluck('id')->toArray();
+
+        foreach ($filters as $filter)
+        {
+            $current = [];
+
+            foreach ($productsFeatures as $productFeature)
+            {
+                if ($filter['id'] == $productFeature['char'] && in_array($productFeature['value'], $filter['value']))
+                {
+                    array_push($current, $productFeature['product']);
+                }
+            }
+
+            $items = array_intersect($items, $current);
+        }
 
         $products->whereIn('id', $items);
 

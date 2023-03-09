@@ -7,6 +7,7 @@ use App\Functions\Sessions\GetCategories;
 use App\Http\Controllers\Controller;
 use App\Models\Categories;
 use App\Models\CharOfCategory;
+use App\Models\CharOfProduct;
 use App\Models\ProductDiscount;
 use App\Models\ProductImage;
 use App\Models\Products;
@@ -19,11 +20,39 @@ class CategoriesController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param  Request $request
      * @param  \App\Models\Categories  $category
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show(Categories $category)
+    public function show(Categories $category, Request $request)
     {
+        if (!empty($request->query()))
+        {
+            $activeFeatures = [];
+
+            foreach ($request->query() as $item)
+            {
+                if (count(explode('-', $item)) == 2)
+                {
+                    array_push($activeFeatures, $item);
+                }
+            }
+
+            if (count($activeFeatures) > 0)
+            {
+                $filterChar = [];
+                $i = 0;
+
+                foreach ($activeFeatures as $item)
+                {
+                    $activeFeatures[$i] = $item;
+                    $filterChar[$i]['feature'] = explode('-', $item)[0];
+                    $filterChar[$i]['value'] = explode('-', $item)[1];
+                    $i++;
+                }
+            }
+        }
+
         if (empty(Session::get('sort')) || Session::get('sort') == "random")
         {
             $products = Products::query()
@@ -32,9 +61,14 @@ class CategoriesController extends Controller
                 ->where('count', '>', 0)
                 ->inRandomOrder();
 
-            if (Session::get('activeFeatures'))
+            if (!empty($activeFeatures))
             {
-                $products = Products::filter($products, Session::get('filterData'));
+                $productsFeatures = CharOfProduct::query()
+                    ->join('char_of_categories', 'char_of_products.char', '=', 'char_of_categories.id')
+                    ->where('char_of_categories.category', $category->id)
+                    ->select('product', 'char', 'value')
+                    ->get()->toArray();
+                $products = Products::filter($products, $filterChar, $productsFeatures);
             }
 
 
@@ -48,9 +82,14 @@ class CategoriesController extends Controller
                 ->where('count', '>', 0)
                 ->orderBy('price');
 
-            if (Session::get('activeFeatures'))
+            if (!empty($activeFeatures))
             {
-                $products = Products::filter($products, Session::get('filterData'));
+                $productsFeatures = CharOfProduct::query()
+                    ->join('char_of_categories', 'char_of_products.char', '=', 'char_of_categories.id')
+                    ->where('char_of_categories.category', $category->id)
+                    ->select('product', 'char', 'value')
+                    ->get()->toArray();
+                $products = Products::filter($products, $filterChar, $productsFeatures);
             }
 
             $products = $products->paginate(20);
@@ -63,9 +102,14 @@ class CategoriesController extends Controller
                 ->where('count', '>', 0)
                 ->orderByDesc('price');
 
-            if (Session::get('activeFeatures'))
+            if (!empty($activeFeatures))
             {
-                $products = Products::filter($products, Session::get('filterData'));
+                $productsFeatures = CharOfProduct::query()
+                    ->join('char_of_categories', 'char_of_products.char', '=', 'char_of_categories.id')
+                    ->where('char_of_categories.category', $category->id)
+                    ->select('product', 'char', 'value')
+                    ->get()->toArray();
+                $products = Products::filter($products, $filterChar, $productsFeatures);
             }
 
             $products = $products->paginate(20);
@@ -88,7 +132,7 @@ class CategoriesController extends Controller
             'values' => $values,
             'discounts' => $productsDiscount,
             'sort' => Session::get('sort') ?? null,
-            'activeFeatures' => Session::get('activeFeatures') ?? null,
+            'activeFeatures' => $activeFeatures ?? null,
         ]);
     }
 
@@ -100,35 +144,34 @@ class CategoriesController extends Controller
         return redirect()->route('category.show', $category)->with('sort', $sort);
     }
 
-    public function filter($categoryId, Request $request)
-    {
-        $features = CharOfCategory::query()->where('category', $categoryId)->get();
-        $activeFeatures = [];
-
-        if (count($request->all()) > 1)
-        {
-            $features = [];
-            $category = Categories::query()->find($categoryId);
-            $i = 0;
-
-            foreach ($request->all() as $item)
-            {
-                if (count(explode('-', $item)) == 2)
-                {
-                    $activeFeatures[$i] = $item;
-                    $features[$i]['feature'] = explode('-', $item)[0];
-                    $features[$i]['value'] = explode('-', $item)[1];
-                    $i++;
-                }
-            }
-
-            return redirect()->route('category.show', $category)
-                ->with('activeFeatures', $activeFeatures)
-                ->with('filterData', $features);
-        }
-        else
-        {
-            return redirect()->back()->with(["message" => "error", "mes_text" => "Products no found."]);
-        }
-    }
+//    public function filter($categoryId, Request $request)
+//    {
+//        $activeFeatures = [];
+//
+//        if (count($request->all()) > 1)
+//        {
+//            $features = [];
+//            $category = Categories::query()->find($categoryId);
+//            $i = 0;
+//
+//            foreach ($request->all() as $item)
+//            {
+//                if (count(explode('-', $item)) == 2)
+//                {
+//                    $activeFeatures[$i] = $item;
+//                    $features[$i]['feature'] = explode('-', $item)[0];
+//                    $features[$i]['value'] = explode('-', $item)[1];
+//                    $i++;
+//                }
+//            }
+//
+//            return redirect()->route('category.show', $category)
+//                ->with('activeFeatures', $activeFeatures)
+//                ->with('filterData', $features);
+//        }
+//        else
+//        {
+//            return redirect()->back()->with(["message" => "error", "mes_text" => "Products no found."]);
+//        }
+//    }
 }

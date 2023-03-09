@@ -11,8 +11,7 @@
                 </button>
                 <!-- ===== Card for sidebar filter ===== -->
                 <div id="aside_filter" class="collapse card d-lg-block mb-5">
-                    <form action="{{ route('filterProductsPublic', $currentCategory->id) }}" method="POST">
-                        @csrf
+                    <form action="{{ route('category.show', $currentCategory) }}" method="GET">
                         @foreach($features as $feature)
                             <article class="filter-group">
                                 <header class="card-header">
@@ -27,11 +26,17 @@
                                             @if($value->char == $feature->id)
                                                 <label class="form-check mb-2 text-dark">
                                                     @if($activeFeatures != null)
-                                                        @if(array_key_exists($feature->id.'-'.$value->id, $activeFeatures))
+                                                        @if(in_array($feature->id.'-'.$value->id, $activeFeatures))
                                                             <input id="{{ $feature->id }}-{{ $value->id }}"
                                                                    name="{{ $feature->id }}-{{ $value->id }}"
                                                                    class="form-check-input" type="checkbox"
                                                                    value="{{ $feature->id }}-{{ $value->id }}" checked>
+                                                            <span class="form-check-label"> {{ $value->value }} </span>
+                                                        @else
+                                                            <input id="{{ $feature->id }}-{{ $value->id }}"
+                                                                   name="{{ $feature->id }}-{{ $value->id }}"
+                                                                   class="form-check-input" type="checkbox"
+                                                                   value="{{ $feature->id }}-{{ $value->id }}">
                                                             <span class="form-check-label"> {{ $value->value }} </span>
                                                         @endif
                                                     @else
