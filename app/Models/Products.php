@@ -51,56 +51,41 @@ class Products extends Model
     public static function filter($products, $data, $productsFeatures)
     {
         $filters = [];
-        $features = [];
-        $values = [];
-
-        for ($i = 0; $i < count($data); $i++)
-        {
-            $features[$i] = $data[$i]['feature'];
-            $values[$i] = $data[$i]['value'];
-        }
-
-        $filters = [];
-        $i = 0;
 
         foreach ($data as $item)
         {
-            if ((!empty($filters[0])) && ($filters[$i]['id'] == $item['feature']))
-            {
-                array_push($filters[$i]['value'], $item['value']);
-            }
-            elseif ((!empty($filters[0])) && ($filters[$i]['id'] != $item['feature']))
-            {
-                $i++;
-                $filters[$i]['id'] = $item['feature'];
-                $filters[$i]['value'] = [$item['value']];
-            }
-            elseif ($i == 0)
-            {
-                $filters[$i]['id'] = $item['feature'];
-                $filters[$i]['value'] = [$item['value']];
-            }
+            $filters[$item['feature']][] = $item['value'];
         }
 
-        $items = $products->pluck('id')->toArray();
+        $items = [];
 
-        foreach ($filters as $filter)
+        foreach ($filters as $id => $values)
         {
-            $current = [];
+            $productIds = [];
 
             foreach ($productsFeatures as $productFeature)
             {
-                if ($filter['id'] == $productFeature['char'] && in_array($productFeature['value'], $filter['value']))
+                if ($productFeature['char'] == $id && in_array($productFeature['value'], $values))
                 {
-                    array_push($current, $productFeature['product']);
+                    $productIds[] = $productFeature['product'];
                 }
             }
 
-            $items = array_intersect($items, $current);
+            if (!empty($productIds))
+            {
+                $items[] = $productIds;
+            }
+            else
+            {
+                $items = [];
+            }
         }
 
-        $products->whereIn('id', $items);
+        if (!empty($items))
+        {
+            $items = call_user_func_array('array_intersect', $items);
+        }
 
-        return $products;
+        return $products->whereIn('id', $items);
     }
 }

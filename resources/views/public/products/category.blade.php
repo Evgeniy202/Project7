@@ -54,38 +54,38 @@
                             </article>
                         @endforeach
                         <article class="filter-group">
-{{--                            <header class="card-header">--}}
-{{--                                <a href="#" class="title" data-bs-toggle="collapse" data-bs-target="#collapse_aside2"--}}
-{{--                                   aria-expanded="true">--}}
-{{--                                    <i class="icon-control fa fa-chevron-down"></i> Price--}}
-{{--                                </a>--}}
-{{--                            </header>--}}
-{{--                            <div class="collapse show" id="collapse_aside2" style="">--}}
-{{--                                <div class="card-body">--}}
-{{--                                    <div class="row mb-3">--}}
-{{--                                        <div class="col-6">--}}
-{{--                                            <label for="min" class="form-label">Min</label>--}}
-{{--                                            @if(array_key_exists('min', $activeChars))--}}
-{{--                                                <input class="form-control" name="min" id="min" placeholder="$0"--}}
-{{--                                                       type="number" value="0">--}}
-{{--                                            @else--}}
-{{--                                                <input class="form-control" name="min" id="min" placeholder="$0"--}}
-{{--                                                       type="number" value="0">--}}
-{{--                                            @endif--}}
-{{--                                        </div> <!-- col end.// -->--}}
-{{--                                        <div class="col-6">--}}
-{{--                                            <label for="max" class="form-label">Max</label>--}}
-{{--                                            --}}{{--                                            @if(array_key_exists('max', $activeChars))--}}
-{{--                                            <input class="form-control" name="max" id="max" placeholder="$1,0000"--}}
-{{--                                                   type="number" value="0">--}}
-{{--                                            @else--}}
-{{--                                                <input class="form-control" name="max" id="max" placeholder="$1,0000"--}}
-{{--                                                       type="number" value="0">--}}
-{{--                                            @endif--}}
-{{--                                        </div> <!-- col end.// -->--}}
-{{--                                    </div> <!-- row end.// -->--}}
-{{--                                </div> <!-- card-body.// -->--}}
-{{--                            </div> <!-- collapse.// -->--}}
+                            {{--                            <header class="card-header">--}}
+                            {{--                                <a href="#" class="title" data-bs-toggle="collapse" data-bs-target="#collapse_aside2"--}}
+                            {{--                                   aria-expanded="true">--}}
+                            {{--                                    <i class="icon-control fa fa-chevron-down"></i> Price--}}
+                            {{--                                </a>--}}
+                            {{--                            </header>--}}
+                            {{--                            <div class="collapse show" id="collapse_aside2" style="">--}}
+                            {{--                                <div class="card-body">--}}
+                            {{--                                    <div class="row mb-3">--}}
+                            {{--                                        <div class="col-6">--}}
+                            {{--                                            <label for="min" class="form-label">Min</label>--}}
+                            {{--                                            @if(array_key_exists('min', $activeChars))--}}
+                            {{--                                                <input class="form-control" name="min" id="min" placeholder="$0"--}}
+                            {{--                                                       type="number" value="0">--}}
+                            {{--                                            @else--}}
+                            {{--                                                <input class="form-control" name="min" id="min" placeholder="$0"--}}
+                            {{--                                                       type="number" value="0">--}}
+                            {{--                                            @endif--}}
+                            {{--                                        </div> <!-- col end.// -->--}}
+                            {{--                                        <div class="col-6">--}}
+                            {{--                                            <label for="max" class="form-label">Max</label>--}}
+                            {{--                                            --}}{{--                                            @if(array_key_exists('max', $activeChars))--}}
+                            {{--                                            <input class="form-control" name="max" id="max" placeholder="$1,0000"--}}
+                            {{--                                                   type="number" value="0">--}}
+                            {{--                                            @else--}}
+                            {{--                                                <input class="form-control" name="max" id="max" placeholder="$1,0000"--}}
+                            {{--                                                       type="number" value="0">--}}
+                            {{--                                            @endif--}}
+                            {{--                                        </div> <!-- col end.// -->--}}
+                            {{--                                    </div> <!-- row end.// -->--}}
+                            {{--                                </div> <!-- card-body.// -->--}}
+                            {{--                            </div> <!-- collapse.// -->--}}
                         </article> <!-- filter-group // -->
                         <button class="btn btn-outline-success col-md-6 m-1" type="submit">Apply</button>
                         <a href="{{ route('category.show', $currentCategory) }}"
@@ -100,11 +100,7 @@
                     <div class="ms-auto">
                         <label for="sort"><strong>Sort by:</strong></label>
                         <select name="sort" id="sort" class="form-select d-inline-block w-auto">
-                            @if(empty($sort))
-                                <option value="{{$currentCategory->id}}-random">Randomly</option>
-                                <option value="{{$currentCategory->id}}-cheap">Cheap at first</option>
-                                <option value="{{$currentCategory->id}}-expensive">First expensive</option>
-                            @elseif($sort == "cheap")
+                            @if($sort == "cheap")
                                 <option value="{{$currentCategory->id}}-cheap">Cheap at first</option>
                                 <option value="{{$currentCategory->id}}-expensive">First expensive</option>
                                 <option value="{{$currentCategory->id}}-random">Randomly</option>
@@ -112,6 +108,10 @@
                                 <option value="{{$currentCategory->id}}-expensive">First expensive</option>
                                 <option value="{{$currentCategory->id}}-random">Randomly</option>
                                 <option value="{{$currentCategory->id}}-cheap">Cheap at first</option>
+                            @else
+                                <option value="{{$currentCategory->id}}-random">Randomly</option>
+                                <option value="{{$currentCategory->id}}-cheap">Cheap at first</option>
+                                <option value="{{$currentCategory->id}}-expensive">First expensive</option>
                             @endif
                         </select>
                         <script
