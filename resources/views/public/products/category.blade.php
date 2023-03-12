@@ -27,23 +27,23 @@
                                                 <label class="form-check mb-2 text-dark">
                                                     @if($activeFeatures != null)
                                                         @if(in_array($feature->id.'-'.$value->id, $activeFeatures))
-                                                            <input id="{{ $feature->id }}"
-                                                                   name="{{ $feature->id }}"
+                                                            <input id="{{ $feature->id }}-{{ $value->id }}"
+                                                                   name="{{ $feature->id }}-{{ $value->id }}"
                                                                    class="form-check-input" type="checkbox"
-                                                                   value="{{ $value->id }}" checked>
+                                                                   checked>
                                                             <span class="form-check-label"> {{ $value->value }} </span>
                                                         @else
-                                                            <input id="{{ $feature->id }}"
-                                                                   name="{{ $feature->id }}"
+                                                            <input id="{{ $feature->id }}-{{ $value->id }}"
+                                                                   name="{{ $feature->id }}-{{ $value->id }}"
                                                                    class="form-check-input" type="checkbox"
-                                                                   value="{{ $value->id }}">
+                                                            >
                                                             <span class="form-check-label"> {{ $value->value }} </span>
                                                         @endif
                                                     @else
-                                                        <input id="{{ $feature->id }}"
-                                                               name="{{ $feature->id }}"
+                                                        <input id="{{ $feature->id }}-{{ $value->id }}"
+                                                               name="{{ $feature->id }}-{{ $value->id }}"
                                                                class="form-check-input" type="checkbox"
-                                                               value="{{ $value->id }}">
+                                                        >
                                                         <span class="form-check-label"> {{ $value->value }} </span>
                                                     @endif
                                                 </label> <!-- form-check end.// -->

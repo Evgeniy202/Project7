@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Session;
 
 class SortController extends Controller
 {
-    public function productsOfCategory($categoryId, $sort)
+    public function productsOfCategory($categoryId, $sort, Request $request)
     {
         $category = Categories::query()->find($categoryId);
         $products = Products::query()

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Open;
 
 use App\Functions\Features\ValuesOfFeatures;
+use App\Functions\Filters\CheckFilters;
 use App\Functions\Sessions\GetCategories;
 use App\Http\Controllers\Controller;
 use App\Models\Categories;
@@ -26,11 +27,31 @@ class CategoriesController extends Controller
      */
     public function show(Categories $category, Request $request)
     {
+        if (!empty($request->query()))
+        {
+            $answer = CheckFilters::checkFilter($request->query());
+            $activeFeatures = $answer[1];
+            $data = $answer[0];
+        }
+
         $products = Products::query()
             ->where('isAvailable', 1)
             ->where('count', '>', 0)
-            ->orderByDesc('isFavorite')
-            ->paginate(2);
+            ->orderByDesc('isFavorite');
+
+        if (!empty($data))
+        {
+            $productsFeatures = CharOfProduct::query()
+                ->join('char_of_categories', 'char_of_products.char', '=', 'char_of_categories.id')
+                ->where('char_of_categories.category', $category->id)
+                ->select('product', 'char', 'value')
+                ->get()->toArray();
+
+            $products = Products::filter($products, $data, $productsFeatures);
+        }
+
+        $products = $products->paginate(2);
+
         $categories = GetCategories::getCategoriesList();
         $images = ProductImage::getMainImages($products ?? null);
         $features = CharOfCategory::query()
