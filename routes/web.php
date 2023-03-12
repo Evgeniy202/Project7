@@ -8,14 +8,12 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/search', [\App\Http\Controllers\Open\ProductController::class, 'searchAll'])->name('searchAll');
 
-Route::prefix('Category')->group(function () {
-    Route::get('/{categoryId}/sort/{sort}', [\App\Http\Controllers\Open\CategoriesController::class, 'sortProducts'])
-        ->name('sortProductsPublic');
-    Route::post('/{categoryId}/filter', [\App\Http\Controllers\Open\CategoriesController::class, 'filter'])
-        ->name('filterProductsPublic');
-    Route::resource('category', \App\Http\Controllers\Open\CategoriesController::class);
+Route::prefix('category')->group(function () {
+    Route::get('/{categoryId}/sort/{sort}', [\App\Http\Controllers\Open\SortController::class, 'productsOfCategory'])
+        ->name('filterCategoryPublic');
 });
 
+Route::resource('category', \App\Http\Controllers\Open\CategoriesController::class);
 Route::resource('product', \App\Http\Controllers\Open\ProductController::class);
 
 //Admin//

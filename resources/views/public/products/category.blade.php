@@ -27,23 +27,23 @@
                                                 <label class="form-check mb-2 text-dark">
                                                     @if($activeFeatures != null)
                                                         @if(in_array($feature->id.'-'.$value->id, $activeFeatures))
-                                                            <input id="{{ $feature->id }}-{{ $value->id }}"
-                                                                   name="{{ $feature->id }}-{{ $value->id }}"
+                                                            <input id="{{ $feature->id }}"
+                                                                   name="{{ $feature->id }}"
                                                                    class="form-check-input" type="checkbox"
-                                                                   value="{{ $feature->id }}-{{ $value->id }}" checked>
+                                                                   value="{{ $value->id }}" checked>
                                                             <span class="form-check-label"> {{ $value->value }} </span>
                                                         @else
-                                                            <input id="{{ $feature->id }}-{{ $value->id }}"
-                                                                   name="{{ $feature->id }}-{{ $value->id }}"
+                                                            <input id="{{ $feature->id }}"
+                                                                   name="{{ $feature->id }}"
                                                                    class="form-check-input" type="checkbox"
-                                                                   value="{{ $feature->id }}-{{ $value->id }}">
+                                                                   value="{{ $value->id }}">
                                                             <span class="form-check-label"> {{ $value->value }} </span>
                                                         @endif
                                                     @else
-                                                        <input id="{{ $feature->id }}-{{ $value->id }}"
-                                                               name="{{ $feature->id }}-{{ $value->id }}"
+                                                        <input id="{{ $feature->id }}"
+                                                               name="{{ $feature->id }}"
                                                                class="form-check-input" type="checkbox"
-                                                               value="{{ $feature->id }}-{{ $value->id }}">
+                                                               value="{{ $value->id }}">
                                                         <span class="form-check-label"> {{ $value->value }} </span>
                                                     @endif
                                                 </label> <!-- form-check end.// -->
@@ -100,16 +100,18 @@
                     <div class="ms-auto">
                         <label for="sort"><strong>Sort by:</strong></label>
                         <select name="sort" id="sort" class="form-select d-inline-block w-auto">
-                            @if($sort == "cheap")
-                                <option value="{{$currentCategory->id}}-cheap">Cheap at first</option>
-                                <option value="{{$currentCategory->id}}-expensive">First expensive</option>
-                                <option value="{{$currentCategory->id}}-random">Randomly</option>
-                            @elseif($sort == "expensive")
-                                <option value="{{$currentCategory->id}}-expensive">First expensive</option>
-                                <option value="{{$currentCategory->id}}-random">Randomly</option>
-                                <option value="{{$currentCategory->id}}-cheap">Cheap at first</option>
+                            @if(!empty($sort))
+                                @if($sort == "cheap")
+                                    <option value="{{$currentCategory->id}}-cheap">Cheap at first</option>
+                                    <option value="{{$currentCategory->id}}-expensive">First expensive</option>
+                                    <option value="{{$currentCategory->id}}-normal">Normal</option>
+                                @elseif($sort == "expensive")
+                                    <option value="{{$currentCategory->id}}-expensive">First expensive</option>
+                                    <option value="{{$currentCategory->id}}-normal">Normal</option>
+                                    <option value="{{$currentCategory->id}}-cheap">Cheap at first</option>
+                                @endif
                             @else
-                                <option value="{{$currentCategory->id}}-random">Randomly</option>
+                                <option value="{{$currentCategory->id}}-normal">Normal</option>
                                 <option value="{{$currentCategory->id}}-cheap">Cheap at first</option>
                                 <option value="{{$currentCategory->id}}-expensive">First expensive</option>
                             @endif

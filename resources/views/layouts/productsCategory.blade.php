@@ -51,5 +51,5 @@
 </div>
 <hr>
 <footer class="row pagination">
-    {{ $products->links() }}
+    {{ $products->withQueryString()->links() }}
 </footer>

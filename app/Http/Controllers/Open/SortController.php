@@ -4,33 +4,32 @@ namespace App\Http\Controllers\Open;
 
 use App\Functions\Features\ValuesOfFeatures;
 use App\Functions\Sessions\GetCategories;
+use App\Functions\Sorting\Open\CategoryProducts;
 use App\Http\Controllers\Controller;
 use App\Models\Categories;
 use App\Models\CharOfCategory;
-use App\Models\CharOfProduct;
 use App\Models\ProductDiscount;
 use App\Models\ProductImage;
 use App\Models\Products;
-use App\Models\ValueOfChar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
-class CategoriesController extends Controller
+class SortController extends Controller
 {
-    /**
-     * Display the specified resource.
-     *
-     * @param  Request $request
-     * @param  \App\Models\Categories  $category
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function show(Categories $category, Request $request)
+    public function productsOfCategory($categoryId, $sort)
     {
+        $category = Categories::query()->find($categoryId);
         $products = Products::query()
             ->where('isAvailable', 1)
             ->where('count', '>', 0)
-            ->orderByDesc('isFavorite')
-            ->paginate(2);
+            ->orderByDesc('isFavorite');
+        $products = CategoryProducts::sort($products, $sort, $categoryId);
+
+        if ($products == 'normal')
+        {
+            return redirect()->route('category.show', $category);
+        }
+
         $categories = GetCategories::getCategoriesList();
         $images = ProductImage::getMainImages($products ?? null);
         $features = CharOfCategory::query()
@@ -47,6 +46,7 @@ class CategoriesController extends Controller
             'features' => $features,
             'values' => $values,
             'discounts' => $productsDiscount,
+            'sort' => $sort,
             'activeFeatures' => $activeFeatures ?? null,
         ]);
     }
