@@ -88,4 +88,16 @@ class Products extends Model
 
         return $products->whereIn('id', $items);
     }
+
+    public static function price($categoryId)
+    {
+        $minPrice = Products::query()
+            ->where('category', $categoryId)
+            ->min('price');
+        $maxPrice = Products::query()
+        ->where('category', $categoryId)
+        ->max('price');
+
+       return [$minPrice, $maxPrice];
+    }
 }

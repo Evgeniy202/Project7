@@ -11,86 +11,90 @@
                 </button>
                 <!-- ===== Card for sidebar filter ===== -->
                 <div id="aside_filter" class="collapse card d-lg-block mb-5">
-                    <form action="{{ route('category.show', $currentCategory) }}" method="GET">
-                        @foreach($features as $feature)
-                            <article class="filter-group">
-                                <header class="card-header">
-                                    <a href="#" class="title" data-bs-toggle="collapse"
-                                       data-bs-target="#collapse_aside_{{ $feature->id }}">
-                                        <i class="icon-control fa fa-chevron-down"></i> {{ $feature->title }}
-                                    </a>
-                                </header>
-                                <div class="collapse show" id="collapse_aside_{{ $feature->id }}">
-                                    <div class="card-body">
-                                        @foreach($values as $value)
-                                            @if($value->char == $feature->id)
-                                                <label class="form-check mb-2 text-dark">
-                                                    @if($activeFeatures != null)
-                                                        @if(in_array($feature->id.'-'.$value->id, $activeFeatures))
-                                                            <input id="{{ $feature->id }}-{{ $value->id }}"
-                                                                   name="{{ $feature->id }}-{{ $value->id }}"
-                                                                   class="form-check-input" type="checkbox"
-                                                                   checked>
-                                                            <span class="form-check-label"> {{ $value->value }} </span>
-                                                        @else
-                                                            <input id="{{ $feature->id }}-{{ $value->id }}"
-                                                                   name="{{ $feature->id }}-{{ $value->id }}"
-                                                                   class="form-check-input" type="checkbox"
-                                                            >
-                                                            <span class="form-check-label"> {{ $value->value }} </span>
+                    @if(empty($sort))
+                        <form action="{{ route('category.show', $currentCategory) }}" method="GET">
+                            @else
+                                <form
+                                    action="{{ route('filterCategoryPublic', [$currentCategory->id, $sort ?? 'normal']) }}"
+                                    method="GET">
+                                    @endif
+                                    @foreach($features as $feature)
+                                        <article class="filter-group">
+                                            <header class="card-header">
+                                                <a href="#" class="title" data-bs-toggle="collapse"
+                                                   data-bs-target="#collapse_aside_{{ $feature->id }}">
+                                                    <i class="icon-control fa fa-chevron-down"></i> {{ $feature->title }}
+                                                </a>
+                                            </header>
+                                            <div class="collapse hide" id="collapse_aside_{{ $feature->id }}">
+                                                <div class="card-body">
+                                                    @foreach($values as $value)
+                                                        @if($value->char == $feature->id)
+                                                            <label class="form-check mb-2 text-dark">
+                                                                @if($activeFeatures != null)
+                                                                    @if(in_array($feature->id.'-'.$value->id, $activeFeatures))
+                                                                        <input id="{{ $feature->id }}-{{ $value->id }}"
+                                                                               name="{{ $feature->id }}-{{ $value->id }}"
+                                                                               class="form-check-input" type="checkbox"
+                                                                               checked>
+                                                                        <span
+                                                                            class="form-check-label"> {{ $value->value }} </span>
+                                                                    @else
+                                                                        <input id="{{ $feature->id }}-{{ $value->id }}"
+                                                                               name="{{ $feature->id }}-{{ $value->id }}"
+                                                                               class="form-check-input" type="checkbox"
+                                                                        >
+                                                                        <span
+                                                                            class="form-check-label"> {{ $value->value }} </span>
+                                                                    @endif
+                                                                @else
+                                                                    <input id="{{ $feature->id }}-{{ $value->id }}"
+                                                                           name="{{ $feature->id }}-{{ $value->id }}"
+                                                                           class="form-check-input" type="checkbox"
+                                                                    >
+                                                                    <span
+                                                                        class="form-check-label"> {{ $value->value }} </span>
+                                                                @endif
+                                                            </label> <!-- form-check end.// -->
                                                         @endif
-                                                    @else
-                                                        <input id="{{ $feature->id }}-{{ $value->id }}"
-                                                               name="{{ $feature->id }}-{{ $value->id }}"
-                                                               class="form-check-input" type="checkbox"
-                                                        >
-                                                        <span class="form-check-label"> {{ $value->value }} </span>
-                                                    @endif
-                                                </label> <!-- form-check end.// -->
-                                            @endif
-                                        @endforeach
-                                    </div> <!-- card-body .// -->
-                                </div> <!-- collapse.// -->
-                            </article>
-                        @endforeach
-                        <article class="filter-group">
-                            {{--                            <header class="card-header">--}}
-                            {{--                                <a href="#" class="title" data-bs-toggle="collapse" data-bs-target="#collapse_aside2"--}}
-                            {{--                                   aria-expanded="true">--}}
-                            {{--                                    <i class="icon-control fa fa-chevron-down"></i> Price--}}
-                            {{--                                </a>--}}
-                            {{--                            </header>--}}
-                            {{--                            <div class="collapse show" id="collapse_aside2" style="">--}}
-                            {{--                                <div class="card-body">--}}
-                            {{--                                    <div class="row mb-3">--}}
-                            {{--                                        <div class="col-6">--}}
-                            {{--                                            <label for="min" class="form-label">Min</label>--}}
-                            {{--                                            @if(array_key_exists('min', $activeChars))--}}
-                            {{--                                                <input class="form-control" name="min" id="min" placeholder="$0"--}}
-                            {{--                                                       type="number" value="0">--}}
-                            {{--                                            @else--}}
-                            {{--                                                <input class="form-control" name="min" id="min" placeholder="$0"--}}
-                            {{--                                                       type="number" value="0">--}}
-                            {{--                                            @endif--}}
-                            {{--                                        </div> <!-- col end.// -->--}}
-                            {{--                                        <div class="col-6">--}}
-                            {{--                                            <label for="max" class="form-label">Max</label>--}}
-                            {{--                                            --}}{{--                                            @if(array_key_exists('max', $activeChars))--}}
-                            {{--                                            <input class="form-control" name="max" id="max" placeholder="$1,0000"--}}
-                            {{--                                                   type="number" value="0">--}}
-                            {{--                                            @else--}}
-                            {{--                                                <input class="form-control" name="max" id="max" placeholder="$1,0000"--}}
-                            {{--                                                       type="number" value="0">--}}
-                            {{--                                            @endif--}}
-                            {{--                                        </div> <!-- col end.// -->--}}
-                            {{--                                    </div> <!-- row end.// -->--}}
-                            {{--                                </div> <!-- card-body.// -->--}}
-                            {{--                            </div> <!-- collapse.// -->--}}
-                        </article> <!-- filter-group // -->
-                        <button class="btn btn-outline-success col-md-6 m-1" type="submit">Apply</button>
-                        <a href="{{ route('category.show', $currentCategory) }}"
-                           class="btn btn-outline-warning col-md-4 m-1" type="button">Reset</a>
-                    </form>
+                                                    @endforeach
+                                                </div> <!-- card-body .// -->
+                                            </div> <!-- collapse.// -->
+                                        </article>
+                                    @endforeach
+                                    <article class="filter-group">
+                                        <header class="card-header">
+                                            <a href="#" class="title" data-bs-toggle="collapse"
+                                               data-bs-target="#collapse_aside2"
+                                               aria-expanded="true">
+                                                <i class="icon-control fa fa-chevron-down"></i> Price
+                                            </a>
+                                        </header>
+                                        <div class="collapse show" id="collapse_aside2" style="">
+                                            <div class="card-body">
+                                                <div class="row mb-3">
+                                                    <div class="range-slider-container">
+                                                        <input type="range" class="form-range" id="min_price"
+                                                               name="min_price" value="{{ $price[0] }}"
+                                                               min="{{ $price[0] }}" max="{{ $price[1] }}">
+                                                        <div class="price-range text-center">
+                                                            <b><span id="min_price_label">{{ $price[0] }}</span> грн -
+                                                                <span
+                                                                    id="max_price_label">{{ $price[1] }}</span> грн</b>
+                                                        </div>
+                                                        <input type="range" class="form-range" id="max_price"
+                                                               name="max_price" value="{{ $price[1] }}"
+                                                               min="{{ $price[0] }}" max="{{ $price[1] }}">
+                                                    </div>
+                                                    <script src="/js/products/priceFilter.js"></script>
+                                                </div> <!-- row end.// -->
+                                            </div> <!-- card-body.// -->
+                                        </div> <!-- collapse.// -->
+                                    </article> <!-- filter-group // -->
+                                    <button class="btn btn-outline-success col-md-6 m-1" type="submit">Apply</button>
+                                    <a href="{{ route('category.show', $currentCategory) }}"
+                                       class="btn btn-outline-warning col-md-4 m-1" type="button">Reset</a>
+                                </form>
                 </div> <!-- card.// -->
                 <!-- ===== Card for sidebar filter .// ===== -->
             </aside> <!-- col .// -->

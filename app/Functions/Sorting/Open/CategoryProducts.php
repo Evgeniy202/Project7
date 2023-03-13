@@ -13,11 +13,11 @@ class CategoryProducts
     {
         if ($sort == 'cheap')
         {
-            return $products->orderBy('price')->paginate(2);
+            return $products->orderBy('price');
         }
         elseif ($sort == 'expensive')
         {
-            return $products->orderByDesc('price')->paginate(2);
+            return $products->orderByDesc('price');
         }
 
         return 'normal';

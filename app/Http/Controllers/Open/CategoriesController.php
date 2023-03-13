@@ -59,6 +59,7 @@ class CategoriesController extends Controller
             ->orderBy('numberInFilter')->get();
         $values = ValuesOfFeatures::getValues($features);
         $productsDiscount = ProductDiscount::getDiscountsToProducts($category->id);
+        $price = Products::price($category->id);
 
         return view('public.products.category', [
             'currentCategory' => $category,
@@ -69,6 +70,7 @@ class CategoriesController extends Controller
             'values' => $values,
             'discounts' => $productsDiscount,
             'activeFeatures' => $activeFeatures ?? null,
+            'price' => $price,
         ]);
     }
 }
