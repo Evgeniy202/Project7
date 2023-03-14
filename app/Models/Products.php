@@ -95,9 +95,14 @@ class Products extends Model
             ->where('category', $categoryId)
             ->min('price');
         $maxPrice = Products::query()
-        ->where('category', $categoryId)
-        ->max('price');
+            ->where('category', $categoryId)
+            ->max('price');
 
        return [$minPrice, $maxPrice];
+    }
+
+    public static function priceFilter($products, $minPrice, $maxPrice)
+    {
+        return $products->where('price', '>=', $minPrice)->where('price', '<=', $maxPrice);
     }
 }

@@ -24,9 +24,7 @@ class SortController extends Controller
 
         if (!empty($request->query()))
         {
-            $answer = CheckFilters::checkFilter($request->query());
-            $activeFeatures = $answer[1];
-            $data = $answer[0];
+            list($data, $activeFeatures) = CheckFilters::checkFilter($request->query());
         }
 
         $products = Products::query()
@@ -51,6 +49,14 @@ class SortController extends Controller
             $products = Products::filter($products, $data, $productsFeatures);
         }
 
+        if (isset($request->query()['min_price']))
+        {
+            $products = Products::priceFilter($products, $request->query()['min_price'], $request->query()['max_price']);
+
+            $activeFeatures['min_price'] = $request->query()['min_price'];
+            $activeFeatures['max_price'] = $request->query()['max_price'];
+        }
+
         $products = $products->paginate(2);
         $categories = GetCategories::getCategoriesList();
         $images = ProductImage::getMainImages($products ?? null);
@@ -70,8 +76,7 @@ class SortController extends Controller
             'values' => $values,
             'discounts' => $productsDiscount,
             'sort' => $sort,
-            'activeFeatures' => $activeFeatures ?? null,
             'price' => $price,
-        ]);
+        ])->with('activeFeatures', $activeFeatures ?? null);
     }
 }

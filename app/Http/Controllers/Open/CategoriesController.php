@@ -29,9 +29,7 @@ class CategoriesController extends Controller
     {
         if (!empty($request->query()))
         {
-            $answer = CheckFilters::checkFilter($request->query());
-            $activeFeatures = $answer[1];
-            $data = $answer[0];
+            list($data, $activeFeatures) = CheckFilters::checkFilter($request->query());
         }
 
         $products = Products::query()
@@ -48,6 +46,14 @@ class CategoriesController extends Controller
                 ->get()->toArray();
 
             $products = Products::filter($products, $data, $productsFeatures);
+        }
+
+        if (isset($request->query()['min_price']))
+        {
+            $products = Products::priceFilter($products, $request->query()['min_price'], $request->query()['max_price']);
+
+            $activeFeatures['min_price'] = $request->query()['min_price'];
+            $activeFeatures['max_price'] = $request->query()['max_price'];
         }
 
         $products = $products->paginate(2);
@@ -69,8 +75,7 @@ class CategoriesController extends Controller
             'features' => $features,
             'values' => $values,
             'discounts' => $productsDiscount,
-            'activeFeatures' => $activeFeatures ?? null,
             'price' => $price,
-        ]);
+        ])->with('activeFeatures', $activeFeatures ?? null);
     }
 }
