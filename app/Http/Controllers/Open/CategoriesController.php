@@ -12,9 +12,12 @@ use App\Models\CharOfProduct;
 use App\Models\ProductDiscount;
 use App\Models\ProductImage;
 use App\Models\Products;
+use App\Models\Selected;
 use App\Models\ValueOfChar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use function League\Flysystem\toArray;
 
 class CategoriesController extends Controller
 {
@@ -67,6 +70,11 @@ class CategoriesController extends Controller
         $productsDiscount = ProductDiscount::getDiscountsToProducts($category->id);
         $price = Products::price($category->id);
 
+        if (!empty(Auth::user()->id))
+        {
+            $selected = Selected::query()->where('user', Auth::user()->id)->pluck('product')->toArray();
+        }
+
         return view('public.products.category', [
             'currentCategory' => $category,
             'categories' => $categories,
@@ -76,6 +84,7 @@ class CategoriesController extends Controller
             'values' => $values,
             'discounts' => $productsDiscount,
             'price' => $price,
+            'selected' => $selected ?? null,
         ])->with('activeFeatures', $activeFeatures ?? null);
     }
 }

@@ -6,7 +6,9 @@ use App\Functions\Sessions\GetCategories;
 use App\Models\Banner;
 use App\Models\ProductImage;
 use App\Models\Products;
+use App\Models\Selected;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -26,11 +28,17 @@ class HomeController extends Controller
         $productsImages = ProductImage::getMainImages($products);
         $banners = Banner::getBanners();
 
+        if (!empty(Auth::user()->id))
+        {
+            $selected = Selected::query()->where('user', Auth::user()->id)->pluck('product')->toArray();
+        }
+
         return view('home', [
             'categories' => $categories,
             'products' => $products,
             'productsImages' => $productsImages,
             'banners' => $banners,
+            'selected' => $selected ?? null,
         ]);
     }
 }

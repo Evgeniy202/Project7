@@ -13,6 +13,9 @@ Route::prefix('category')->group(function () {
         ->name('filterCategoryPublic');
 });
 
+Route::post('/select-product', [\App\Http\Controllers\Open\SelectedProductsController::class, 'action'])
+    ->name('select-product');
+
 Route::resource('category', \App\Http\Controllers\Open\CategoriesController::class);
 Route::resource('product', \App\Http\Controllers\Open\ProductController::class);
 
