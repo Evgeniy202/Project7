@@ -30,4 +30,39 @@ class ProductDiscount extends Model
 
         return $discounts;
     }
+
+    public static function getDiscounts($products)
+    {
+        $discounts = [];
+
+        foreach ($products as $product) {
+            $discount = ProductDiscount::where('product', $product->id)
+                ->where('begin_date', '<=', Carbon::now())
+                ->where('end_date', '>=', Carbon::now())
+                ->orderBy('end_date', 'asc')
+                ->first();
+
+            if ($discount) {
+                $discounts[$product->id] = $discount->discount;
+            }
+        }
+
+        return $discounts;
+    }
+
+    public static function getDiscount($product)
+    {
+        $discount = ProductDiscount::query()->where('product', $product->id)
+            ->where('begin_date', '<=', Carbon::now())
+            ->where('end_date', '>=', Carbon::now())
+            ->orderBy('end_date', 'asc')
+            ->first();
+
+        if ($discount)
+        {
+            $discount = $discount->discount;
+        }
+
+        return $discount;
+    }
 }

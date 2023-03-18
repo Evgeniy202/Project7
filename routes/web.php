@@ -6,6 +6,11 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/selected', [\App\Http\Controllers\Open\SelectedProductsController::class, 'show'])
+    ->name('selected-product-public');
+Route::get('/remove-selected/{productId}', [\App\Http\Controllers\Open\SelectedProductsController::class, 'remove'])
+    ->name('remove-selected');
+
 Route::post('/search', [\App\Http\Controllers\Open\ProductController::class, 'searchAll'])->name('searchAll');
 
 Route::prefix('category')->group(function () {
@@ -13,11 +18,12 @@ Route::prefix('category')->group(function () {
         ->name('filterCategoryPublic');
 });
 
-Route::post('/select-product', [\App\Http\Controllers\Open\SelectedProductsController::class, 'action'])
-    ->name('select-product');
-
 Route::resource('category', \App\Http\Controllers\Open\CategoriesController::class);
 Route::resource('product', \App\Http\Controllers\Open\ProductController::class);
+
+//Ajax
+Route::post('/select-product', [\App\Http\Controllers\Open\SelectedProductsController::class, 'action'])
+    ->name('select-product');
 
 //Admin//
 Route::group(['middleware' => ['role:admin']], function () {

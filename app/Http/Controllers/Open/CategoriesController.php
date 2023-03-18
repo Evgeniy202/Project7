@@ -36,6 +36,7 @@ class CategoriesController extends Controller
         }
 
         $products = Products::query()
+            ->where('category', $category->id)
             ->where('isAvailable', 1)
             ->where('count', '>', 0)
             ->orderByDesc('isFavorite');
@@ -61,13 +62,12 @@ class CategoriesController extends Controller
 
         $products = $products->paginate(2);
 
-        $categories = GetCategories::getCategoriesList();
         $images = ProductImage::getMainImages($products ?? null);
         $features = CharOfCategory::query()
             ->where('category', $category->id)
             ->orderBy('numberInFilter')->get();
         $values = ValuesOfFeatures::getValues($features);
-        $productsDiscount = ProductDiscount::getDiscountsToProducts($category->id);
+        $discounts = ProductDiscount::getDiscounts($products);
         $price = Products::price($category->id);
 
         if (!empty(Auth::user()->id))
@@ -77,12 +77,11 @@ class CategoriesController extends Controller
 
         return view('public.products.category', [
             'currentCategory' => $category,
-            'categories' => $categories,
             'products' => $products,
             'images' => $images,
             'features' => $features,
             'values' => $values,
-            'discounts' => $productsDiscount,
+            'discounts' => $discounts,
             'price' => $price,
             'selected' => $selected ?? null,
         ])->with('activeFeatures', $activeFeatures ?? null);

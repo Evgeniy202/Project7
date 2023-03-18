@@ -28,6 +28,7 @@ class SortController extends Controller
         }
 
         $products = Products::query()
+            ->where('category', $categoryId)
             ->where('isAvailable', 1)
             ->where('count', '>', 0)
             ->orderByDesc('isFavorite');
@@ -58,23 +59,21 @@ class SortController extends Controller
         }
 
         $products = $products->paginate(2);
-        $categories = GetCategories::getCategoriesList();
         $images = ProductImage::getMainImages($products ?? null);
         $features = CharOfCategory::query()
             ->where('category', $category->id)
             ->orderBy('numberInFilter')->get();
         $values = ValuesOfFeatures::getValues($features);
-        $productsDiscount = ProductDiscount::getDiscountsToProducts($category->id);
+        $discounts = ProductDiscount::getDiscounts($products);
         $price = Products::price($category->id);
 
         return view('public.products.category', [
             'currentCategory' => $category,
-            'categories' => $categories,
             'products' => $products,
             'images' => $images,
             'features' => $features,
             'values' => $values,
-            'discounts' => $productsDiscount,
+            'discounts' => $discounts,
             'sort' => $sort,
             'price' => $price,
         ])->with('activeFeatures', $activeFeatures ?? null);

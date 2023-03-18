@@ -18,6 +18,7 @@
 
     @yield('head')
 </head>
+@php $categories = \App\Functions\Sessions\GetCategories::getCategoriesList() @endphp
 <body>
 <div id="app">
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
@@ -86,7 +87,7 @@
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="#">My orders</a>
-                                <a class="dropdown-item" href="#">My selected products</a>
+                                <a class="dropdown-item" href="{{ route('selected-product-public') }}">My selected</a>
                                 <a class="dropdown-item" href="#">Support</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
@@ -105,6 +106,25 @@
         </div>
     </nav>
     <main class="py-4">
+        @if(session()->has('message'))
+            @if(session('message') == 'success')
+                <div id="message" class="alert alert-success alert-dismissible fade show text-center" role="alert">
+                    <strong>{{ session()->get('mes_text') }}</strong>
+                </div>
+            @elseif(session('message') == 'error')
+                <div id="message" class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                    <strong>{{ session('mes_text') }}</strong>
+                </div>
+            @endif
+        @endif
+        <script>
+            setTimeout(function () {
+                document.getElementById('message').style.display = 'none';
+            }, 4000);
+            document.getElementById('message').onclick = function () {
+                document.getElementById('message').hidden = true;
+            }
+        </script>
         @yield('content')
     </main>
 </div>

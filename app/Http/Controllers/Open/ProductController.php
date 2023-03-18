@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CharOfCategory;
 use App\Models\CharOfProduct;
 use App\Models\Comment;
+use App\Models\ProductDiscount;
 use App\Models\ProductImage;
 use App\Models\Products;
 use Illuminate\Http\Request;
@@ -64,21 +65,19 @@ class ProductController extends Controller
             ->where('product', $product->id)
             ->orderBy('numberInList', 'asc')
             ->get();
-        $featuresOfCategory = CharOfCategory::query()
-            ->where('category', $product->category)
-            ->orderBy('numberInFilter')
-            ->get();
         $featuresOfProduct = FeaturesOfProducts::getValue($product->category, $charsOfProd);
         $values = ValuesOfFeatures::getValues($featuresOfProduct);
         $comments = Comment::query()->where('product', $product->id)->orderBy('updated_at');
         $featuresView = FeaturesOfProducts::getFeaturesOfProductView($charsOfProd, $featuresOfProduct, $values);
+        $discount = ProductDiscount::getDiscount($product);
 
         return view('public.products.productDetail', [
-           'product' => $product,
-           'categories' => $categories,
-           'images' => $images,
-           'features' => $featuresView,
-           'comments' => $comments,
+            'product' => $product,
+            'categories' => $categories,
+            'images' => $images,
+            'features' => $featuresView,
+            'comments' => $comments,
+            'discount' => $discount,
         ]);
     }
 
@@ -119,7 +118,6 @@ class ProductController extends Controller
     public function searchAll(Request $request)
     {
         $url = explode('/', $request->url());
-        $categories = GetCategories::getCategoriesList();
 
         if (!empty($url[1]))
         {
@@ -137,7 +135,6 @@ class ProductController extends Controller
 
                 return view('public.products.searchInCategory', [
                     'currentCategory' => $currentCategory,
-                    'categories' => $categories,
                     'products' => $products,
                 ]);
             }
@@ -154,7 +151,6 @@ class ProductController extends Controller
             }
 
             return view('public.products.search', [
-                'categories' => $categories,
                 'products' => $products,
                 'productsImages' => $productsImages,
             ]);

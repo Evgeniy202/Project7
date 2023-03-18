@@ -18,7 +18,15 @@
             </div>
             <div class="col-md-8">
                 <h3> {{ $product->title }} </h3>
-                <p>Price: {{ $product->price }} грн.</p>
+                <p>Price: @if (!empty($discount))
+                        <strong class="price text-danger">${{ $product->price - $discount }} with
+                            discount!</strong>
+                        <br>
+                        <del class="price-old"> ${{ $product->price }}</del>
+                    @else
+                        <strong class="price"> ${{ $product->price }} </strong>
+                    @endif
+                </p>
                 <p>Description: {{ $product->description }} </p>
                 <hr>
                 @if(!empty(Auth::user()->id))
