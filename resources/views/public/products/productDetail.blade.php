@@ -7,6 +7,42 @@
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
 @endsection
 @section('content')
+    @if (!empty(Auth::user()->id))
+        <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"
+        ></script>
+        <script>
+            $(document).ready(function () {
+                $('.select-btn').on('click', function () {
+                    var productId = $(this).data('product-id');
+
+                    $.ajax({
+                        url: '{{ route('select-product') }}',
+                        method: 'POST',
+                        data: {
+                            product_id: productId,
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function () {
+                            btnStyle();
+                        },
+                    });
+
+                    function btnStyle() {
+                        const button = document.getElementById('selectBtn-' + productId);
+
+                        if (button.classList.contains('active')) {
+                            button.classList.remove('active');
+                        } else {
+                            button.classList.add('active');
+                        }
+                    }
+                });
+            });
+        </script>
+    @endif
     <div class="container text-dark">
         <div class="row">
             <div class="col-md-4">
@@ -30,10 +66,21 @@
                 <p>Description: {{ $product->description }} </p>
                 <hr>
                 @if(!empty(Auth::user()->id))
-                    <a href="#" class="btn btn-outline-primary">Add to selected</a>
-                    <a href="#" class="btn btn-outline-success">Add to cart</a>
+                    @php
+                        $active = null;
+                        if ($selected)
+                        {
+                            $active = 'active';
+                        }
+                    @endphp
+                    <button id="selectBtn-{{ $product->id }}"
+                            data-product-id="{{ $product->id }}"
+                            class="btn btn-outline-danger select-btn {{ $active }}">
+                        Add to selected
+                    </button>
+                    <a href="{{ route('add-to-cart', $product->id) }}" class="btn btn-outline-success">Add to cart</a>
                 @else
-                    <a href="{{ route('login') }}" class="btn btn-outline-primary">Add to selected</a>
+                    <a href="{{ route('login') }}" class="btn btn-outline-danger">Add to selected</a>
                     <a href="{{ route('login') }}" class="btn btn-outline-success">Add to cart</a>
                 @endif
             </div>

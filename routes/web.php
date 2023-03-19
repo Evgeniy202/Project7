@@ -6,12 +6,22 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/selected', [\App\Http\Controllers\Open\SelectedProductsController::class, 'show'])
-    ->name('selected-product-public');
-Route::get('/remove-selected/{productId}', [\App\Http\Controllers\Open\SelectedProductsController::class, 'remove'])
-    ->name('remove-selected');
 
 Route::post('/search', [\App\Http\Controllers\Open\ProductController::class, 'searchAll'])->name('searchAll');
+
+Route::middleware(['verified'])->group(function () {
+    Route::get('/selected', [\App\Http\Controllers\Open\SelectedProductsController::class, 'show'])
+        ->name('selected-product-public');
+
+    Route::get('/remove-selected/{productId}', [\App\Http\Controllers\Open\SelectedProductsController::class, 'remove'])
+        ->name('remove-selected');
+
+    Route::get('/add-product-to-cart/{productId}', [\App\Http\Controllers\Open\CartProductsController::class, 'add'])
+        ->name('add-to-cart');
+
+    Route::get('/remove-product-from-cart/{cartProductId}', [\App\Http\Controllers\Open\CartProductsController::class, 'remove'])
+        ->name('remove-from-cart');
+});
 
 Route::prefix('category')->group(function () {
     Route::get('/{categoryId}/sort/{sort}', [\App\Http\Controllers\Open\SortController::class, 'productsOfCategory'])

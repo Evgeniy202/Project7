@@ -12,7 +12,9 @@ use App\Models\Comment;
 use App\Models\ProductDiscount;
 use App\Models\ProductImage;
 use App\Models\Products;
+use App\Models\Selected;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -71,6 +73,18 @@ class ProductController extends Controller
         $featuresView = FeaturesOfProducts::getFeaturesOfProductView($charsOfProd, $featuresOfProduct, $values);
         $discount = ProductDiscount::getDiscount($product);
 
+        if (!empty(Auth::user()->id))
+        {
+            if (!empty(Selected::query()
+                ->where('product', $product->id)
+                ->where('user', Auth::user()->id)
+                ->first())
+            )
+            {
+                $selected = true;
+            }
+        }
+
         return view('public.products.productDetail', [
             'product' => $product,
             'categories' => $categories,
@@ -78,6 +92,7 @@ class ProductController extends Controller
             'features' => $featuresView,
             'comments' => $comments,
             'discount' => $discount,
+            'selected' => $selected ?? false,
         ]);
     }
 
