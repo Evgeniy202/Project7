@@ -16,11 +16,18 @@ Route::middleware(['verified'])->group(function () {
     Route::get('/remove-selected/{productId}', [\App\Http\Controllers\Open\SelectedProductsController::class, 'remove'])
         ->name('remove-selected');
 
+    Route::get('/cart', [\App\Http\Controllers\Open\CartProductsController::class, 'show'])
+        ->name('cart-view');
+    Route::post('/change-quantity/{cartProductId}', [\App\Http\Controllers\Open\CartProductsController::class, 'changeQuantity'])
+        ->name('change-quantity');
     Route::get('/add-product-to-cart/{productId}', [\App\Http\Controllers\Open\CartProductsController::class, 'add'])
         ->name('add-to-cart');
-
     Route::get('/remove-product-from-cart/{cartProductId}', [\App\Http\Controllers\Open\CartProductsController::class, 'remove'])
         ->name('remove-from-cart');
+    Route::get('/all-remove-from-cart', [\App\Http\Controllers\Open\CartProductsController::class, 'cleanCart'])
+        ->name('all-remove-from-cart');
+    Route::get('/redirect-to-product/{productId}', [\App\Http\Controllers\Open\CartProductsController::class, 'redirectToProduct'])
+        ->name('redirect-to-product');
 });
 
 Route::prefix('category')->group(function () {

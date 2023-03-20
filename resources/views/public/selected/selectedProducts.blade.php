@@ -51,7 +51,7 @@
                                     @endif
                                 </div> <!-- info-price-detail // -->
                                 <div class="mb-3">
-                                    <a href="#"
+                                    <a href="{{ route('add-to-cart', $product->id) }}"
                                        class="btn btn-outline-primary col-8 m-1"> Add to cart </a>
                                     <a href="{{ route('remove-selected', $product->id) }}"
                                        class="btn btn-outline-danger col-8 m-1"> Remove from selected </a>
