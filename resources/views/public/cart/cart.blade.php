@@ -51,9 +51,35 @@
             <h5>General price: ${{ $generalPrice }}</h5>
             <hr>
             <div class="">
-                <a href="#" class="btn btn-outline-success col-7 m-1">Make order</a>
+                <button id="show_order" class="btn btn-outline-success col-7 m-1">Make order</button>
                 <a href="{{ route('all-remove-from-cart') }}" class="btn btn-outline-danger col-4 m-1">Clean cart</a>
             </div>
+            <form id="order_form" method="post" action="{{ route('check-order') }}" hidden>
+                <hr>
+                @csrf
+                <div class="mt-2">
+                    <input id="name" name="name" type="text" class="form-control"
+                           placeholder="Recipient firstname and lastname...">
+                </div>
+                <div class="mt-2">
+                    <input id="phone" name="phone" type="text" class="form-control" placeholder="Mobile number...">
+                </div>
+                <div class="mt-2">
+                    <input id="address" name="address" type="text" class="form-control"
+                           placeholder="Address of ZIP Code...">
+                </div>
+                <div class="mt-2">
+                    <textarea id="comment" name="comment" class="form-control" rows="10"
+                              placeholder="Comment (not necessarily)..."></textarea>
+                </div>
+                <input id="generalPrice" name="generalPrice" type="text" class="visually-hidden"
+                       value="{{ $generalPrice }}" readonly>
+                <div class="mt-2">
+                    <button type="submit" class="btn btn-outline-success col-9 m-2">Send</button>
+                    <button type="button" id="hide_order" class="btn btn-outline-secondary col-2 m-2">Close</button>
+                </div>
+            </form>
+            <script src="js/order/form.js"></script>
         @else
             <h3 class="text-center">Empty</h3>
         @endif

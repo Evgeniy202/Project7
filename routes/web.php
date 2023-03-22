@@ -28,6 +28,9 @@ Route::middleware(['verified'])->group(function () {
         ->name('all-remove-from-cart');
     Route::get('/redirect-to-product/{productId}', [\App\Http\Controllers\Open\CartProductsController::class, 'redirectToProduct'])
         ->name('redirect-to-product');
+
+    Route::post('/check-order', [\App\Http\Controllers\Open\OrderController::class, 'checkOrder'])
+        ->name('check-order');
 });
 
 Route::prefix('category')->group(function () {
