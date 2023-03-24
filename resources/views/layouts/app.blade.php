@@ -88,7 +88,7 @@
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('cart-view') }}">My cart</a>
                                 <a class="dropdown-item" href="{{ route('selected-product-public') }}">My selected</a>
-                                <a class="dropdown-item" href="#">My orders</a>
+                                <a class="dropdown-item" href="{{ route('order-view') }}">My orders</a>
                                 <a class="dropdown-item" href="#">Support</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();

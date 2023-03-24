@@ -31,6 +31,8 @@ Route::middleware(['verified'])->group(function () {
 
     Route::post('/check-order', [\App\Http\Controllers\Open\OrderController::class, 'checkOrder'])
         ->name('check-order');
+    Route::get('/orders', [\App\Http\Controllers\Open\OrderController::class, 'orderView'])
+        ->name('order-view');
 });
 
 Route::prefix('category')->group(function () {

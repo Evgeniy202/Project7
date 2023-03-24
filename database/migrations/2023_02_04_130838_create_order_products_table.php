@@ -28,6 +28,7 @@ return new class extends Migration
                 ->on('products')
                 ->onDelete('cascade');
             $table->bigInteger('number');
+            $table->decimal('price');
             $table->timestamps();
         });
     }
