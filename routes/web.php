@@ -33,6 +33,10 @@ Route::middleware(['verified'])->group(function () {
         ->name('check-order');
     Route::get('/orders', [\App\Http\Controllers\Open\OrderController::class, 'orderView'])
         ->name('order-view');
+
+    Route::get('/support', [\App\Http\Controllers\Open\SupportController::class, 'show'])->name('support-public');
+    Route::post('/create-support', [\App\Http\Controllers\Open\SupportController::class, 'create'])
+        ->name('create-support');
 });
 
 Route::prefix('category')->group(function () {

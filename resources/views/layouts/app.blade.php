@@ -89,7 +89,7 @@
                                 <a class="dropdown-item" href="{{ route('cart-view') }}">My cart</a>
                                 <a class="dropdown-item" href="{{ route('selected-product-public') }}">My selected</a>
                                 <a class="dropdown-item" href="{{ route('order-view') }}">My orders</a>
-                                <a class="dropdown-item" href="#">Support</a>
+                                <a class="dropdown-item" href="{{ route('support-public') }}">Support</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
