@@ -119,11 +119,12 @@
             <div class="text-light">
                 <div class="col-md-12">
                     <h3 class=""></h3>
-                    <form action="#" method="POST" class="p-5">
+                    <form action="{{ route('add-comment', $product->id) }}" method="POST" class="p-5">
                         @csrf
-                        <input type="text" id="name" name="name" class="form-control m-2" placeholder="You name">
+                        <input type="text" id="name" name="name" class="form-control m-2" placeholder="You name"
+                               required>
                         <textarea id="comment" name="comment" class="form-control m-2" rows="5"
-                                  placeholder="You comment"></textarea>
+                                  placeholder="You comment" required></textarea>
                         <input type="submit" class="btn btn-outline-success m-2 col-12" value="Add comment">
                     </form>
                 </div>

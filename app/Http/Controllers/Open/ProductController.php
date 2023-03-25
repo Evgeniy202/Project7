@@ -19,37 +19,6 @@ use Illuminate\Support\Facades\Auth;
 class ProductController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \App\Models\Products  $product
@@ -69,7 +38,7 @@ class ProductController extends Controller
             ->get();
         $featuresOfProduct = FeaturesOfProducts::getValue($product->category, $charsOfProd);
         $values = ValuesOfFeatures::getValues($featuresOfProduct);
-        $comments = Comment::query()->where('product', $product->id)->orderBy('updated_at');
+        $comments = Comment::query()->where('product', $product->id)->orderBy('updated_at')->get();
         $featuresView = FeaturesOfProducts::getFeaturesOfProductView($charsOfProd, $featuresOfProduct, $values);
         $discount = ProductDiscount::getDiscount($product);
 
@@ -94,40 +63,6 @@ class ProductController extends Controller
             'discount' => $discount,
             'selected' => $selected ?? false,
         ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Products  $products
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Products $products)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Products  $products
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Products $products)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Products  $products
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Products $products)
-    {
-        //
     }
 
     public function searchAll(Request $request)
@@ -170,5 +105,21 @@ class ProductController extends Controller
                 'productsImages' => $productsImages,
             ]);
         }
+    }
+
+    public function addComment(Request $request, $productId)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'comment' => 'required',
+        ]);
+
+        $comment = new Comment();
+        $comment->product = $productId;
+        $comment->name = $validatedData['name'];
+        $comment->comment = $validatedData['comment'];
+        $comment->save();
+
+        return redirect()->back()->with(['message' => 'success', 'mes_text' => 'Your comment added.']);
     }
 }

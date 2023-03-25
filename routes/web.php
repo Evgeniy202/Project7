@@ -37,6 +37,9 @@ Route::middleware(['verified'])->group(function () {
     Route::get('/support', [\App\Http\Controllers\Open\SupportController::class, 'show'])->name('support-public');
     Route::post('/create-support', [\App\Http\Controllers\Open\SupportController::class, 'create'])
         ->name('create-support');
+
+    Route::post('/add-comment/{productId}', [\App\Http\Controllers\Open\ProductController::class, 'addComment'])
+        ->name('add-comment');
 });
 
 Route::prefix('category')->group(function () {
