@@ -21,7 +21,7 @@
 
 </head>
 <body class="bg-light text-dark">
-<nav class="navbar navbar-expand-md navbar-dark bg-black shadow-sm">
+<nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm">
     <div class="container">
         <a class="navbar-brand" href="{{ route('home') }}">
             Project7
@@ -40,9 +40,9 @@
                     </button>
                     <div class="collapse" id="dashboard-collapse" style="">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="{{ route('categories.index') }}" class="link-light rounded">All
+                            <li><a href="{{ route('categories.index') }}" class="link-dark rounded">All
                                     Categories</a></li>
-                            <li><a href="{{ route('categories.create') }}" class="link-light rounded">Create
+                            <li><a href="{{ route('categories.create') }}" class="link-dark rounded">Create
                                     Category</a></li>
                         </ul>
                     </div>
@@ -52,6 +52,27 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('banner.index') }}">Banners</a>
+                </li>
+                <li class="nav-item">
+                    <button class="btn btn-toggle align-items-center rounded collapsed nav-link"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#dashboard-collapse" aria-expanded="false">
+                        Orders
+                    </button>
+                    <div class="collapse" id="dashboard-collapse" style="">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="{{ route('orders-status', 'New') }}" class="link-dark rounded">New</a></li>
+                            <li><a href="{{ route('orders-status', 'Processing') }}" class="link-dark rounded">Processing</a>
+                            </li>
+                            <li><a href="{{ route('orders-status', 'Sent') }}" class="link-dark rounded">Sent</a></li>
+                            <li><a href="{{ route('orders-status', 'Executed') }}"
+                                   class="link-dark rounded">Executed</a></li>
+                            <li><a href="{{ route('orders-status', 'Cancelled') }}"
+                                   class="link-dark rounded">Cancelled</a></li>
+                            <hr>
+                            <li><a href="{{ route('search-order') }}" class="link-dark rounded">Search</a></li>
+                        </ul>
+                    </div>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto">
@@ -65,7 +86,7 @@
                 </li>
             </ul>
         </div>
-    </div>{{ route('forgetCategoriesSession') }}
+    </div>
 </nav>
 <main class="py-4 container">
     @if(session()->has('message'))

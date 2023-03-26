@@ -123,6 +123,15 @@ Route::group(['middleware' => ['role:admin']], function () {
                 ->name('remove-discount');
         });
 
+        Route::prefix('orders')->group(function () {
+            Route::get('/search', [\App\Http\Controllers\Admin\OrderController::class, 'search'])
+                ->name('search-order');
+            Route::get('/detail/{orderId}', [\App\Http\Controllers\Admin\OrderController::class, 'show'])
+                ->name('order-detail');
+            Route::get('/{status}', [\App\Http\Controllers\Admin\OrderController::class, 'ordersList'])
+                ->name('orders-status');
+        });
+
         Route::resource('categories', \App\Http\Controllers\Admin\CategoriesController::class);
         Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
         Route::resource('banner', \App\Http\Controllers\Admin\BannerController::class);
