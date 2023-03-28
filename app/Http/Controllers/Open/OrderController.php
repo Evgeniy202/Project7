@@ -7,6 +7,7 @@ use App\Models\CartProduct;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\ProductDiscount;
+use App\Models\Products;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -66,6 +67,9 @@ class OrderController extends Controller
             }
 
             $orderProduct->save();
+            $countProduct = Products::query()->find($product->id);
+            $countProduct->count -= $product->number;
+            $countProduct->save();
 
             $generalPrice += $orderProduct->price;
         }

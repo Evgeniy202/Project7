@@ -131,6 +131,14 @@ Route::group(['middleware' => ['role:admin']], function () {
             Route::get('/{status}', [\App\Http\Controllers\Admin\OrderController::class, 'ordersList'])
                 ->name('orders-status');
         });
+        Route::get('/change-status/{orderId}/{status}', [\App\Http\Controllers\Admin\OrderController::class, 'changeStatus'])
+            ->name('change-status');
+        Route::get('/remove-number/{orderProductId}', [\App\Http\Controllers\Admin\OrderController::class, 'removeProduct'])
+            ->name('remove-orderProduct');
+        Route::post('/change-number/{orderProductId}', [\App\Http\Controllers\Admin\OrderController::class, 'changeNumber'])
+            ->name('change-number');
+        Route::post('/add-product/{orderId}', [\App\Http\Controllers\Admin\OrderController::class, 'addProduct'])
+            ->name('add-product');
 
         Route::resource('categories', \App\Http\Controllers\Admin\CategoriesController::class);
         Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
