@@ -49,7 +49,7 @@
                             </i></a>
                     @endif
                     <b><a href="{{ route('product.show', $product) }}"
-                          class="title text-light text-decoration-none">{{ $product->title }}</a></b>
+                          class="title text-danger text-decoration-none">{{ $product->title }}</a></b>
                     <br>
                     @if (!empty($discounts[$product->id]))
                         <strong class="price text-danger">${{ $product->price - $discounts[$product->id] }} with

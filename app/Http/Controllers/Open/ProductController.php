@@ -67,44 +67,18 @@ class ProductController extends Controller
 
     public function searchAll(Request $request)
     {
-        $url = explode('/', $request->url());
+        $query = $request->input('search');
+        $products = Products::searchAllPublic($query);
+        $productsImages = ProductImage::getMainImages($products);
 
-        if (!empty($url[1]))
-        {
-            if ($url[1] == "Category")
-            {
-                $currentCategory = explode('?', $url[2])[0];
-
-                $query = $request->input('search');
-                $products = Products::searchInCategoryPublic($query, $currentCategory);
-
-                if (empty($products[0]))
-                {
-                    return redirect()->back()->with(["message" => "error", "mes_text" => "Product no found."]);
-                }
-
-                return view('public.products.searchInCategory', [
-                    'currentCategory' => $currentCategory,
-                    'products' => $products,
-                ]);
-            }
+        if (empty($products[0])) {
+            return redirect()->back()->with(["message" => "error", "mes_text" => "Product no found."]);
         }
-        else
-        {
-            $query = $request->input('search');
-            $products = Products::searchAllPublic($query);
-            $productsImages = ProductImage::getMainImages($products);
 
-            if (empty($products[0]))
-            {
-                return redirect()->back()->with(["message" => "error", "mes_text" => "Product no found."]);
-            }
-
-            return view('public.products.search', [
-                'products' => $products,
-                'productsImages' => $productsImages,
-            ]);
-        }
+        return view('public.products.search', [
+            'products' => $products,
+            'productsImages' => $productsImages,
+        ]);
     }
 
     public function addComment(Request $request, $productId)
