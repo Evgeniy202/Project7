@@ -40,6 +40,8 @@ Route::middleware(['verified'])->group(function () {
 
     Route::post('/add-comment/{productId}', [\App\Http\Controllers\Open\ProductController::class, 'addComment'])
         ->name('add-comment');
+    Route::post('/add-rating/{productId}', [\App\Http\Controllers\Open\ProductController::class, 'addRating'])
+        ->name('add-rating');
 });
 
 Route::prefix('category')->group(function () {

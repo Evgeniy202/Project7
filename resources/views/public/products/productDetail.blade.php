@@ -79,9 +79,52 @@
                         Add to selected
                     </button>
                     <a href="{{ route('add-to-cart', $product->id) }}" class="btn btn-outline-success">Add to cart</a>
+                    <button type="button" class="btn btn-outline-warning"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modalWindow">Evaluate the
+                        product
+                    </button>
+                    <div class="modal fade" id="modalWindow" tabindex="-1"
+                         aria-labelledby="modalWindowLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content text-dark">
+                                <div class="modal-header">
+                                    <h5 class="modal-title text-center"
+                                        id="modalWindowLabel">
+                                        Select Rating
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="post" action="{{ route('add-rating', $product->id) }}">
+                                        @csrf
+                                        <div class="d-flex justify-content-between">
+                                            <span>0</span>
+                                            <span>1</span>
+                                            <span>2</span>
+                                            <span>3</span>
+                                            <span>4</span>
+                                            <span>5</span>
+                                            <span>6</span>
+                                            <span>5</span>
+                                            <span>8</span>
+                                            <span>9</span>
+                                            <span>10</span>
+                                        </div>
+                                        <input class="col-12" type="range" id="rating" name="rating" min="0" max="10">
+                                        <hr>
+                                        <input type="submit" class="btn btn-success col-12" value="Send">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @else
                     <a href="{{ route('login') }}" class="btn btn-outline-danger">Add to selected</a>
                     <a href="{{ route('login') }}" class="btn btn-outline-success">Add to cart</a>
+                    <a href="{{ route('login') }}" class="btn btn-outline-warning">Evaluate the product</a>
                 @endif
             </div>
             <hr>
@@ -97,9 +140,6 @@
                 </tbody>
             </table>
             <hr>
-
-            {{--            comment in future--}}
-
         </div>
         <div class="row">
             <section id="detail">

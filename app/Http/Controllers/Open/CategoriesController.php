@@ -11,6 +11,7 @@ use App\Models\CharOfCategory;
 use App\Models\CharOfProduct;
 use App\Models\ProductDiscount;
 use App\Models\ProductImage;
+use App\Models\ProductRating;
 use App\Models\Products;
 use App\Models\Selected;
 use App\Models\ValueOfChar;
@@ -75,6 +76,8 @@ class CategoriesController extends Controller
             $selected = Selected::query()->where('user', Auth::user()->id)->pluck('product')->toArray();
         }
 
+        $ratings = ProductRating::getForProducts($products);
+
         return view('public.products.category', [
             'currentCategory' => $category,
             'products' => $products,
@@ -84,6 +87,7 @@ class CategoriesController extends Controller
             'discounts' => $discounts,
             'price' => $price,
             'selected' => $selected ?? null,
+            'ratings' => $ratings,
         ])->with('activeFeatures', $activeFeatures ?? null);
     }
 }

@@ -11,6 +11,7 @@ use App\Models\CharOfProduct;
 use App\Models\Comment;
 use App\Models\ProductDiscount;
 use App\Models\ProductImage;
+use App\Models\ProductRating;
 use App\Models\Products;
 use App\Models\Selected;
 use Illuminate\Http\Request;
@@ -95,5 +96,31 @@ class ProductController extends Controller
         $comment->save();
 
         return redirect()->back()->with(['message' => 'success', 'mes_text' => 'Your comment added.']);
+    }
+
+    public function addRating(Request $request, $productId)
+    {
+        $rating = ProductRating::query()
+            ->where('product_id', $productId)
+            ->where('user_id', Auth::user()->id)
+            ->first();
+
+        if (empty($rating))
+        {
+            $rating = new ProductRating();
+            $rating->product_id = $productId;
+            $rating->user_id = Auth::user()->id;
+            $rating->rating = $request->input('rating');
+            $rating->save();
+
+            return redirect()->back()->with(['message' => 'success', 'mes_text' => 'Your rating added.']);
+        }
+        else
+        {
+            $rating->rating = $request->input('rating');
+            $rating->save();
+
+            return redirect()->back()->with(['message' => 'success', 'mes_text' => 'Your rating added.']);
+        }
     }
 }
