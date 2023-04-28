@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Functions\Sessions\GetCategories;
 use App\Models\Banner;
+use App\Models\Categories;
 use App\Models\ProductDiscount;
 use App\Models\ProductImage;
+use App\Models\ProductRating;
 use App\Models\Products;
 use App\Models\Selected;
 use Illuminate\Http\Request;
@@ -27,6 +29,8 @@ class HomeController extends Controller
         $productsImages = ProductImage::getMainImages($products);
         $banners = Banner::getBanners();
         $discounts = ProductDiscount::getDiscounts($products);
+        $ratings = ProductRating::getForProducts($products);
+        $categoriesList = Categories::all()->pluck('title', 'id')->toArray();
 
         if (!empty(Auth::user()->id))
         {
@@ -39,6 +43,8 @@ class HomeController extends Controller
             'banners' => $banners,
             'discounts' => $discounts,
             'selected' => $selected ?? null,
+            'ratings' => $ratings ?? false,
+            'categoriesList' => $categoriesList,
         ]);
     }
 }

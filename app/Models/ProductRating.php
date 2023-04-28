@@ -34,6 +34,6 @@ class ProductRating extends Model
     {
         $rating = self::query()->where('product_id', $productId)->avg('rating');
 
-        return $rating ?? null;
+        return round($rating, 1) ?? null;
     }
 }

@@ -47,7 +47,7 @@
         </button>
     </div>
     <hr>
-    <main class="container bg-dark text-light rounded-2">
+    <main class="container bg-light text-dark rounded-2">
         <header class="section-heading">
             <h1 class="section-title">Recommended Products</h1>
         </header>

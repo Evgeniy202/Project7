@@ -7,7 +7,7 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::post('/search', [\App\Http\Controllers\Open\ProductController::class, 'searchAll'])->name('searchAll');
+Route::match(['get', 'post'], '/search', [\App\Http\Controllers\Open\ProductController::class, 'searchAll'])->name('searchAll');
 
 Route::middleware(['verified'])->group(function () {
     Route::get('/selected', [\App\Http\Controllers\Open\SelectedProductsController::class, 'show'])

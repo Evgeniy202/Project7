@@ -87,7 +87,7 @@ class CategoriesController extends Controller
             'discounts' => $discounts,
             'price' => $price,
             'selected' => $selected ?? null,
-            'ratings' => $ratings,
+            'ratings' => $ratings ?? false,
         ])->with('activeFeatures', $activeFeatures ?? null);
     }
 }

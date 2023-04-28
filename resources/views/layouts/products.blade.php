@@ -51,6 +51,17 @@
                     <b><a href="{{ route('product.show', $product) }}"
                           class="title text-danger text-decoration-none">{{ $product->title }}</a></b>
                     <br>
+                    @if ($categoriesList)
+                        @if (!empty($categoriesList[$product->category]))
+                            <small
+                                class="text-muted">{{ $categoriesList[$product->category] }} @if ($ratings)
+                                    @if (!empty($ratings[$product->id]))
+                                        <br><p>Reviews: {{ round($ratings[$product->id], 1) }}/10
+                                    @endif
+                                @endif</small>
+                                <br>
+                        @endif
+                    @endif
                     @if (!empty($discounts[$product->id]))
                         <strong class="price text-danger">${{ $product->price - $discounts[$product->id] }} with
                             discount!</strong>

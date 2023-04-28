@@ -6,6 +6,7 @@ use App\Functions\Features\FeaturesOfProducts;
 use App\Functions\Features\ValuesOfFeatures;
 use App\Functions\Sessions\GetCategories;
 use App\Http\Controllers\Controller;
+use App\Models\Categories;
 use App\Models\CharOfCategory;
 use App\Models\CharOfProduct;
 use App\Models\Comment;
@@ -42,6 +43,7 @@ class ProductController extends Controller
         $comments = Comment::query()->where('product', $product->id)->orderBy('updated_at')->get();
         $featuresView = FeaturesOfProducts::getFeaturesOfProductView($charsOfProd, $featuresOfProduct, $values);
         $discount = ProductDiscount::getDiscount($product);
+        $rating = ProductRating::getForProduct($product->id);
 
         if (!empty(Auth::user()->id))
         {
@@ -63,6 +65,7 @@ class ProductController extends Controller
             'comments' => $comments,
             'discount' => $discount,
             'selected' => $selected ?? false,
+            'rating' => $rating ?? false,
         ]);
     }
 
@@ -71,6 +74,8 @@ class ProductController extends Controller
         $query = $request->input('search');
         $products = Products::searchAllPublic($query);
         $productsImages = ProductImage::getMainImages($products);
+        $categoriesList = Categories::all()->pluck('title', 'id')->toArray();
+        $ratings = ProductRating::getForProducts($products);
 
         if (empty($products[0])) {
             return redirect()->back()->with(["message" => "error", "mes_text" => "Product no found."]);
@@ -79,6 +84,8 @@ class ProductController extends Controller
         return view('public.products.search', [
             'products' => $products,
             'productsImages' => $productsImages,
+            'categoriesList' => $categoriesList ?? false,
+            'ratings' => $ratings ?? false,
         ]);
     }
 
@@ -113,14 +120,14 @@ class ProductController extends Controller
             $rating->rating = $request->input('rating');
             $rating->save();
 
-            return redirect()->back()->with(['message' => 'success', 'mes_text' => 'Your rating added.']);
+            return redirect()->back()->with(['message' => 'success', 'mes_text' => 'Your response added.']);
         }
         else
         {
             $rating->rating = $request->input('rating');
             $rating->save();
 
-            return redirect()->back()->with(['message' => 'success', 'mes_text' => 'Your rating added.']);
+            return redirect()->back()->with(['message' => 'success', 'mes_text' => 'Your response changed.']);
         }
     }
 }

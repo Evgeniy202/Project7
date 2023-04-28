@@ -54,7 +54,11 @@
                            class="title text-danger">{{ $product->title }}</a>
                     </b>
                     <br>
-                    <small class="text-muted">{{ $currentCategory->title }}</small>
+                    <small class="text-muted">{{ $currentCategory->title }} @if ($ratings)
+                            @if (!empty($ratings[$product->id]))
+                                <br><p>Reviews: {{ round($ratings[$product->id], 1) }}/10
+                            @endif
+                        @endif</small>
                     <br>
                     @if (!empty($discounts[$product->id]))
                         <strong class="price text-danger">${{ $product->price - $discounts[$product->id] }} with

@@ -12,6 +12,7 @@ use App\Models\CharOfCategory;
 use App\Models\CharOfProduct;
 use App\Models\ProductDiscount;
 use App\Models\ProductImage;
+use App\Models\ProductRating;
 use App\Models\Products;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -66,6 +67,7 @@ class SortController extends Controller
         $values = ValuesOfFeatures::getValues($features);
         $discounts = ProductDiscount::getDiscounts($products);
         $price = Products::price($category->id);
+        $ratings = ProductRating::getForProducts($products);
 
         return view('public.products.category', [
             'currentCategory' => $category,
@@ -76,6 +78,7 @@ class SortController extends Controller
             'discounts' => $discounts,
             'sort' => $sort,
             'price' => $price,
+            'ratings' => $ratings ?? false,
         ])->with('activeFeatures', $activeFeatures ?? null);
     }
 }

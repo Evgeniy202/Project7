@@ -63,6 +63,9 @@
                         <strong class="price"> ${{ $product->price }} </strong>
                     @endif
                 </p>
+                @if ($rating)
+                    <p>Reviews: {{ $rating }}/10</p>
+                @endif
                 <p>Description: {{ $product->description }} </p>
                 <hr>
                 @if(!empty(Auth::user()->id))

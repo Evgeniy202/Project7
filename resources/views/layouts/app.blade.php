@@ -52,7 +52,7 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ms-auto">
                     <li>
-                        <form action="{{ route('searchAll') }}" method="POST">
+                        <form action="{{ route('searchAll') }}" method="GET">
                             @csrf
                             <div class="input-group float-center">
                                 <div class="form-outline">
