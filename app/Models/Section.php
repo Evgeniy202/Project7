@@ -5,11 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Categories extends Model
+class Section extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id', 'priority', 'title', 'section'];
-
-    public $timestamps = false;
+    protected $fillable = ['id', 'title', 'priority'];
 }

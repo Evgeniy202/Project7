@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Functions\Sessions\GetCategories;
 use App\Models\Categories;
 use App\Models\CharOfCategory;
+use App\Models\Section;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -19,6 +20,7 @@ class CategoriesController extends Controller
     {
         $categories = Categories::query()->orderBy('priority')->get();
         $charList = CharOfCategory::query()->orderBy('numberInFilter')->get();
+//        $section = Section::query()->orderBy('section')->get();
 
         return view('admin.categories.index', [
             'categories' => $categories,
@@ -52,6 +54,12 @@ class CategoriesController extends Controller
         }
 
         $new_category->title = $request->input('title');
+
+        if (!empty($request->input('section')))
+        {
+            $new_category->section = $request->input('section');
+        }
+
         $new_category->save();
 
         return redirect()->route('categories.index')
@@ -73,6 +81,12 @@ class CategoriesController extends Controller
         }
 
         $category->title = $request->input('title');
+
+        if (!empty($request->input('section')))
+        {
+            $category->section = $request->input('section');
+        }
+
         $category->save();
 
         return redirect()->route('categories.index')
