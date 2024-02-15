@@ -10,4 +10,9 @@ class Section extends Model
     use HasFactory;
 
     protected $fillable = ['id', 'title', 'priority'];
+
+//    public function categories(): \Illuminate\Database\Eloquent\Relations\HasMany
+//    {
+//        return $this->hasMany(Categories::class);
+//    }
 }

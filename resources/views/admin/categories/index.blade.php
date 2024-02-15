@@ -8,6 +8,7 @@
             <th scope="col">Priority</th>
             <th scope="col">Tittle</th>
             <th scope="col">Features</th>
+            <th scope="col">Section</th>
             <th scope="col">Change</th>
             <th scope="col">Remove</th>
         </tr>
@@ -17,6 +18,13 @@
             <tr>
                 <th scope="row">{{ $category->priority }}</th>
                 <td>{{ $category->title }}</td>
+                <td>
+                @if(!$category->section == null)
+                    {{ $category->section_title }}
+                    @else
+                    None
+                @endif
+                </td>
                 <td>
                     <button class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#charModal-{{ $category->id }}">Features
@@ -86,6 +94,13 @@
                                                        class="form-control text-center"
                                                        value="{{ $category->title }}"
                                                        required>
+                                            </div>
+                                            <div class="form-group mt-3">
+                                                <select class="form-control text-center btn-outline-secondary" name="category">
+                                                    @foreach ($sections as $section)
+                                                        <option value="{{ $section->id }}">{{ $section->title }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                             <hr>
                                             <input type="submit" class="btn btn-warning btn-block col-12"

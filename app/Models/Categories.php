@@ -12,4 +12,9 @@ class Categories extends Model
     protected $fillable = ['id', 'priority', 'title', 'section'];
 
     public $timestamps = false;
+
+//    public function sections(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+//    {
+//        return $this->belongsTo(Section::class);
+//    }
 }

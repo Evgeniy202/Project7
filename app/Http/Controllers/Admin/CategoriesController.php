@@ -18,13 +18,17 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Categories::query()->orderBy('priority')->get();
+        $categories = Categories::query()->orderBy('priority')
+            ->leftJoin('sections', 'categories.section', '=', 'sections.id')
+            ->select('categories.*', 'sections.title as section_title')
+            ->get();
         $charList = CharOfCategory::query()->orderBy('numberInFilter')->get();
-//        $section = Section::query()->orderBy('section')->get();
+        $sections = Section::query()->orderBy('priority')->get();
 
         return view('admin.categories.index', [
             'categories' => $categories,
             'charList' => $charList,
+            'sections' => $sections,
         ]);
     }
 
@@ -49,16 +53,12 @@ class CategoriesController extends Controller
         $new_category = new Categories();
 
         if (!empty($request->input('priority')))
-        {
             $new_category->priority = $request->input('priority');
-        }
 
         $new_category->title = $request->input('title');
 
         if (!empty($request->input('section')))
-        {
             $new_category->section = $request->input('section');
-        }
 
         $new_category->save();
 
