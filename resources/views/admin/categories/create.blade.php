@@ -14,6 +14,14 @@
                 <input style="text-align: center" type="text" name="title" id="title"
                        placeholder="Title..." class="form-control" required>
             </div>
+            <div class="form-group mt-3">
+                <select class="form-control text-center btn-outline-secondary" name="section">
+                    <option value="null">None</option>
+                    @foreach ($sections as $section)
+                        <option value="{{ $section->id }}">{{ $section->title }}</option>
+                    @endforeach
+                </select>
+            </div>
             <hr>
             <input type="submit" class="btn btn-success btn-block col-12" value="Add">
         </form>

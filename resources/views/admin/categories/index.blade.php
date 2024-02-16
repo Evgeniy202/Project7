@@ -96,10 +96,23 @@
                                                        required>
                                             </div>
                                             <div class="form-group mt-3">
-                                                <select class="form-control text-center btn-outline-secondary" name="category">
-                                                    @foreach ($sections as $section)
-                                                        <option value="{{ $section->id }}">{{ $section->title }}</option>
-                                                    @endforeach
+                                                <select class="form-control text-center btn-outline-secondary" name="section">
+                                                    @if($category->section != null)
+                                                        <option value="{{ $category->section }}">
+                                                            {{ $category->section_title }}
+                                                        </option>
+                                                        @foreach ($sections as $section)
+                                                            @if($section->id != $category->section)
+                                                                <option value="{{ $section->id }}">{{ $section->title }}</option>
+                                                            @endif
+                                                        @endforeach
+                                                        <option value="null">None</option>
+                                                    @else
+                                                        <option value="null">None</option>
+                                                        @foreach ($sections as $section)
+                                                            <option value="{{ $section->id }}">{{ $section->title }}</option>
+                                                        @endforeach
+                                                    @endif
                                                 </select>
                                             </div>
                                             <hr>

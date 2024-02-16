@@ -39,7 +39,11 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        $sections = Section::query()->orderBy('priority')->get();
+
+        return view('admin.categories.create', [
+            'sections' => $sections,
+        ]);
     }
 
     /**
@@ -58,7 +62,10 @@ class CategoriesController extends Controller
         $new_category->title = $request->input('title');
 
         if (!empty($request->input('section')))
-            $new_category->section = $request->input('section');
+            if ($request->input('section') == 'null')
+                $new_category->section = null;
+            else
+                $new_category->section = $request->input('section');
 
         $new_category->save();
 
@@ -73,19 +80,21 @@ class CategoriesController extends Controller
      * @param  \App\Models\Categories  $category
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Categories $category)
+    public function update(Request $request, Categories $category): \Illuminate\Http\RedirectResponse
     {
         if (!empty($request->input('priority')))
-        {
             $category->priority = $request->input('priority');
-        }
 
         $category->title = $request->input('title');
 
         if (!empty($request->input('section')))
-        {
             $category->section = $request->input('section');
-        }
+
+        if (!empty($request->input('section')))
+            if ($request->input('section') == 'null')
+                $category->section = null;
+            else
+                $category->section = $request->input('section');
 
         $category->save();
 
