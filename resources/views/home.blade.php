@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Project7')
+@section('title', 'FishingShop')
 @section('content')
     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
@@ -38,18 +38,18 @@
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
                 data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
+            <span class="visually-hidden">Попередня</span>
         </button>
         <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
                 data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
+            <span class="visually-hidden">Наступна</span>
         </button>
     </div>
     <hr>
     <main class="container bg-light text-dark rounded-2">
         <header class="section-heading">
-            <h1 class="section-title">Recommended Products</h1>
+            <h1 class="section-title">Рекомендовані товари</h1>
         </header>
         <script
             src="https://code.jquery.com/jquery-3.6.0.min.js"

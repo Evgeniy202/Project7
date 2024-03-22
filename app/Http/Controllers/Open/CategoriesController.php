@@ -61,7 +61,7 @@ class CategoriesController extends Controller
             $activeFeatures['max_price'] = $request->query()['max_price'];
         }
 
-        $products = $products->paginate(20);
+        $products = $products->paginate(9);
 
         $images = ProductImage::getMainImages($products ?? null);
         $features = CharOfCategory::query()

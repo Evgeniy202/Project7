@@ -59,7 +59,7 @@
                                         <br><p>Reviews: {{ round($ratings[$product->id], 1) }}/10
                                     @endif
                                 @endif</small>
-                                <br>
+                            <br>
                         @endif
                     @endif
                     @if (!empty($discounts[$product->id]))

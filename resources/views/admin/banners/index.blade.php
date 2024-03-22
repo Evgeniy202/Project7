@@ -1,11 +1,11 @@
 @extends('admin.layouts.base')
-@section('title', 'Banners')
+@section('title', 'Проекти - Банери')
 @section('content')
-    <h1>Banners</h1>
+    <h1>Банери</h1>
     <hr class="mt-2">
     <button type="button" class="btn btn-outline-success col-md-12" data-bs-toggle="modal"
             data-bs-target="#orderDetails-">
-        Add New Banner
+        Додати новий банер
     </button>
     <div class="modal fade" id="orderDetails-" tabindex="-1" aria-labelledby="orderDetailsLabel-"
          aria-hidden="true">
@@ -13,7 +13,7 @@
             <div class="modal-content text-dark">
                 <div class="modal-header">
                     <h5 class="modal-title text-center" id="orderDetailsLabel-">
-                        Add new product
+                        Додати новий продукт
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -23,31 +23,31 @@
                             @csrf
                             <div class="form-group mt-3">
                                 <div class="form-group mt-3">
-                                    <input type="text" name="title" id="title" placeholder="Title..."
+                                    <input type="text" name="title" id="title" placeholder="Назва..."
                                            class="form-control">
                                 </div>
                                 <div class="form-group mt-3">
-                                    <input type="text" name="link" id="link" placeholder="Link..."
+                                    <input type="text" name="link" id="link" placeholder="Посилання..."
                                            class="form-control">
                                 </div>
                                 <div class="form-group mt-3">
-                                    <input type="number" name="priority" id="priority" placeholder="Priority..."
+                                    <input type="number" name="priority" id="priority" placeholder="Пріоритет..."
                                            class="form-control">
                                 </div>
                                 <div class="form-group mt-3">
-                                    <label>Is Active <input type="checkbox" name="active" id="active"
-                                                            value="1"></label>
+                                    <label>Активний <input type="checkbox" name="active" id="active"
+                                                           value="1"></label>
                                 </div>
                                 <div class="form-group mt-3">
-                                    <label>Image <input type="file" name="image" id="image"></label>
+                                    <label>Зображення <input type="file" name="image" id="image"></label>
                                 </div>
                                 <div class="form-group mt-3">
                                     <textarea class="form-control" name="description" id="description" rows="10"
-                                              placeholder="Description..."></textarea>
+                                              placeholder="Опис..."></textarea>
                                 </div>
                             </div>
                             <hr>
-                            <input type="submit" class="btn btn-success btn-block col-12" value="Add">
+                            <input type="submit" class="btn btn-success btn-block col-12" value="Додати">
                         </form>
                     </div>
                 </div>
@@ -58,12 +58,12 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th scope="col">Priority</th>
-            <th scope="col">Image</th>
-            <th scope="col">Title</th>
-            <th scope="col">Link</th>
-            <th scope="col">Is Active</th>
-            <th scope="col">Actions</th>
+            <th scope="col">Пріоритет</th>
+            <th scope="col">Зображення</th>
+            <th scope="col">Назва</th>
+            <th scope="col">Посилання</th>
+            <th scope="col">Активний</th>
+            <th scope="col">Дії</th>
         </tr>
         </thead>
         <tbody>
@@ -84,7 +84,7 @@
                             <div class="modal-content text-dark">
                                 <div class="modal-header bg-dark">
                                     <h5 class="modal-title text-light text-center" id="imageDetails-{{ $banner->id }}">
-                                        Banner: {{ $banner->title }}_{{ $banner->position }}
+                                        Банер: {{ $banner->title }}_{{ $banner->position }}
                                     </h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
@@ -104,7 +104,7 @@
                     @if(!empty($banner->link))
                         {{ $banner->link }}
                     @else
-                        Empty
+                        Порожнє
                     @endif
                 </td>
                 <td><strong>
@@ -117,16 +117,15 @@
                 </td>
                 <td>
                     <button class="btn btn-warning col-5" data-bs-toggle="modal"
-                            data-bs-target="#changeModal-{{ $banner->id }}">Detail Or Change Banner
+                            data-bs-target="#changeModal-{{ $banner->id }}">Деталі або Змінити банер
                     </button>
                     <div class="modal fade" id="changeModal-{{ $banner->id }}" tabindex="-1"
                          aria-labelledby="changeModalLabel-{{ $banner->id }}" aria-hidden="true">
                         <div class="modal-dialog modal-x">
                             <div class="modal-content">
                                 <div class="modal-header text-dark">
-                                    <h5 class="modal-title text-center"
-                                        id="changeModalLabel-{{ $banner->id }}">
-                                        <strong>Banner - {{ $banner->title }}</strong>
+                                    <h5 class="modal-title text-center" id="changeModalLabel-{{ $banner->id }}">
+                                        <strong>Банер - {{ $banner->title }}</strong>
                                     </h5>
                                 </div>
                                 <div class="modal-body">
@@ -136,44 +135,38 @@
                                             @csrf
                                             @method('PUT')
                                             <div class="form-group mt-3">
-                                                <div class="form-group mt-3">
-                                                    <input type="text" name="title" id="title" placeholder="Title..."
-                                                           class="form-control" value="{{ $banner->title }}">
-                                                </div>
-                                                <div class="form-group mt-3">
-                                                    <input type="text" name="link" id="link" placeholder="Link..."
-                                                           class="form-control" value="{{ $banner->link }}">
-                                                </div>
-                                                <div class="form-group mt-3">
-                                                    <input type="number" name="priority" id="priority"
-                                                           placeholder="Priority..."
-                                                           class="form-control" value="{{ $banner->priority }}">
-                                                </div>
-                                                <div class="form-group mt-3">
-                                                    @if($banner->active == 1)
-                                                        <label>Is Active <input type="checkbox" name="active"
-                                                                                id="active"
-                                                                                value="1"
-                                                                                checked></label>
-                                                    @else
-                                                        <label>Is Active <input type="checkbox" name="active"
-                                                                                id="active"
-                                                                                value="1"></label>
-                                                    @endif
-                                                </div>
-                                                <div class="form-group mt-3">
-                                                    <label>Image <input type="file" name="image" id="image"></label>
-                                                </div>
-                                                <div class="form-group mt-3">
-                                                    <textarea class="form-control" name="description" id="description"
-                                                              rows="10"
-                                                              placeholder="Description...">{{ $banner->description }}
-                                                    </textarea>
-                                                </div>
+                                                <input type="text" name="title" id="title" placeholder="Заголовок..."
+                                                       class="form-control" value="{{ $banner->title }}">
+                                            </div>
+                                            <div class="form-group mt-3">
+                                                <input type="text" name="link" id="link" placeholder="Посилання..."
+                                                       class="form-control" value="{{ $banner->link }}">
+                                            </div>
+                                            <div class="form-group mt-3">
+                                                <input type="number" name="priority" id="priority"
+                                                       placeholder="Пріоритет..." class="form-control"
+                                                       value="{{ $banner->priority }}">
+                                            </div>
+                                            <div class="form-group mt-3">
+                                                @if($banner->active == 1)
+                                                    <label>Активний <input type="checkbox" name="active" id="active"
+                                                                           value="1" checked></label>
+                                                @else
+                                                    <label>Активний <input type="checkbox" name="active" id="active"
+                                                                           value="1"></label>
+                                                @endif
+                                            </div>
+                                            <div class="form-group mt-3">
+                                                <label>Зображення <input type="file" name="image" id="image"></label>
+                                            </div>
+                                            <div class="form-group mt-3">
+                                                <textarea class="form-control" name="description" id="description"
+                                                          rows="10"
+                                                          placeholder="Опис...">{{ $banner->description }}</textarea>
                                             </div>
                                             <hr>
                                             <input type="submit" class="btn btn-warning btn-block col-12"
-                                                   value="Change">
+                                                   value="Змінити">
                                         </form>
                                     </div>
                                 </div>
@@ -181,31 +174,28 @@
                         </div>
                     </div>
                     <button class="btn btn-danger col-5" data-bs-toggle="modal"
-                            data-bs-target="#removeModal-{{ $banner->id }}">Remove Banner
+                            data-bs-target="#removeModal-{{ $banner->id }}">Видалити банер
                     </button>
                     <div class="modal fade" id="removeModal-{{ $banner->id }}" tabindex="-1"
                          aria-labelledby="removeModalLabel-{{ $banner->id }}" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header text-dark">
-                                    <h5 class="modal-title text-center"
-                                        id="removeModalLabel-{{ $banner->id }}">
-                                        <strong>Remove Banner</strong>
+                                    <h5 class="modal-title text-center" id="removeModalLabel-{{ $banner->id }}">
+                                        <strong>Видалити банер</strong>
                                     </h5>
                                 </div>
                                 <div class="modal-body text-dark">
-                                    <div>
-                                        You are sure you want to delete this Banner?
-                                    </div>
+                                    <div>Ви впевнені, що хочете видалити цей банер?</div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                        Close
+                                        Закрити
                                     </button>
                                     <form action="{{ route('banner.destroy', $banner) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="btn btn-outline-danger">Remove</button>
+                                        <button class="btn btn-outline-danger">Видалити</button>
                                     </form>
                                 </div>
                             </div>

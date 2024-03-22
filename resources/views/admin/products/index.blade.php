@@ -1,19 +1,19 @@
 @extends('admin.layouts.base')
-@section('title', 'Products')
+@section('title', 'Продукти')
 @section('content')
     <form class="form-inline mt-2 mt-md-0 row mb-4" method="POST"
           action="{{ route('searchProductsAdmin') }}">
         @csrf
-        <input name="search" id="search" class="mr-sm-2 col-md-9 bg-light" type="text" placeholder="Search"
+        <input name="search" id="search" class="mr-sm-2 col-md-9 bg-light" type="text" placeholder="Пошук"
                aria-label="Search" required>
-        <button class="btn btn-primary my-2 my-sm-0 col-md-2" type="submit">Search</button>
+        <button class="btn btn-primary my-2 my-sm-0 col-md-2" type="submit">Пошук</button>
         <a href="{{ route('products.index') }}"
-           class="btn btn-secondary my-2 my-sm-0 col-md-1">Reset
+           class="btn btn-secondary my-2 my-sm-0 col-md-1">Скинути
         </a>
     </form>
     <button type="button" class="btn btn-outline-success col-md-12" data-bs-toggle="modal"
             data-bs-target="#orderDetails-">
-        Add new Product
+        Додати новий продукт
     </button>
     <div class="modal fade" id="orderDetails-" tabindex="-1" aria-labelledby="orderDetailsLabel-"
          aria-hidden="true">
@@ -21,7 +21,7 @@
             <div class="modal-content text-dark">
                 <div class="modal-header">
                     <h5 class="modal-title text-center" id="orderDetailsLabel-">
-                        Add new product
+                        Додати новий продукт
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -36,35 +36,35 @@
                                     @endforeach
                                 </select>
                                 <div class="form-group mt-3">
-                                    <input type="text" name="title" id="title" placeholder="Title..."
+                                    <input type="text" name="title" id="title" placeholder="Назва..."
                                            class="form-control">
                                 </div>
                                 <div class="form-group mt-3">
-                                    <input type="text" name="slug" id="slug" placeholder="Marking..."
+                                    <input type="text" name="slug" id="slug" placeholder="Маркування..."
                                            class="form-control">
                                 </div>
                                 <div class="form-group mt-3">
                                         <textarea class="form-control" name="description" id="description" rows="10"
-                                                  placeholder="Description..."></textarea>
+                                                  placeholder="Опис..."></textarea>
                                 </div>
                                 <div class="form-group mt-3">
-                                    <input type="text" name="price" id="price" placeholder="Price..."
+                                    <input type="text" name="price" id="price" placeholder="Ціна..."
                                            class="form-control">
                                 </div>
                                 <div class="form-group mt-3">
-                                    <label>Is available <input type="checkbox" name="isAvailable" id="isAvailable"
-                                                               value="1"></label>
+                                    <label>Доступний <input type="checkbox" name="isAvailable" id="isAvailable"
+                                                            value="1"></label>
                                 </div>
                                 <div class="form-group mt-3">
-                                    <label>Is favorite <input type="checkbox" name="isFavorite" id="isFavorite"
-                                                              value="1"></label>
+                                    <label>Улюблений <input type="checkbox" name="isFavorite" id="isFavorite"
+                                                            value="1"></label>
                                 </div>
                                 <div class="form-group mt-3">
-                                    <label>Main image <input type="file" name="mainImg" id="mainImg"></label>
+                                    <label>Основне зображення <input type="file" name="mainImg" id="mainImg"></label>
                                 </div>
                             </div>
                             <hr>
-                            <input type="submit" class="btn btn-success btn-block col-12" value="Add">
+                            <input type="submit" class="btn btn-success btn-block col-12" value="Додати">
                         </form>
                     </div>
                 </div>
@@ -73,20 +73,21 @@
     </div>
     <hr>
     <div class="row">
-        <h3 class="col-md-10">All Products</h3>
+        <h3 class="col-md-10">Усі продукти</h3>
         <hr class="mb-4">
     </div>
     <div class="row">
-        <h6 class="col-md-4">Title</h6>
-        <h6 class="col-md-2">Count</h6>
-        <h6 class="col-md-2">Price</h6>
-        <h6 class="col-md-2">Is available</h6>
-        <h6 class="col-md-2">Is favorite</h6>
+        <h6 class="col-md-3">Назва</h6>
+        <h6 class="col-md-2">Кількість</h6>
+        <h6 class="col-md-2">Ціна</h6>
+        <h6 class="col-md-2">Доступність</h6>
+        <h6 class="col-md-2">Улюблений</h6>
+        <h6 class="col-md-1">Дії</h6> <!-- Додано стовпець для дій -->
         <hr class="mb-4">
         @foreach($products as $product)
             <hr>
             <a href="{{ route('products.show', $product) }}"
-               class="col-md-4 btn btn-warning">{{ $product->title }}</a>
+               class="col-md-3 btn btn-warning">{{ $product->title }}</a>
             <p class="col-md-2">{{ $product->count }}</p>
             <p class="col-md-2">{{ $product->price }}$</p>
             <strong class="col-md-2">
@@ -103,6 +104,13 @@
                     -
                 @endif
             </strong>
+            <div class="col-md-1">
+                <form action="{{ route('products.destroy', $product->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Видалити</button>
+                </form>
+            </div>
         @endforeach
         <div class="d-flex justify-content-center">
             {{ $products->links() }}

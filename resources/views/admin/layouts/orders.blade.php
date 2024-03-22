@@ -1,8 +1,8 @@
 <div class="col-12">
     @if(!empty($status))
-        <h4 class="mb-5">{{$status}} Orders:</h4>
+        <h4 class="mb-5">{{$status}} Замовлення:</h4>
     @else
-    <h4 class="mb-5">Orders:</h4>
+        <h4 class="mb-5">Замовлення:</h4>
     @endif
     <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active" role="tabpanel"
@@ -10,11 +10,11 @@
             <table class="table table-striped text-dark">
                 <thead>
                 <tr>
-                    <th class="col-md-2">Number</th>
-                    <th class="col-md-2">Status</th>
-                    <th class="col-md-2">Price</th>
-                    <th class="col-md-2">Created at</th>
-                    <th class="col-md-2">Updated at</th>
+                    <th class="col-md-2">Номер</th>
+                    <th class="col-md-2">Статус</th>
+                    <th class="col-md-2">Ціна</th>
+                    <th class="col-md-2">Створено</th>
+                    <th class="col-md-2">Оновлено</th>
                 </tr>
                 </thead>
                 <tbody class="text-dark">
@@ -27,7 +27,7 @@
                         <td class="col-md-2">{{$order->updated_at}}</td>
                         <td>
                             <a href="{{ route('order-detail', $order->id) }}"
-                               class="btn btn-primary" target="_blank">More</a>
+                               class="btn btn-primary" target="_blank">Детальніше</a>
                         </td>
                     </tr>
                 @endforeach
