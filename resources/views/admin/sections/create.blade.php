@@ -8,7 +8,7 @@
             @csrf
             <div class="form-group mt-3">
                 <input style="text-align: center" type="text" name="priority" id="priority"
-                       placeholder="Priority (not necessary..." class="form-control">
+                       placeholder="Priority (not necessary...)" class="form-control">
             </div>
             <div class="form-group mt-3">
                 <input style="text-align: center" type="text" name="title" id="title"
