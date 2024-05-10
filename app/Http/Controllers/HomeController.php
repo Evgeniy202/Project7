@@ -10,6 +10,7 @@ use App\Models\ProductImage;
 use App\Models\ProductRating;
 use App\Models\Products;
 use App\Models\Selected;
+use App\Models\Section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,7 +31,11 @@ class HomeController extends Controller
         $banners = Banner::getBanners();
         $discounts = ProductDiscount::getDiscounts($products);
         $ratings = ProductRating::getForProducts($products);
-        $categoriesList = Categories::all()->pluck('title', 'id')->toArray();
+        $categoriesList = Categories::all()->pluck('title', 'id')->toArray(); // костиль
+        // $sectionsList = Section::query()->orderBy('priority')->pluck('title', 'id')->toArray();
+        
+        // $sections = Section::orderBy('priority')->get();
+        // $categories = Categories::orderBy('section')->get();
 
         if (!empty(Auth::user()->id))
         {
@@ -44,7 +49,9 @@ class HomeController extends Controller
             'discounts' => $discounts,
             'selected' => $selected ?? null,
             'ratings' => $ratings ?? false,
-            'categoriesList' => $categoriesList,
+            // 'categories' => $categories,
+            // 'sections' => $sections,
+            'categoriesList' => $categoriesList, // костиль
         ]);
     }
 }

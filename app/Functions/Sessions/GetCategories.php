@@ -3,6 +3,7 @@
 namespace App\Functions\Sessions;
 
 use App\Models\Categories;
+use App\Models\Section;
 use Illuminate\Support\Facades\Session;
 
 class GetCategories
@@ -20,6 +21,11 @@ class GetCategories
         }
 
         return $categoriesList;
+    }
+
+    public static function getSectionsList()
+    {
+        return Section::orderBy('priority')->get();;
     }
 
     public static function forgetCategoriesSession()
