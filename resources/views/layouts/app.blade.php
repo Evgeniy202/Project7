@@ -60,7 +60,9 @@
                 </ul>
             </div>
             </li>
-
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Про нас</a>
+                </li>
             </ul>
     </div>
     </li>
@@ -84,13 +86,13 @@
         @guest
         @if (Route::has('login'))
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+            <a class="nav-link" href="{{ route('login') }}">Увійти</a>
         </li>
         @endif
 
         @if (Route::has('register'))
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+            <a class="nav-link" href="{{ route('register') }}">Зараєструватись</a>
         </li>
         @endif
         @else
@@ -106,7 +108,7 @@
                 <a class="dropdown-item" href="{{ route('support-public') }}">Підтримка</a>
                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                    {{ __('Logout') }}
+                    Вийти
                 </a>
 
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

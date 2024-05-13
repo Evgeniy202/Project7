@@ -56,13 +56,12 @@
                     <br>
                     <small class="text-muted">{{ $currentCategory->title }} @if ($ratings)
                             @if (!empty($ratings[$product->id]))
-                                <br><p>Reviews: {{ round($ratings[$product->id], 1) }}/10
+                                <br><p>Перегляд: {{ round($ratings[$product->id], 1) }}/10
                             @endif
                         @endif</small>
                     <br>
                     @if (!empty($discounts[$product->id]))
-                        <strong class="price text-danger">${{ $product->price - $discounts[$product->id] }} with
-                            discount!</strong>
+                        <strong class="price text-danger">${{ $product->price - $discounts[$product->id] }} зі знишкою!</strong>
                         <br>
                         <del class="price-old"> ${{ $product->price }}</del>
                     @else

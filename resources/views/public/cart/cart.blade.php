@@ -9,10 +9,10 @@
             <table class="table text-dark">
                 <thead>
                 <tr>
-                    <th scope="col">Title</th>
-                    <th scope="col">Image</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Number</th>
+                    <th scope="col">Назва</th>
+                    <th scope="col">Зображення</th>
+                    <th scope="col">Ціна</th>
+                    <th scope="col">Кількість</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -43,45 +43,45 @@
                                 <input type="submit" class="btn btn-primary col-md-12" value="Change Quantity">
                             </form>
                             <a href="{{ route('remove-from-cart', $cartProduct->cart_prod_id) }}"
-                               class="btn btn-danger col-md-12 mt-2">Remove</a>
+                               class="btn btn-danger col-md-12 mt-2">Видалити</a>
                         </td>
                 @endforeach
                 </tbody>
             </table>
-            <h5>General price: ${{ $generalPrice }}</h5>
+            <h5>Загальна ціна: ${{ $generalPrice }}</h5>
             <hr>
             <div class="">
-                <button id="show_order" class="btn btn-outline-success col-7 m-1">Make order</button>
-                <a href="{{ route('all-remove-from-cart') }}" class="btn btn-outline-danger col-4 m-1">Clean cart</a>
+                <button id="show_order" class="btn btn-outline-success col-7 m-1">Зробити замовлення</button>
+                <a href="{{ route('all-remove-from-cart') }}" class="btn btn-outline-danger col-4 m-1">Очистити кошик</a>
             </div>
             <form id="order_form" method="post" action="{{ route('check-order') }}" hidden>
                 <hr>
                 @csrf
                 <div class="mt-2">
                     <input id="name" name="name" type="text" class="form-control"
-                           placeholder="Recipient firstname and lastname...">
+                           placeholder="Ім'я та прізвище отримувача...">
                 </div>
                 <div class="mt-2">
-                    <input id="phone" name="phone" type="text" class="form-control" placeholder="Mobile number...">
+                    <input id="phone" name="phone" type="text" class="form-control" placeholder="Номер телефону...">
                 </div>
                 <div class="mt-2">
                     <input id="address" name="address" type="text" class="form-control"
-                           placeholder="Address of ZIP Code...">
+                           placeholder="Адреса або індекс...">
                 </div>
                 <div class="mt-2">
                     <textarea id="comment" name="comment" class="form-control" rows="10"
-                              placeholder="Comment (not necessarily)..."></textarea>
+                              placeholder="Коментар до замовлення (не обов'язково)..."></textarea>
                 </div>
                 <input id="generalPrice" name="generalPrice" type="text" class="visually-hidden"
                        value="{{ $generalPrice }}" readonly>
                 <div class="mt-2">
-                    <button type="submit" class="btn btn-outline-success col-9 m-2">Send</button>
-                    <button type="button" id="hide_order" class="btn btn-outline-secondary col-2 m-2">Close</button>
+                    <button type="submit" class="btn btn-outline-success col-9 m-2">Відправити</button>
+                    <button type="button" id="hide_order" class="btn btn-outline-secondary col-2 m-2">Закрити</button>
                 </div>
             </form>
             <script src="js/order/form.js"></script>
         @else
-            <h3 class="text-center">Empty</h3>
+            <h3 class="text-center">Пусто</h3>
         @endif
     </div>
 @endsection

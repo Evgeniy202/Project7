@@ -49,14 +49,13 @@
                 <div class="main-img-slider">
                     <a data-fancybox="gallery" href="{{ asset('/storage/'.$images[0]->image) }}">
                         <img src="{{ asset('/storage/'.$images[0]->image) }}"
-                             class="img-fluid w-100 rounded">More Images</a>
+                             class="img-fluid w-100 rounded">Більше зображень</a>
                 </div>
             </div>
             <div class="col-md-8">
                 <h3> {{ $product->title }} </h3>
                 <p>Price: @if (!empty($discount))
-                        <strong class="price text-danger">${{ $product->price - $discount }} with
-                            discount!</strong>
+                        <strong class="price text-danger">${{ $product->price - $discount }} зі зінишкою!</strong>
                         <br>
                         <del class="price-old"> ${{ $product->price }}</del>
                     @else
@@ -64,9 +63,9 @@
                     @endif
                 </p>
                 @if ($rating)
-                    <p>Reviews: {{ $rating }}/10</p>
+                    <p>Рейтинг: {{ $rating }}/10</p>
                 @endif
-                <p>Description: {{ $product->description }} </p>
+                <p>Опис: {{ $product->description }} </p>
                 <hr>
                 @if(!empty(Auth::user()->id))
                     @php
@@ -79,13 +78,12 @@
                     <button id="selectBtn-{{ $product->id }}"
                             data-product-id="{{ $product->id }}"
                             class="btn btn-outline-danger select-btn {{ $active }}">
-                        Add to selected
+                        Додати до обраних
                     </button>
-                    <a href="{{ route('add-to-cart', $product->id) }}" class="btn btn-outline-success">Add to cart</a>
+                    <a href="{{ route('add-to-cart', $product->id) }}" class="btn btn-outline-success">Додати в кошик</a>
                     <button type="button" class="btn btn-outline-warning"
                             data-bs-toggle="modal"
-                            data-bs-target="#modalWindow">Evaluate the
-                        product
+                            data-bs-target="#modalWindow">Оцінити
                     </button>
                     <div class="modal fade" id="modalWindow" tabindex="-1"
                          aria-labelledby="modalWindowLabel"
@@ -95,7 +93,7 @@
                                 <div class="modal-header">
                                     <h5 class="modal-title text-center"
                                         id="modalWindowLabel">
-                                        Select Rating
+                                        Обрати оцінку
                                     </h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
@@ -125,13 +123,13 @@
                         </div>
                     </div>
                 @else
-                    <a href="{{ route('login') }}" class="btn btn-outline-danger">Add to selected</a>
-                    <a href="{{ route('login') }}" class="btn btn-outline-success">Add to cart</a>
-                    <a href="{{ route('login') }}" class="btn btn-outline-warning">Evaluate the product</a>
+                    <a href="{{ route('login') }}" class="btn btn-outline-danger">Додати до обраних</a>
+                    <a href="{{ route('login') }}" class="btn btn-outline-success">Додати до кошика</a>
+                    <a href="{{ route('login') }}" class="btn btn-outline-warning">Оцінити</a>
                 @endif
             </div>
             <hr>
-            <h4>Features:</h4>
+            <h4>Характеристики:</h4>
             <table class="table">
                 <tbody>
                 @foreach($features as $feature)
@@ -157,18 +155,18 @@
             </section>
             <script src="/js/products/imagesCarusel.js"></script>
         </div>
-        <h3 class="mb-2">Comments:</h3>
+        <h3 class="mb-2">Коментарі:</h3>
         @if (!empty(Auth::user()->id))
             <div class="text-light">
                 <div class="col-md-12">
                     <h3 class=""></h3>
                     <form action="{{ route('add-comment', $product->id) }}" method="POST" class="p-5">
                         @csrf
-                        <input type="text" id="name" name="name" class="form-control m-2" placeholder="You name"
+                        <input type="text" id="name" name="name" class="form-control m-2" placeholder="Ваше ім'я"
                                required>
                         <textarea id="comment" name="comment" class="form-control m-2" rows="5"
-                                  placeholder="You comment" required></textarea>
-                        <input type="submit" class="btn btn-outline-success m-2 col-12" value="Add comment">
+                                  placeholder="Ваш коментар" required></textarea>
+                        <input type="submit" class="btn btn-outline-success m-2 col-12" value="Додати коментар">
                     </form>
                 </div>
             </div>
@@ -185,7 +183,8 @@
                 </div>
             @endforeach
         @else
-            <h5>No comments...</h5>
+            <h5>Немає коментарів...</h5>
         @endif
     </div>
 @endsection
+

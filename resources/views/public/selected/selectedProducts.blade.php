@@ -1,21 +1,21 @@
 @extends('layouts.app')
-@section('title', 'Project - Selected Products')
+@section('title', 'Project7 - Selected Products')
 @section('content')
     <main class="container">
         <header class="d-sm-flex align-items-center border-bottom mb-4 pb-3">
             @if(!empty($products))
                 @if(count($products) < 2)
-                    <strong class="d-block py-2">{{ count($products) }} product</strong>
+                    <strong class="d-block py-2">{{ count($products) }} товари</strong>
                 @elseif(count($products) > 1)
-                    <strong class="d-block py-2">{{ count($products) }} products</strong>
+                    <strong class="d-block py-2">{{ count($products) }} товари</strong>
                 @endif
             @else
-                <strong class="d-block py-2">0 products</strong>
+                <strong class="d-block py-2">0 товарів</strong>
             @endif
         </header>
         <!-- ========= content items ========= -->
         @if(empty($products))
-            <h3 class="text-center">Empty</h3>
+            <h3 class="text-center">Пусто</h3>
         @else
             @foreach($products as $product)
                 <article class="card card-product-list m-4">
@@ -42,8 +42,7 @@
                             <div class="info-aside">
                                 <div class="price-wrap pt-1">
                                     @if (!empty($discounts[$product->id]))
-                                        <strong class="price">${{ $product->price - $discounts[$product->id] }} with
-                                            discount!</strong>
+                                        <strong class="price">${{ $product->price - $discounts[$product->id] }} зі знишкою!</strong>
                                         <br>
                                         <del class="price-old"> ${{ $product->price }}</del>
                                     @else
@@ -52,9 +51,9 @@
                                 </div> <!-- info-price-detail // -->
                                 <div class="mb-3">
                                     <a href="{{ route('add-to-cart', $product->id) }}"
-                                       class="btn btn-outline-primary col-8 m-1"> Add to cart </a>
+                                       class="btn btn-outline-primary col-8 m-1"> Додати до кошика </a>
                                     <a href="{{ route('remove-selected', $product->id) }}"
-                                       class="btn btn-outline-danger col-8 m-1"> Remove from selected </a>
+                                       class="btn btn-outline-danger col-8 m-1"> Видалити із обраних </a>
                                 </div>
                             </div> <!-- info-aside.// -->
                         </aside> <!-- col.// -->

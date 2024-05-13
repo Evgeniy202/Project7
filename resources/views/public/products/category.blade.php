@@ -14,15 +14,15 @@
                     <form
                         action="{{ isset($sort) ? route('filterCategoryPublic', [$currentCategory->id, $sort]) : route('category.show', $currentCategory) }}"
                         method="GET">
-                        <button class="btn btn-outline-success col-md-6 m-1" type="submit">Apply</button>
+                        <button class="btn btn-outline-success col-md-6 m-1" type="submit">Застосувати</button>
                         <a href="{{ route('category.show', $currentCategory) }}"
-                           class="btn btn-outline-warning col-md-4 m-1" type="button">Reset</a>
+                           class="btn btn-outline-warning col-md-4 m-1" type="button">Скинути</a>
                         <article class="filter-group">
                             <header class="card-header">
                                 <a href="#" class="title" data-bs-toggle="collapse"
                                    data-bs-target="#collapse_aside2"
                                    aria-expanded="true">
-                                    <i class="icon-control fa fa-chevron-down"></i> Price
+                                    <i class="icon-control fa fa-chevron-down"></i> Ціна
                                 </a>
                             </header>
                             <div class="collapse show" id="collapse_aside2" style="">
@@ -103,22 +103,22 @@
                 <header class="d-sm-flex align-items-center border-bottom mb-4 pb-3">
                     <h1 class="d-block py-2">{{ $currentCategory->title }}</h1>
                     <div class="ms-auto">
-                        <label for="sort"><strong>Sort by:</strong></label>
+                        <label for="sort"><strong>Сортування:</strong></label>
                         <select name="sort" id="sort" class="form-select d-inline-block w-auto">
                             @if(!empty($sort))
                                 @if($sort == "cheap")
-                                    <option value="{{$currentCategory->id}}-cheap">Cheap at first</option>
-                                    <option value="{{$currentCategory->id}}-expensive">First expensive</option>
-                                    <option value="{{$currentCategory->id}}-normal">Normal</option>
+                                    <option value="{{$currentCategory->id}}-cheap">Спочатку дешевше</option>
+                                    <option value="{{$currentCategory->id}}-expensive">Спочатку дорогі</option>
+                                    <option value="{{$currentCategory->id}}-normal">Звичайне</option>
                                 @elseif($sort == "expensive")
-                                    <option value="{{$currentCategory->id}}-expensive">First expensive</option>
-                                    <option value="{{$currentCategory->id}}-normal">Normal</option>
-                                    <option value="{{$currentCategory->id}}-cheap">Cheap at first</option>
+                                    <option value="{{$currentCategory->id}}-expensive">Спочатку дорогі</option>
+                                    <option value="{{$currentCategory->id}}-normal">Звичайне</option>
+                                    <option value="{{$currentCategory->id}}-cheap">Спочатку дешевше</option>
                                 @endif
                             @else
-                                <option value="{{$currentCategory->id}}-normal">Normal</option>
-                                <option value="{{$currentCategory->id}}-cheap">Cheap at first</option>
-                                <option value="{{$currentCategory->id}}-expensive">First expensive</option>
+                                <option value="{{$currentCategory->id}}-normal">Звичайне</option>
+                                <option value="{{$currentCategory->id}}-cheap">Спочатку дешевше</option>
+                                <option value="{{$currentCategory->id}}-expensive">Спочатку дорогі</option>
                             @endif
                         </select>
                         <script

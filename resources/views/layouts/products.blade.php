@@ -56,15 +56,14 @@
                             <small
                                 class="text-muted">{{ $categoriesList[$product->category] }} @if ($ratings)
                                     @if (!empty($ratings[$product->id]))
-                                        <br><p>Reviews: {{ round($ratings[$product->id], 1) }}/10
+                                        <br><p>Рейтинг: {{ round($ratings[$product->id], 1) }}/10
                                     @endif
                                 @endif</small>
                                 <br>
                         @endif
                     @endif
                     @if (!empty($discounts[$product->id]))
-                        <strong class="price text-danger">${{ $product->price - $discounts[$product->id] }} with
-                            discount!</strong>
+                        <strong class="price text-danger">${{ $product->price - $discounts[$product->id] }} зі знишкою!</strong>
                         <br>
                         <del class="price-old"> ${{ $product->price }}</del>
                     @else
@@ -110,3 +109,4 @@
 <footer class="d-flex mt-4 align-items-center">
     {{ $products->links() }}
 </footer>
+

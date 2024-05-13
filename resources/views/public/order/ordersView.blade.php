@@ -4,17 +4,17 @@
     @if(!empty($orders[0]))
         <div class="container text-dark">
             <div class="col-12">
-                <h4 style="margin-top: 10px;">My orders:</h4>
+                <h4 style="margin-top: 10px;">Мої замовлення:</h4>
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="list-orders" role="tabpanel"
                          aria-labelledby="list-orders-list">
                         <table class="table table-striped table-light">
                             <thead>
                             <tr>
-                                <th scope="col">Number</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Detail</th>
+                                <th scope="col">Номер</th>
+                                <th scope="col">Статус</th>
+                                <th scope="col">Ціна</th>
+                                <th scope="col">Детально</th>
                             </tr>
                             </thead>
                             <tbody class="text-dark">
@@ -29,7 +29,7 @@
                                     <td>
                                         <button type="button" class="btn btn-primary"
                                                 data-bs-toggle="modal"
-                                                data-bs-target="#orderDetails-{{ $order->id }}">More
+                                                data-bs-target="#orderDetails-{{ $order->id }}">Більше
                                         </button>
                                     </td>
                                     <div class="modal fade" id="orderDetails-{{ $order->id }}" tabindex="-1"
@@ -40,7 +40,7 @@
                                                 <div class="modal-header">
                                                     <h5 class="modal-title text-center"
                                                         id="orderDetailsLabel-{{ $order->id }}">
-                                                        Information about order №{{ $order->id }}
+                                                        Інформація про замовлення №{{ $order->id }}
                                                     </h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
@@ -48,16 +48,16 @@
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="col-md-3 text-center mb-2">
-                                                            <strong>Product title</strong>
+                                                            <strong>Назва</strong>
                                                         </div>
                                                         <div class="col-md-3 text-center mb-2">
-                                                            <strong>Image</strong>
+                                                            <strong>Зображення</strong>
                                                         </div>
                                                         <div class="col-md-3 text-center mb-2">
-                                                            <strong>Number</strong>
+                                                            <strong>Кількість</strong>
                                                         </div>
                                                         <div class="col-md-3 text-center mb-2">
-                                                            <strong>Price</strong>
+                                                            <strong>Ціна</strong>
                                                         </div>
                                                         <hr>
                                                         @foreach($productsOrder as $orderProduct)
@@ -78,7 +78,7 @@
                                                                     class="img-fluid" width="50px">
                                                             </div>
                                                             <div class="col-md-3 mb-3 text-center">
-                                                                {{ $orderProduct->number }} piece
+                                                                {{ $orderProduct->number }} ціна
                                                             </div>
                                                             <div class="col-md-3 mb-3 text-center">
                                                                 ${{ $orderProduct->price }}
@@ -88,12 +88,12 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <div>
-                                                        <strong>General price:</strong>
+                                                        <strong>Загальна ціна:</strong>
                                                         ${{ $order->price }}
                                                     </div>
                                                     <button type="button" class="btn btn-secondary"
                                                             data-bs-dismiss="modal">
-                                                        Close
+                                                        Закрити
                                                     </button>
                                                 </div>
                                             </div>
@@ -108,7 +108,7 @@
             </div>
         </div>
     @else
-        <h3 class="text-center">Empty</h3>
+        <h3 class="text-center">Пусто</h3>
     @endif
     <hr class="mt-5">
 @endsection
