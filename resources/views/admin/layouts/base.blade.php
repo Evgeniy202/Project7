@@ -6,14 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield("title")</title>
 
-    <!-- Scripts -->
+    <!-- Скрипти -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
-    <!-- Fonts -->
+    <!-- Шрифти -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-    <!-- Styles -->
+    <!-- Стилі -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
 
@@ -28,67 +28,67 @@
                 Project7
             </a>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Left Side Of Navbar -->
+                <!-- Ліва частина навігації -->
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('mainAdmin') }}">Main Panel</a>
+                        <a class="nav-link" href="{{ route('mainAdmin') }}">Головна панель</a>
                     </li>
                     <li class="nav-item">
                         <button class="btn btn-toggle align-items-center rounded collapsed nav-link" data-bs-toggle="collapse" data-bs-target="#sections-collapse" aria-expanded="false">
-                            Sections
+                            Розділи
                         </button>
                         <div class="collapse" id="sections-collapse">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                 <li><a href="{{ route('sections.index') }}" class="link-dark rounded">
-                                        All Sections</a></li>
-                                <li><a href="{{ route('sections.create') }}" class="link-dark rounded">Create
-                                        Sections</a></li>
+                                        Всі розділи</a></li>
+                                <li><a href="{{ route('sections.create') }}" class="link-dark rounded">Створити
+                                        розділ</a></li>
                             </ul>
                         </div>
                     </li>
                     <li class="nav-item">
                         <button class="btn btn-toggle align-items-center rounded collapsed nav-link" data-bs-toggle="collapse" data-bs-target="#categories-collapse" aria-expanded="false">
-                            Categories
+                            Категорії
                         </button>
                         <div class="collapse" id="categories-collapse">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="{{ route('categories.index') }}" class="link-dark rounded">All
-                                        Categories</a></li>
-                                <li><a href="{{ route('categories.create') }}" class="link-dark rounded">Create
-                                        Category</a></li>
+                                <li><a href="{{ route('categories.index') }}" class="link-dark rounded">Всі
+                                        категорії</a></li>
+                                <li><a href="{{ route('categories.create') }}" class="link-dark rounded">Створити
+                                        категорію</a></li>
                             </ul>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('products.index') }}">Products</a>
+                        <a class="nav-link" href="{{ route('products.index') }}">Продукти</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('banner.index') }}">Banners</a>
+                        <a class="nav-link" href="{{ route('banner.index') }}">Банери</a>
                     </li>
                     <li class="nav-item">
                         <button class="btn btn-toggle align-items-center rounded collapsed nav-link" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-                            Orders
+                            Замовлення
                         </button>
                         <div class="collapse" id="orders-collapse">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="{{ route('orders-status', 'New') }}" class="link-dark rounded">New</a></li>
-                                <li><a href="{{ route('orders-status', 'Processing') }}" class="link-dark rounded">Processing</a>
+                                <li><a href="{{ route('orders-status', 'New') }}" class="link-dark rounded">Нові</a></li>
+                                <li><a href="{{ route('orders-status', 'Processing') }}" class="link-dark rounded">В обробці</a>
                                 </li>
-                                <li><a href="{{ route('orders-status', 'Sent') }}" class="link-dark rounded">Sent</a></li>
-                                <li><a href="{{ route('orders-status', 'Executed') }}" class="link-dark rounded">Executed</a></li>
-                                <li><a href="{{ route('orders-status', 'Cancelled') }}" class="link-dark rounded">Cancelled</a></li>
+                                <li><a href="{{ route('orders-status', 'Sent') }}" class="link-dark rounded">Відправлені</a></li>
+                                <li><a href="{{ route('orders-status', 'Executed') }}" class="link-dark rounded">Виконані</a></li>
+                                <li><a href="{{ route('orders-status', 'Cancelled') }}" class="link-dark rounded">Скасовані</a></li>
                                 <hr>
-                                <li><a href="{{ route('search-order') }}" class="link-dark rounded">Search</a></li>
+                                <li><a href="{{ route('search-order') }}" class="link-dark rounded">Пошук</a></li>
                             </ul>
                         </div>
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item dropdown">
-                        <a href="#" id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tools</a>
+                        <a href="#" id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Інструменти</a>
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('forgetCategoriesSession') }}">Forget Categories
-                                Session</a>
+                            <a class="dropdown-item" href="{{ route('forgetCategoriesSession') }}">Забути сесію категорій
+                                </a>
                         </div>
                     </li>
                 </ul>

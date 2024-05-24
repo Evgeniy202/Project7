@@ -3,8 +3,13 @@
     Product - {{ $product->title }}
 @endsection
 @section('content')
+    @extends('admin.layouts.base')
+@section('title')
+    Адмін - Продукт №{{ $product->id }}
+@endsection
+@section('content')
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <h1>Product - {{ $product->title }}</h1>
+    <h1>Продукт - {{ $product->title }}</h1>
     <hr class="mt-2">
     <div class="row">
         <form action="{{ route('products.update', $product) }}" method="POST" enctype="multipart/form-data">
@@ -12,102 +17,102 @@
             @method('PUT')
             <div class="form-group mt-3">
                 <div class="form-group mt-3">
-                    <label>Title:</label>
-                    <input type="text" name="title" id="title" placeholder="Title..."
+                    <label>Назва:</label>
+                    <input type="text" name="title" id="title" placeholder="Назва..."
                            class="form-control bg-dark text-light" value="{{ $product->title }}">
                 </div>
                 <div class="form-group mt-3">
-                    <input type="text" name="slug" id="slug" placeholder="Marking..."
+                    <input type="text" name="slug" id="slug" placeholder="Маркування..."
                            class="form-control bg-dark text-light" value="{{ $product->slug }}">
                 </div>
                 <div class="form-group mt-3">
                     <textarea class="form-control bg-dark text-light" name="description" id="description" rows="10"
-                              placeholder="Description...">{{ $product->description }}</textarea>
+                              placeholder="Опис...">{{ $product->description }}</textarea>
                 </div>
                 <div class="form-group mt-3">
-                    <label>Price:</label><input type="text" name="price" id="price" placeholder="Price..."
-                           class="form-control bg-dark text-light" value="{{ $product->price }}">
-                </div>
-                <div class="form-group mt-3">
-                    <label>Count:</label><input type="number" name="count" id="count" placeholder="Count..."
-                           class="form-control bg-dark text-light" value="{{ $product->count }}">
-                </div>
-                <div class="form-group mt-3">
-                    @if($product->isAvailable == 1)
-                        <label>Is available <input type="checkbox" name="isAvailable" id="isAvailable"
-                                                   value="1" checked></label>
-                    @else
-                        <label>Is available <input type="checkbox" name="isAvailable" id="isAvailable"
-                                                   value="1"></label>
-                    @endif
-                </div>
-                <div class="form-group mt-3">
-                    @if($product->isFavorite == 1)
-                        <label>Is favorite <input type="checkbox" name="isFavorite" id="isFavorite"
-                                                  value="1" checked></label>
-                    @else
-                        <label>Is favorite <input type="checkbox" name="isFavorite" id="isFavorite"
-                                                  value="1"></label>
-                    @endif
-                </div>
-            </div>
-            <input type="submit" class="btn btn-outline-warning btn-block col-md-12" value="Change">
-        </form>
-        <hr class="mt-2">
-        <hr>
-        <button type="button" class="btn btn-outline-success col-md-12" data-bs-toggle="modal"
-                data-bs-target="#createDiscount-">
-            Add New Discount
-        </button>
-        <div class="modal fade" id="createDiscount-" tabindex="-1" aria-labelledby="createDiscountLabel-"
-             aria-hidden="true">
-            <div class="modal-dialog modal-sm">
-                <div class="modal-content text-dark">
-                    <div class="modal-header">
-                        <h5 class="modal-title text-center" id="createDiscountLabel-">
-                            Add New Discount
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <form action="{{ route('create-discount', $product->id) }}" method="POST"
-                                  enctype="multipart/form-data">
-                                @csrf
+                                    <label>Ціна:</label><input type="text" name="price" id="price" placeholder="Ціна..."
+                                        class="form-control bg-dark text-light" value="{{ $product->price }}">
+                                </div>
                                 <div class="form-group mt-3">
-                                    <div class="form-group mt-3">
-                                        <input type="text" id="discount" name="discount" placeholder="Discount..."
-                                               required>
+                                    <label>Кількість:</label><input type="number" name="count" id="count" placeholder="Кількість..."
+                                        class="form-control bg-dark text-light" value="{{ $product->count }}">
+                                </div>
+                                <div class="form-group mt-3">
+                                    @if($product->isAvailable == 1)
+                                        <label>Доступний <input type="checkbox" name="isAvailable" id="isAvailable"
+                                                                value="1" checked></label>
+                                    @else
+                                        <label>Доступний <input type="checkbox" name="isAvailable" id="isAvailable"
+                                                                value="1"></label>
+                                    @endif
+                                </div>
+                                <div class="form-group mt-3">
+                                    @if($product->isFavorite == 1)
+                                        <label>Улюблений <input type="checkbox" name="isFavorite" id="isFavorite"
+                                                                value="1" checked></label>
+                                    @else
+                                        <label>Улюблений <input type="checkbox" name="isFavorite" id="isFavorite"
+                                                                value="1"></label>
+                                    @endif
+                                </div>
+                            </div>
+                            <input type="submit" class="btn btn-outline-warning btn-block col-md-12" value="Змінити">
+                        </form>
+                        <hr class="mt-2">
+                        <hr>
+                        <button type="button" class="btn btn-outline-success col-md-12" data-bs-toggle="modal"
+                                data-bs-target="#createDiscount-">
+                            Додати нову знижку
+                        </button>
+                        <div class="modal fade" id="createDiscount-" tabindex="-1" aria-labelledby="createDiscountLabel-"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content text-dark">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-center" id="createDiscountLabel-">
+                                            Додати нову знижку
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <div class="form-group mt-3">
-                                        <label for="start_date">Start Date:</label>
-                                        <input type="datetime-local" id="begin" name="begin" required>
-                                    </div>
-                                    <div class="form-group mt-3">
-                                        <label for="end_date">End Date:</label>
-                                        <input type="datetime-local" id="end" name="end" required><br><br>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <form action="{{ route('create-discount', $product->id) }}" method="POST"
+                                                enctype="multipart/form-data">
+                                                @csrf
+                                                <div class="form-group mt-3">
+                                                    <div class="form-group mt-3">
+                                                        <input type="text" id="discount" name="discount" placeholder="Знижка..."
+                                                            required>
+                                                    </div>
+                                                    <div class="form-group mt-3">
+                                                        <label for="start_date">Дата початку:</label>
+                                                        <input type="datetime-local" id="begin" name="begin" required>
+                                                    </div>
+                                                    <div class="form-group mt-3">
+                                                        <label for="end_date">Дата закінчення:</label>
+                                                        <input type="datetime-local" id="end" name="end" required><br><br>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <input type="submit" class="btn btn-success btn-block col-12" value="Додати">
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
-                                <hr>
-                                <input type="submit" class="btn btn-success btn-block col-12" value="Add">
-                            </form>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <hr>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th scope="col">Discount</th>
-                <th scope="col">Price with discount</th>
-                <th scope="col">Date - begin</th>
-                <th scope="col">Date - end</th>
-                <th scope="col">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
+                        <hr>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">Знижка</th>
+                                <th scope="col">Ціна зі знижкою</th>
+                                <th scope="col">Дата - початок</th>
+                                <th scope="col">Дата - кінець</th>
+                                <th scope="col">Дії</th>
+                            </tr>
+                            </thead>
+                            <tbody>                
             @foreach($productDiscounts as $discount)
                 <tr>
                     <th scope="row">{{ $discount->discount }}$</th>

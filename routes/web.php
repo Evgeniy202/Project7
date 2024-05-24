@@ -52,6 +52,10 @@ Route::prefix('category')->group(function () {
 Route::resource('category', \App\Http\Controllers\Open\CategoriesController::class);
 Route::resource('product', \App\Http\Controllers\Open\ProductController::class);
 
+Route::get('/about', function (){
+    return view('public.other.about');
+})->name('about');
+
 //Ajax
 Route::post('/select-product', [\App\Http\Controllers\Open\SelectedProductsController::class, 'action'])
     ->name('select-product');

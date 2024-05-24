@@ -61,7 +61,7 @@
             </div>
             </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Про нас</a>
+                    <a class="nav-link" href="{{ route('about') }}">Про нас</a>
                 </li>
             </ul>
     </div>
