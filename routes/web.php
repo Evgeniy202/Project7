@@ -146,6 +146,9 @@ Route::group(['middleware' => ['role:admin']], function () {
         Route::post('/add-product/{orderId}', [\App\Http\Controllers\Admin\OrderController::class, 'addProduct'])
             ->name('add-product');
 
+        Route::get('remove-comment/{commentId}', [\App\Http\Controllers\Open\ProductController::class, 'commentDestroy'])
+            ->name('remove-comment');
+
         Route::resource('categories', \App\Http\Controllers\Admin\CategoriesController::class);
         Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
         Route::resource('banner', \App\Http\Controllers\Admin\BannerController::class);

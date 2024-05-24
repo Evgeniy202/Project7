@@ -174,12 +174,19 @@
         @endif
         @if(!empty($comments->first()))
             @foreach($comments as $comment)
-                <div class="comment mt-4 text-justify float-left">
-                    <hr style="margin-right: 60%;">
-                    <h6>{{ $comment->name }} <span>- {{ $comment->created_at }}</span></h6>
-                    <br>
-                    <p>{{ $comment->comment }}</p>
-                    <hr style="margin-right: 60%;">
+                <div class="comment card mt-4">
+                    <div class="card-body">
+                        <h6 class="card-title">{{ $comment->name }} <span class="text-muted">- {{ $comment->created_at->format('Y-m-d H:i:s') }}</span></h6>
+                        <p class="card-text">{{ $comment->comment }}</p>
+                        <!-- Додамо кнопку видалити лише для адміністраторів -->
+                        @if($isAdmin)
+                            <form action="{{ route('remove-comment', $comment->id) }}" method="GET">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Видалити</button>
+                            </form>
+                        @endif
+                    </div>
                 </div>
             @endforeach
         @else

@@ -57,6 +57,8 @@ class ProductController extends Controller
             }
         }
 
+        $isAdmin = $this->isAdmin();
+
         return view('public.products.productDetail', [
             'product' => $product,
             'categories' => $categories,
@@ -66,6 +68,7 @@ class ProductController extends Controller
             'discount' => $discount,
             'selected' => $selected ?? false,
             'rating' => $rating ?? false,
+            'isAdmin' => $isAdmin,
         ]);
     }
 
@@ -129,5 +132,17 @@ class ProductController extends Controller
 
             return redirect()->back()->with(['message' => 'success', 'mes_text' => 'Your response changed.']);
         }
+    }
+
+    public function commentDestroy(Request $request, $commentId)
+    {
+        Comment::query()->find($commentId)->delete();
+
+        return redirect()->back();
+    }
+
+    public function isAdmin()
+    {
+        return Auth::check() && Auth::user()->hasRole('admin');
     }
 }
