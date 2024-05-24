@@ -6,14 +6,14 @@
         @csrf
         <input name="search" id="search" class="mr-sm-2 col-md-9 bg-light" type="text" placeholder="Search"
                aria-label="Search" required>
-        <button class="btn btn-primary my-2 my-sm-0 col-md-2" type="submit">Search</button>
+        <button class="btn btn-primary my-2 my-sm-0 col-md-2" type="submit">Пошук</button>
         <a href="{{ route('products.index') }}"
-           class="btn btn-secondary my-2 my-sm-0 col-md-1">Reset
+           class="btn btn-secondary my-2 my-sm-0 col-md-1">Скинути
         </a>
     </form>
     <button type="button" class="btn btn-outline-success col-md-12" data-bs-toggle="modal"
             data-bs-target="#orderDetails-">
-        Add new Product
+        Додати новий товар
     </button>
     <div class="modal fade" id="orderDetails-" tabindex="-1" aria-labelledby="orderDetailsLabel-"
          aria-hidden="true">
@@ -21,7 +21,7 @@
             <div class="modal-content text-dark">
                 <div class="modal-header">
                     <h5 class="modal-title text-center" id="orderDetailsLabel-">
-                        Add new product
+                        Додати новий товар
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -36,35 +36,35 @@
                                     @endforeach
                                 </select>
                                 <div class="form-group mt-3">
-                                    <input type="text" name="title" id="title" placeholder="Title..."
+                                    <input type="text" name="title" id="title" placeholder="Назва..."
                                            class="form-control">
                                 </div>
                                 <div class="form-group mt-3">
-                                    <input type="text" name="slug" id="slug" placeholder="Marking..."
+                                    <input type="text" name="slug" id="slug" placeholder="Маркування..."
                                            class="form-control">
                                 </div>
                                 <div class="form-group mt-3">
                                         <textarea class="form-control" name="description" id="description" rows="10"
-                                                  placeholder="Description..."></textarea>
+                                                  placeholder="Опис..."></textarea>
                                 </div>
                                 <div class="form-group mt-3">
-                                    <input type="text" name="price" id="price" placeholder="Price..."
+                                    <input type="text" name="price" id="price" placeholder="Ціна..."
                                            class="form-control">
                                 </div>
                                 <div class="form-group mt-3">
-                                    <label>Is available <input type="checkbox" name="isAvailable" id="isAvailable"
+                                    <label>В наявності <input type="checkbox" name="isAvailable" id="isAvailable"
                                                                value="1"></label>
                                 </div>
                                 <div class="form-group mt-3">
-                                    <label>Is favorite <input type="checkbox" name="isFavorite" id="isFavorite"
+                                    <label>Рекомендоване <input type="checkbox" name="isFavorite" id="isFavorite"
                                                               value="1"></label>
                                 </div>
                                 <div class="form-group mt-3">
-                                    <label>Main image <input type="file" name="mainImg" id="mainImg"></label>
+                                    <label>Головне зображення <input type="file" name="mainImg" id="mainImg"></label>
                                 </div>
                             </div>
                             <hr>
-                            <input type="submit" class="btn btn-success btn-block col-12" value="Add">
+                            <input type="submit" class="btn btn-success btn-block col-12" value="Додати">
                         </form>
                     </div>
                 </div>
@@ -73,15 +73,15 @@
     </div>
     <hr>
     <div class="row">
-        <h3 class="col-md-10">All Products</h3>
+        <h3 class="col-md-10">Всі товари</h3>
         <hr class="mb-4">
     </div>
     <div class="row">
-        <h6 class="col-md-4">Title</h6>
-        <h6 class="col-md-2">Count</h6>
-        <h6 class="col-md-2">Price</h6>
-        <h6 class="col-md-2">Is available</h6>
-        <h6 class="col-md-2">Is favorite</h6>
+        <h6 class="col-md-4">Назва</h6>
+        <h6 class="col-md-2">Кількість</h6>
+        <h6 class="col-md-2">Ціна</h6>
+        <h6 class="col-md-2">В наявності</h6>
+        <h6 class="col-md-2">Рекомендоване</h6>
         <hr class="mb-4">
         @foreach($products as $product)
             <hr>

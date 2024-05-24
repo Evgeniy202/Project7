@@ -167,3 +167,4 @@
             </tr>
         @endforeach
     </table>
+@endsection

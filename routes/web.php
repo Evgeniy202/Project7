@@ -94,6 +94,12 @@ Route::group(['middleware' => ['role:admin']], function () {
             [\App\Http\Controllers\Admin\ValueOfFeaturesController::class, 'remove'])
             ->name('removeValuesOfFeature');
 
+        Route::get('/user/search', [\App\Http\Controllers\Admin\UserController::class, 'searchForm'])->name('searchUserById');
+        Route::get('/user/{id}', [\App\Http\Controllers\Admin\UserController::class, 'show'])->name('showUser');
+        Route::get('/user/{id}/edit-role', [\App\Http\Controllers\Admin\UserController::class, 'editRoleForm'])->name('editUserRoleForm');
+        Route::put('/user/{id}/edit-role', [\App\Http\Controllers\Admin\UserController::class, 'editRole'])->name('editUserRole');
+        Route::delete('/user/{id}', [\App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('deleteUser');
+
         Route::prefix('products')->group(function () {
             Route::post('/search', [\App\Http\Controllers\Admin\ProductController::class, 'search'])
                 ->name('searchProductsAdmin');

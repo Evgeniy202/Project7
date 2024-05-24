@@ -1,14 +1,14 @@
 @extends('admin.layouts.base')
 @section('title', 'All Categories')
 @section('content')
-    <h1>Sections</h1>
+    <h1>Секція</h1>
     <table class="table table-striped">
         <thead>
         <tr>
-            <th scope="col">Priority</th>
-            <th scope="col">Title</th>
-            <th scope="col">Change</th>
-            <th scope="col">Remove</th>
+            <th scope="col">Пріорітет</th>
+            <th scope="col">Назва</th>
+            <th scope="col">Змінити</th>
+            <th scope="col">Видалити</th>
         </tr>
         </thead>
         <tbody>
@@ -18,7 +18,7 @@
                 <td>{{ $section->title }}</td>
                 <td>
                     <button class="btn btn-warning" data-bs-toggle="modal"
-                            data-bs-target="#changeModal-{{ $section->id }}">Change
+                            data-bs-target="#changeModal-{{ $section->id }}">Змінити
                     </button>
                     <div class="modal fade" id="changeModal-{{ $section->id }}" tabindex="-1"
                          aria-labelledby="changeModalLabel-{{ $section->title }}" aria-hidden="true">
@@ -27,7 +27,7 @@
                                 <div class="modal-header text-dark">
                                     <h5 class="modal-title text-center"
                                         id="changeModalLabel-{{ $section->title }}">
-                                        <strong>Change tittle {{ $section->title }}</strong>
+                                        <strong>Змінити назву {{ $section->title }}</strong>
                                     </h5>
                                 </div>
                                 <div class="modal-body text-dark">
@@ -37,26 +37,26 @@
                                             @method('PUT')
                                             <div class="form-group mt-3">
                                                 <input type="number" name="priority"
-                                                       id="title" placeholder="Priority..."
+                                                       id="priority" placeholder="Пріорітет..."
                                                        class="form-control text-center"
                                                        value="{{ $section->priority }}">
                                             </div>
                                             <div class="form-group mt-3">
                                                 <input type="text" name="title"
-                                                       id="title" placeholder="Title..."
+                                                       id="title" placeholder="Назва..."
                                                        class="form-control text-center"
                                                        value="{{ $section->title }}"
                                                        required>
                                             </div>
                                             <hr>
                                             <input type="submit" class="btn btn-warning btn-block col-12"
-                                                   value="Change">
+                                                   value="Змінити">
                                         </form>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                        Close
+                                        Звернути
                                     </button>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
                 </td>
                 <td>
                     <button class="btn btn-danger" data-bs-toggle="modal"
-                            data-bs-target="#removeModal-{{ $section->id }}">Remove
+                            data-bs-target="#removeModal-{{ $section->id }}">Видалити
                     </button>
                     <div class="modal fade" id="removeModal-{{ $section->id }}" tabindex="-1"
                          aria-labelledby="removeModalLabel-{{ $section->title }}" aria-hidden="true">
@@ -74,23 +74,23 @@
                                 <div class="modal-header text-dark">
                                     <h5 class="modal-title text-center"
                                         id="removeModalLabel-{{ $section->title }}">
-                                        <strong>Remove {{ $section->title }}</strong>
+                                        <strong>Видалити {{ $section->title }}</strong>
                                     </h5>
                                 </div>
                                 <div class="modal-body text-dark">
                                     <div>
-                                        You are sure you want to delete the section "{{ $section->title }}"?
-                                        All products in this category will also be removed!
+                                        Ви впевнені, що хочете видалити розділ "{{ $section->title }}"?
+                                        Усі товари цієї секції також будуть видалені!
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                        Close
+                                        Звернути
                                     </button>
                                     <form action="{{ route('sections.destroy', $section) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-outline-danger">Remove</button>
+                                        <button type="submit" class="btn btn-outline-danger">Видалити</button>
                                     </form>
                                 </div>
                             </div>

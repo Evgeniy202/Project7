@@ -21,6 +21,10 @@ return new class extends Migration
                 ->onDelete('cascade');
             $table->char('name');
             $table->longText('comment');
+            $table->foreignId('user')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

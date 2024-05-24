@@ -32,8 +32,7 @@
         <div class="card">
             <div class="card-body">
                 <h3 class="card-title">Керування продуктами</h3>
-                <a href="{{ route('products.index') }}" class="btn btn-info w-100 mb-3">Всі продукти</a>
-                <a href="{{ route('products.create') }}" class="btn btn-info w-100">Додати новий продукт</a>
+                <a href="{{ route('products.index') }}" class="btn btn-info w-100 mb-3">Керування продуктами</a>
             </div>
         </div>
     </div>
@@ -51,6 +50,22 @@
             </div>
         </div>
     </div>
+
+    <div class="col-md-4 mt-4">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Пошук користувача за ІД</h3>
+                <form action="{{ route('searchUserById') }}" method="GET">
+                    <div class="form-group mb-3">
+                        <label for="userId">Введіть ID користувача:</label>
+                        <input type="text" class="form-control" id="userId" name="userId" required>
+                    </div>
+                    <button type="submit" class="btn btn-dark w-100">Пошук</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
