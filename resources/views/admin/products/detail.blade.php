@@ -1,10 +1,5 @@
 @extends('admin.layouts.base')
 @section('title')
-    Product - {{ $product->title }}
-@endsection
-@section('content')
-    @extends('admin.layouts.base')
-@section('title')
     Адмін - Продукт №{{ $product->id }}
 @endsection
 @section('content')

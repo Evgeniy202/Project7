@@ -13,7 +13,7 @@ $(document).ready(function () {
                     if (data) {
                         $('#value').empty();
                         $('#value').focus;
-                        $('#value').append('<option value="">-Select value of characteristic-</option>');
+                        $('#value').append('<option value="">-Оберіть характеристику-</option>');
                         $.each(data, function (key, value) {
                             $('select[name="value"]').append('<option value="' + value.id + '">' + value.value + '</option>');
                         });
