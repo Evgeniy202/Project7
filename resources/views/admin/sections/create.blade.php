@@ -7,7 +7,7 @@
         <form action="{{ route('sections.store') }}" method="POST">
             @csrf
             <div class="form-group mt-3">
-                <input style="text-align: center" type="text" name="priority" id="priority"
+                <input style="text-align: center" type="number" name="priority" id="priority"
                        placeholder="Пріорітет (не обов'язково...)" class="form-control">
             </div>
             <div class="form-group mt-3">

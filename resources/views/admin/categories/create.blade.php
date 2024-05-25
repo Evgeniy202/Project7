@@ -11,7 +11,7 @@
                        placeholder="Пріоритет..." class="form-control">
             </div>
             <div class="form-group mt-3">
-                <input style="text-align: center" type="text" name="title" id="title"
+                <input style="text-align: center" type="number" name="title" id="title"
                        placeholder="Назва..." class="form-control" required>
             </div>
             <div class="form-group mt-3">

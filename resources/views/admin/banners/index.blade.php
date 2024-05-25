@@ -13,7 +13,7 @@
             <div class="modal-content text-dark">
                 <div class="modal-header">
                     <h5 class="modal-title text-center" id="orderDetailsLabel-">
-                        Додати новий продукт
+                        Додати новий банер
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Звернути"></button>
                 </div>
