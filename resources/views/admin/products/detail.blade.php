@@ -252,7 +252,7 @@
                         <div class="modal-content text-dark">
                             <div class="modal-header bg-dark">
                                 <h5 class="modal-title text-light text-center" id="imageDetails-{{ $image->id }}">
-                                    Image: {{ $product->title }}_{{ $image->position }}
+                                    Зображення: {{ $product->title }}_{{ $image->position }}
                                 </h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
@@ -272,7 +272,7 @@
                 @csrf
                 <div class="form-group mt-3">
                     <label class="col">Позиція<input type="text" name="position" id="position"
-                                                      placeholder="Position..."
+                                                      placeholder="Позиція..."
                                                       class="form-control bg-dark text-light"
                                                       value="{{ $image->position }}"></label>
                 </div>
@@ -285,7 +285,7 @@
                                              value="1"></label>
                     @endif
                 </div>
-                <input type="submit" class="btn btn-warning col-2" value="Change Image">
+                <input type="submit" class="btn btn-warning col-2" value="Замінити зображення">
             </form>
             <div class="container">
                 <button class="btn btn-danger col-2" data-bs-toggle="modal"
@@ -312,7 +312,7 @@
                                 Закрити
                             </button>
                             <a href="{{ route('destroyProductImage', [$image->id]) }}"
-                               class="btn btn-outline-danger">Remove</a>
+                               class="btn btn-outline-danger">Видалити</a>
                         </div>
                     </div>
                 </div>
