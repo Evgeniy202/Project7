@@ -121,7 +121,7 @@
                     <td>{{ $discount->end_date }}</td>
                     <td>
                         <button class="btn btn-warning col-5" data-bs-toggle="modal"
-                                data-bs-target="#changeModal-{{ $discount->id }}">Change Discount
+                                data-bs-target="#changeModal-{{ $discount->id }}">Змінити знижку
                         </button>
                         <div class="modal fade" id="changeModal-{{ $discount->id }}" tabindex="-1"
                              aria-labelledby="changeModalLabel-{{ $discount->id }}" aria-hidden="true">
@@ -130,7 +130,7 @@
                                     <div class="modal-header text-dark">
                                         <h5 class="modal-title text-center"
                                             id="changeModalLabel-{{ $discount->id }}">
-                                            <strong>Change Discount</strong>
+                                            <strong>Змінити знижку</strong>
                                         </h5>
                                     </div>
                                     <div class="modal-body">
@@ -141,18 +141,18 @@
                                                 <div class="form-group mt-3">
                                                     <div class="form-group mt-3">
                                                         <input type="text" id="discount" name="discount"
-                                                               placeholder="Discount..."
+                                                               placeholder="Знижка..."
                                                                value="{{ $discount->discount }}"
                                                                required>
                                                     </div>
                                                     <div class="form-group mt-3">
-                                                        <label for="start_date">Start Date:</label>
+                                                        <label for="start_date">Дата початку:</label>
                                                         <input type="datetime-local" id="begin" name="begin"
                                                                value="{{ $discount->begin_date }}"
                                                                required>
                                                     </div>
                                                     <div class="form-group mt-3">
-                                                        <label for="end_date">End Date:</label>
+                                                        <label for="end_date">Дата кінця:</label>
                                                         <input type="datetime-local" id="end" name="end"
                                                                value="{{ $discount->end_date }}"
                                                                required>
@@ -160,7 +160,7 @@
                                                 </div>
                                                 <hr>
                                                 <input type="submit" class="btn btn-warning btn-block col-12"
-                                                       value="Change">
+                                                       value="Змінити">
                                             </form>
                                         </div>
                                     </div>
@@ -168,7 +168,7 @@
                             </div>
                         </div>
                         <button class="btn btn-danger col-5" data-bs-toggle="modal"
-                                data-bs-target="#removeModal-{{ $discount->id }}">Remove Discount
+                                data-bs-target="#removeModal-{{ $discount->id }}">Видалити знижку
                         </button>
                         <div class="modal fade" id="removeModal-{{ $discount->id }}" tabindex="-1"
                              aria-labelledby="removeModalLabel-{{ $discount->id }}" aria-hidden="true">
@@ -177,12 +177,12 @@
                                     <div class="modal-header text-dark">
                                         <h5 class="modal-title text-center"
                                             id="removeModalLabel-{{ $discount->id }}">
-                                            <strong>Remove Discount</strong>
+                                            <strong>Видалити знижку</strong>
                                         </h5>
                                     </div>
                                     <div class="modal-body text-dark">
                                         <div>
-                                            You are sure you want to delete this discount?
+                                            Ви впевнені, що хочете видалити цю знижку?
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -190,7 +190,7 @@
                                             Close
                                         </button>
                                         <a href="{{ route('remove-discount', $discount->id) }}"
-                                           class="btn btn-outline-danger">Remove</a>
+                                           class="btn btn-outline-danger">Видалити</a>
                                     </div>
                                 </div>
                             </div>
@@ -203,7 +203,7 @@
         <hr>
         <button type="button" class="btn btn-outline-success col-md-12" data-bs-toggle="modal"
                 data-bs-target="#orderDetails-">
-            Add New Image
+            Додати нове зображення
         </button>
         <div class="modal fade" id="orderDetails-" tabindex="-1" aria-labelledby="orderDetailsLabel-"
              aria-hidden="true">
@@ -211,7 +211,7 @@
                 <div class="modal-content text-dark">
                     <div class="modal-header">
                         <h5 class="modal-title text-center" id="orderDetailsLabel-">
-                            Add New Image
+                            Додати нове зображення
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -222,15 +222,15 @@
                                 @csrf
                                 <div class="form-group mt-3">
                                     <div class="form-group mt-3">
-                                        <label>Image <input type="file" name="image" id="image" required></label>
+                                        <label>Зображення <input type="file" name="image" id="image" required></label>
                                     </div>
                                     <div class="form-group mt-3">
                                         <input class="col-12" type="text" name="position" id="position"
-                                               placeholder="Position...">
+                                               placeholder="Позиція...">
                                     </div>
                                 </div>
                                 <hr>
-                                <input type="submit" class="btn btn-success btn-block col-12" value="Add">
+                                <input type="submit" class="btn btn-success btn-block col-12" value="Додати">
                             </form>
                         </div>
                     </div>
@@ -271,17 +271,17 @@
                   enctype="multipart/form-data">
                 @csrf
                 <div class="form-group mt-3">
-                    <label class="col">Position<input type="text" name="position" id="position"
+                    <label class="col">Позиція<input type="text" name="position" id="position"
                                                       placeholder="Position..."
                                                       class="form-control bg-dark text-light"
                                                       value="{{ $image->position }}"></label>
                 </div>
                 <div class="form-group mt-3">
                     @if($image->isMain == 1)
-                        <label>Is Main<input type="checkbox" name="isMain" id="isMain"
+                        <label>Головне<input type="checkbox" name="isMain" id="isMain"
                                              value="1" checked></label>
                     @else
-                        <label>Is Main<input type="checkbox" name="isMain" id="isMain"
+                        <label>Головне<input type="checkbox" name="isMain" id="isMain"
                                              value="1"></label>
                     @endif
                 </div>
@@ -289,7 +289,7 @@
             </form>
             <div class="container">
                 <button class="btn btn-danger col-2" data-bs-toggle="modal"
-                        data-bs-target="#removeModal-{{ $image->id }}">Remove Image
+                        data-bs-target="#removeModal-{{ $image->id }}">Видалити зображення
                 </button>
             </div>
             <div class="modal fade" id="removeModal-{{ $image->id }}" tabindex="-1"
@@ -299,17 +299,17 @@
                         <div class="modal-header text-dark">
                             <h5 class="modal-title text-center"
                                 id="removeModalLabel-{{ $image->id }}">
-                                <strong>Remove Image</strong>
+                                <strong>Видалити зображенняe</strong>
                             </h5>
                         </div>
                         <div class="modal-body text-dark">
                             <div>
-                                You are sure you want to delete this image?
+                                Ви впевнені, що хочете видалити це зображення?
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                Close
+                                Закрити
                             </button>
                             <a href="{{ route('destroyProductImage', [$image->id]) }}"
                                class="btn btn-outline-danger">Remove</a>
@@ -322,11 +322,11 @@
         <hr>
         <button type="button" class="btn btn-outline-success col-md-9" data-bs-toggle="modal"
                 data-bs-target="#newProdChar-">
-            Create Or Change Characteristic
+            Додати або змінити характеристику
         </button>
         <a href="{{ route('featuresOfCategory', $product->category) }}" target="_blank"
            class="btn btn-outline-warning col-md-3">
-            Characteristics manage
+            Управління характеристиками
         </a>
         <hr class="mt-3 mb-3">
     </div>
@@ -336,7 +336,7 @@
             <div class="modal-content text-dark">
                 <div class="modal-header">
                     <h5 class="modal-title text-center" id="newProdCharLabel-">
-                        Create Or Change Characteristic
+                        Додати або змінити характеристику
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -359,12 +359,12 @@
                             </div>
                             <div class="form-group mt-3">
                                 <input type="text" name="numberInList" id="numberInList"
-                                       placeholder="Number in list"
+                                       placeholder="Порядок в списку"
                                        class="form-control text-center">
                             </div>
                             <hr>
                             <input type="submit" class="btn btn-success btn-block col-12"
-                                   value="Create Or Change Characteristic">
+                                   value="Додати або змінити характеристику">
                             <script src="/js/ajax/admin/valueOfFeature.js"></script>
                         </form>
                     </div>
@@ -375,10 +375,10 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th scope="col">Number In Filter</th>
-            <th scope="col">Feature</th>
-            <th scope="col">Value</th>
-            <th scope="col">Remove</th>
+            <th scope="col">Порядок в списку</th>
+            <th scope="col">Характеристика</th>
+            <th scope="col">Значення</th>
+            <th scope="col">Видалити</th>
         </tr>
         </thead>
         <tbody>
@@ -389,7 +389,7 @@
                 <td>{{ $featureView['value'] }}</td>
                 <td>
                     <button class="btn btn-warning" data-bs-toggle="modal"
-                            data-bs-target="#changeModal-{{ $featureView['feature'] }}">Change Number in Filter
+                            data-bs-target="#changeModal-{{ $featureView['feature'] }}">Змінити порядок в списку
                     </button>
                     <div class="modal fade" id="changeModal-{{ $featureView['feature'] }}" tabindex="-1"
                          aria-labelledby="changeModalLabel-{{ $featureView['feature'] }}" aria-hidden="true">
@@ -398,7 +398,7 @@
                                 <div class="modal-header text-dark">
                                     <h5 class="modal-title text-center"
                                         id="changeModalLabel-{{ $featureView['feature'] }}">
-                                        <strong>Change Number In List for {{ $featureView['feature'] }}</strong>
+                                        <strong>Змінити порядок в списку для {{ $featureView['feature'] }}</strong>
                                     </h5>
                                 </div>
                                 <div class="modal-body text-dark">
@@ -410,7 +410,7 @@
                                             <input type="text" placeholder="Number" id="numberInList"
                                                    name="numberInList"
                                                    value="{{ $featureView['numberInList'] }}" required>
-                                            <input type="submit" class="btn btn-warning" value="Change">
+                                            <input type="submit" class="btn btn-warning" value="Змінити">
                                         </form>
                                     </div>
                                 </div>
@@ -418,7 +418,7 @@
                         </div>
                     </div>
                     <button class="btn btn-danger" data-bs-toggle="modal"
-                            data-bs-target="#removeModal-{{ $featureView['feature'] }}">Remove
+                            data-bs-target="#removeModal-{{ $featureView['feature'] }}">Видалити
                     </button>
                     <div class="modal fade" id="removeModal-{{ $featureView['feature'] }}" tabindex="-1"
                          aria-labelledby="removeModalLabel-{{ $featureView['feature'] }}" aria-hidden="true">
@@ -427,20 +427,20 @@
                                 <div class="modal-header text-dark">
                                     <h5 class="modal-title text-center"
                                         id="removeModalLabel-{{ $featureView['feature'] }}">
-                                        <strong>Remove {{ $featureView['feature'] }}</strong>
+                                        <strong>Видалити {{ $featureView['feature'] }}</strong>
                                     </h5>
                                 </div>
                                 <div class="modal-body text-dark">
                                     <div>
-                                        You are sure you want to delete the feature "{{ $featureView['feature'] }}"?
+                                        Ви впевнені, що хочете видалити характеристику "{{ $featureView['feature'] }}"?
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                        Close
+                                        Закрити
                                     </button>
                                     <a href="{{ route('destroyProductFeature', [$featureView['charOfProd']]) }}">
-                                        <button type="button" class="btn btn-outline-danger">Remove
+                                        <button type="button" class="btn btn-outline-danger">Видалити
                                         </button>
                                     </a>
                                 </div>
