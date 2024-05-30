@@ -100,6 +100,7 @@ class ProductController extends Controller
         ]);
 
         $comment = new Comment();
+        $comment->user = Auth::user()->id;
         $comment->product = $productId;
         $comment->name = $validatedData['name'];
         $comment->comment = $validatedData['comment'];

@@ -26,6 +26,7 @@ class HomeController extends Controller
         $products = Products::query()->where('isAvailable', 1)
             ->where('isFavorite', 1)
             ->where('count', '>', 0)
+            ->inRandomOrder()
             ->paginate(30);
         $productsImages = ProductImage::getMainImages($products);
         $banners = Banner::getBanners();
