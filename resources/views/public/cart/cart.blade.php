@@ -40,7 +40,7 @@
                                 <input type="number" class="form-control col-md-12" name="number" min="1"
                                        value="{{ $cartProduct->number }}">
                                 <br>
-                                <input type="submit" class="btn btn-primary col-md-12" value="Change Quantity">
+                                <input type="submit" class="btn btn-primary col-md-12" value="Змінити кількість">
                             </form>
                             <a href="{{ route('remove-from-cart', $cartProduct->cart_prod_id) }}"
                                class="btn btn-danger col-md-12 mt-2">Видалити</a>
