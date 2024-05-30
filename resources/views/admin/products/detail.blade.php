@@ -341,7 +341,7 @@
                             @csrf
                             <div class="form-group mt-3 text-dark">
                                 <select name="char" class="form-control text-center" id="char">
-                                    <option>-Select characteristic-</option>
+                                    <option>-Обрати характеристику-</option>
                                     @foreach ($featuresOfCategory as $char)
                                         <option value="{{ $char->id }}"
                                                 data-class="{{ $char->id }}">{{ $char->title }}</option>
